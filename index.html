@@ -517,14 +517,74 @@
       border: 1px solid rgba(148, 163, 184, 0.7);
       font-size: 0.7rem;
       color: var(--text-muted);
+      white-space: nowrap;
     }
 
-    /* Topic bubbles – shaded per type, in both themes */
-    body[data-theme="dark"] .pill-syllabus {
+    /* Topic bubbles – per-topic colours (syllabus) */
+
+    /* Dark theme */
+    body[data-theme="dark"] .pill-syllabus.topic-number-and-algebra {
       background: rgba(34, 197, 94, 0.16);
       color: #bbf7d0;
       border-color: rgba(34, 197, 94, 0.7);
     }
+
+    body[data-theme="dark"] .pill-syllabus.topic-functions {
+      background: rgba(56, 189, 248, 0.16);
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+
+    body[data-theme="dark"] .pill-syllabus.topic-geometry-and-trigonometry {
+      background: rgba(129, 140, 248, 0.2);
+      color: #e0e7ff;
+      border-color: rgba(129, 140, 248, 0.8);
+    }
+
+    body[data-theme="dark"] .pill-syllabus.topic-statistics-and-probability {
+      background: rgba(251, 191, 36, 0.18);
+      color: #fef3c7;
+      border-color: rgba(251, 191, 36, 0.8);
+    }
+
+    body[data-theme="dark"] .pill-syllabus.topic-calculus {
+      background: rgba(244, 114, 182, 0.2);
+      color: #fce7f3;
+      border-color: rgba(244, 114, 182, 0.85);
+    }
+
+    /* Light theme */
+    body[data-theme="light"] .pill-syllabus.topic-number-and-algebra {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #16a34a;
+    }
+
+    body[data-theme="light"] .pill-syllabus.topic-functions {
+      background: #e0f2fe;
+      color: #075985;
+      border-color: #0284c7;
+    }
+
+    body[data-theme="light"] .pill-syllabus.topic-geometry-and-trigonometry {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-color: #4f46e5;
+    }
+
+    body[data-theme="light"] .pill-syllabus.topic-statistics-and-probability {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    body[data-theme="light"] .pill-syllabus.topic-calculus {
+      background: #fce7f3;
+      color: #9d174d;
+      border-color: #f472b6;
+    }
+
+    /* Textbook + resource pills keep their colour by type */
 
     body[data-theme="dark"] .pill-textbook {
       background: rgba(56, 189, 248, 0.16);
@@ -536,12 +596,6 @@
       background: rgba(168, 85, 247, 0.16);
       color: #ede9fe;
       border-color: rgba(168, 85, 247, 0.7);
-    }
-
-    body[data-theme="light"] .pill-syllabus {
-      background: #dcfce7;
-      color: #166534;
-      border-color: #16a34a;
     }
 
     body[data-theme="light"] .pill-textbook {
@@ -735,236 +789,257 @@
 
   <script>
     /**********************************************************
-     * DATA – Topic 1 (Number & Algebra) syllabus objectives
-     * LaTeX is allowed in `text`.
+     * SYLLABUS OBJECTIVES – AHL Topics 1–5, with topic tags
      **********************************************************/
-   const SYLLABUS_OBJECTIVES = [
-  // =========================
-  // TOPIC 1 — NUMBER & ALGEBRA (AHL 1.10–1.16)
-  // =========================
-  {
-    id: "AA_AHL1-10",
-    section: "AHL 1.10",
-    topic: "Number and Algebra",
-    text: "Use counting principles, permutations $\\,_nP_r$ and combinations $\\,_nC_r$, and apply the binomial theorem $(a + b)^n$ for integer, negative and fractional $n$."
-  },
-  {
-    id: "AA_AHL1-11",
-    section: "AHL 1.11",
-    topic: "Number and Algebra",
-    text: "Decompose rational functions into partial fractions where the denominator has at most two distinct linear factors and $\\deg(\\text{numerator}) < \\deg(\\text{denominator})$."
-  },
-  {
-    id: "AA_AHL1-12",
-    section: "AHL 1.12",
-    topic: "Number and Algebra",
-    text: "Work with complex numbers in Cartesian form $z = a + bi$: real and imaginary parts, conjugate $\\overline{z}$, modulus $|z|$, argument $\\arg(z)$; perform arithmetic and represent points on the Argand diagram."
-  },
-  {
-    id: "AA_AHL1-13",
-    section: "AHL 1.13",
-    topic: "Number and Algebra",
-    text: "Use modulus–argument (polar) and Euler form $z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$; convert between Cartesian, polar and Euler forms and interpret sums, products and quotients geometrically."
-  },
-  {
-    id: "AA_AHL1-14",
-    section: "AHL 1.14",
-    topic: "Number and Algebra",
-    text: "Solve polynomial equations with real coefficients using complex roots (including conjugate pairs); apply De Moivre’s theorem $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and extend to rational exponents to find powers and roots of complex numbers."
-  },
-  {
-    id: "AA_AHL1-15",
-    section: "AHL 1.15",
-    topic: "Number and Algebra",
-    text: "Use proof by mathematical induction (for results such as series, identities, powers); use proof by contradiction, and construct / explain counterexamples to show that a statement is not always true."
-  },
-  {
-    id: "AA_AHL1-16",
-    section: "AHL 1.16",
-    topic: "Number and Algebra",
-    text: "Solve systems of linear equations (up to three equations in three unknowns) using algebraic methods and/or matrix approaches; interpret the nature of the solution set (unique, none, infinitely many)."
-  },
+    const SYLLABUS_OBJECTIVES = [
+      // TOPIC 1 — NUMBER & ALGEBRA
+      {
+        id: "AA_AHL1-10",
+        section: "AHL 1.10",
+        topic: "Number and Algebra",
+        text:
+          "Use counting principles, permutations $\\,_nP_r$ and combinations $\\,_nC_r$, and apply the binomial theorem $(a + b)^n$ for integer, negative and fractional $n$."
+      },
+      {
+        id: "AA_AHL1-11",
+        section: "AHL 1.11",
+        topic: "Number and Algebra",
+        text:
+          "Decompose rational functions into partial fractions where the denominator has at most two distinct linear factors and $\\deg(\\text{numerator}) < \\deg(\\text{denominator})$."
+      },
+      {
+        id: "AA_AHL1-12",
+        section: "AHL 1.12",
+        topic: "Number and Algebra",
+        text:
+          "Work with complex numbers in Cartesian form $z = a + bi$: real and imaginary parts, conjugate $\\overline{z}$, modulus $|z|$, argument $\\arg(z)$; perform arithmetic and represent points on the Argand diagram."
+      },
+      {
+        id: "AA_AHL1-13",
+        section: "AHL 1.13",
+        topic: "Number and Algebra",
+        text:
+          "Use modulus–argument (polar) and Euler form $z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$; convert between Cartesian, polar and Euler forms and interpret sums, products and quotients geometrically."
+      },
+      {
+        id: "AA_AHL1-14",
+        section: "AHL 1.14",
+        topic: "Number and Algebra",
+        text:
+          "Solve polynomial equations with real coefficients using complex roots (including conjugate pairs); apply De Moivre’s theorem $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and extend to rational exponents to find powers and roots of complex numbers."
+      },
+      {
+        id: "AA_AHL1-15",
+        section: "AHL 1.15",
+        topic: "Number and Algebra",
+        text:
+          "Use proof by mathematical induction (for results such as series, identities, powers); use proof by contradiction, and construct / explain counterexamples to show that a statement is not always true."
+      },
+      {
+        id: "AA_AHL1-16",
+        section: "AHL 1.16",
+        topic: "Number and Algebra",
+        text:
+          "Solve systems of linear equations (up to three equations in three unknowns) using algebraic methods and/or matrix approaches; interpret the nature of the solution set (unique, none, infinitely many)."
+      },
 
-  // =========================
-  // TOPIC 2 — FUNCTIONS (AHL 2.12–2.16)
-  // =========================
-  {
-    id: "AA_AHL2-12",
-    section: "AHL 2.12",
-    topic: "Functions",
-    text: "Analyse polynomial functions and their graphs; use the factor and remainder theorems; determine sums and products of roots for polynomial equations."
-  },
-  {
-    id: "AA_AHL2-13",
-    section: "AHL 2.13",
-    topic: "Functions",
-    text: "Work with rational functions, including asymptotic behaviour; simplify and manipulate expressions such as $f(x) = \\dfrac{ax^2 + bx + c}{dx + e}$ or $\\dfrac{ax + b}{cx^2 + dx + e}$."
-  },
-  {
-    id: "AA_AHL2-14",
-    section: "AHL 2.14",
-    topic: "Functions",
-    text: "Investigate odd and even functions; identify and analyse self-inverse functions; find inverse functions $f^{-1}(x)$ including appropriate domain restrictions so that $f$ is one-to-one."
-  },
-  {
-    id: "AA_AHL2-15",
-    section: "AHL 2.15",
-    topic: "Functions",
-    text: "Solve inequalities of the form $g(x) \\ge f(x)$, both graphically and algebraically, for functions including polynomials up to degree $3$ and other standard functions; use technology where analytic methods are not suitable."
-  },
-  {
-    id: "AA_AHL2-16",
-    section: "AHL 2.16",
-    topic: "Functions",
-    text: "Interpret and sketch transformations and related graphs such as $y = |f(x)|$, $y = f(|x|)$, $y = \\dfrac{1}{f(x)}$, $y = f(ax + b)$, and $y = [f(x)]^2$, and solve related equations and inequalities involving these forms."
-  },
+      // TOPIC 2 — FUNCTIONS
+      {
+        id: "AA_AHL2-12",
+        section: "AHL 2.12",
+        topic: "Functions",
+        text:
+          "Analyse polynomial functions and their graphs; use the factor and remainder theorems; determine sums and products of roots for polynomial equations."
+      },
+      {
+        id: "AA_AHL2-13",
+        section: "AHL 2.13",
+        topic: "Functions",
+        text:
+          "Work with rational functions, including asymptotic behaviour; simplify and manipulate expressions such as $f(x) = \\dfrac{ax^2 + bx + c}{dx + e}$ or $\\dfrac{ax + b}{cx^2 + dx + e}$."
+      },
+      {
+        id: "AA_AHL2-14",
+        section: "AHL 2.14",
+        topic: "Functions",
+        text:
+          "Investigate odd and even functions; identify and analyse self-inverse functions; find inverse functions $f^{-1}(x)$ including appropriate domain restrictions so that $f$ is one-to-one."
+      },
+      {
+        id: "AA_AHL2-15",
+        section: "AHL 2.15",
+        topic: "Functions",
+        text:
+          "Solve inequalities of the form $g(x) \\ge f(x)$, both graphically and algebraically, for functions including polynomials up to degree $3$ and other standard functions; use technology where analytic methods are not suitable."
+      },
+      {
+        id: "AA_AHL2-16",
+        section: "AHL 2.16",
+        topic: "Functions",
+        text:
+          "Interpret and sketch transformations and related graphs such as $y = |f(x)|$, $y = f(|x|)$, $y = \\dfrac{1}{f(x)}$, $y = f(ax + b)$, and $y = [f(x)]^2$, and solve related equations and inequalities involving these forms."
+      },
 
-  // =========================
-  // TOPIC 3 — GEOMETRY & TRIGONOMETRY (AHL 3.9–3.18)
-  // =========================
-  {
-    id: "AA_AHL3-09",
-    section: "AHL 3.9",
-    topic: "Geometry and Trigonometry",
-    text: "Understand fractals and self-similarity; explore geometric constructions and sequences that exhibit fractal behaviour (for example, the Koch snowflake or Sierpiński triangle)."
-  },
-  {
-    id: "AA_AHL3-10",
-    section: "AHL 3.10",
-    topic: "Geometry and Trigonometry",
-    text: "Use compound angle identities for sine and cosine (such as $\\sin(\\alpha \\pm \\beta)$, $\\cos(\\alpha \\pm \\beta)$) and derive double-angle formulae including for $\\tan 2\\theta$."
-  },
-  {
-    id: "AA_AHL3-11",
-    section: "AHL 3.11",
-    topic: "Geometry and Trigonometry",
-    text: "Apply the sine rule and cosine rule in more advanced contexts; solve non-right-angled triangle problems in two and three dimensions including ambiguous cases."
-  },
-  {
-    id: "AA_AHL3-12",
-    section: "AHL 3.12",
-    topic: "Geometry and Trigonometry",
-    text: "Use trigonometric equations and identities to solve more complex equations such as $a\\sin(kx) + b\\cos(kx) = c$ over specified domains."
-  },
-  {
-    id: "AA_AHL3-13",
-    section: "AHL 3.13",
-    topic: "Geometry and Trigonometry",
-    text: "Define and calculate the scalar (dot) product of vectors; use it to find the angle between vectors and the acute angle between two lines."
-  },
-  {
-    id: "AA_AHL3-14",
-    section: "AHL 3.14",
-    topic: "Geometry and Trigonometry",
-    text: "Use vector equations of lines in $\\mathbb{R}^2$ and $\\mathbb{R}^3$, $\\mathbf{r} = \\mathbf{a} + \\lambda \\mathbf{b}$; relate $\\mathbf{a}$ to position and $\\mathbf{b}$ to direction; work with parametric forms for lines."
-  },
-  {
-    id: "AA_AHL3-15",
-    section: "AHL 3.15",
-    topic: "Geometry and Trigonometry",
-    text: "Determine the angle between two lines, and between a line and a plane; find the distance from a point to a line or plane in vector form."
-  },
-  {
-    id: "AA_AHL3-16",
-    section: "AHL 3.16",
-    topic: "Geometry and Trigonometry",
-    text: "Use vector methods to solve geometric problems, including finding intersections of lines and planes, and working with parallelism and perpendicularity in 3D."
-  },
-  {
-    id: "AA_AHL3-17",
-    section: "AHL 3.17",
-    topic: "Geometry and Trigonometry",
-    text: "Calculate areas of triangles and parallelograms using vector methods such as $\\tfrac12|\\mathbf{a} \\times \\mathbf{b}|$ or $|\\mathbf{a} \\times \\mathbf{b}|$."
-  },
-  {
-    id: "AA_AHL3-18",
-    section: "AHL 3.18",
-    topic: "Geometry and Trigonometry",
-    text: "Use vectors to find volumes of solids such as parallelepipeds via scalar triple products; interpret geometric meaning of $\\mathbf{a} \\cdot (\\mathbf{b} \\times \\mathbf{c})$."
-  },
+      // TOPIC 3 — GEOMETRY & TRIGONOMETRY
+      {
+        id: "AA_AHL3-09",
+        section: "AHL 3.9",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Understand fractals and self-similarity; explore geometric constructions and sequences that exhibit fractal behaviour (for example, the Koch snowflake or Sierpiński triangle)."
+      },
+      {
+        id: "AA_AHL3-10",
+        section: "AHL 3.10",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Use compound angle identities for sine and cosine (such as $\\sin(\\alpha \\pm \\beta)$, $\\cos(\\alpha \\pm \\beta)$) and derive double-angle formulae including for $\\tan 2\\theta$."
+      },
+      {
+        id: "AA_AHL3-11",
+        section: "AHL 3.11",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Apply the sine rule and cosine rule in more advanced contexts; solve non-right-angled triangle problems in two and three dimensions including ambiguous cases."
+      },
+      {
+        id: "AA_AHL3-12",
+        section: "AHL 3.12",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Use trigonometric equations and identities to solve more complex equations such as $a\\sin(kx) + b\\cos(kx) = c$ over specified domains."
+      },
+      {
+        id: "AA_AHL3-13",
+        section: "AHL 3.13",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Define and calculate the scalar (dot) product of vectors; use it to find the angle between vectors and the acute angle between two lines."
+      },
+      {
+        id: "AA_AHL3-14",
+        section: "AHL 3.14",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Use vector equations of lines in $\\mathbb{R}^2$ and $\\mathbb{R}^3$, $\\mathbf{r} = \\mathbf{a} + \\lambda \\mathbf{b}$; relate $\\mathbf{a}$ to position and $\\mathbf{b}$ to direction; work with parametric forms for lines."
+      },
+      {
+        id: "AA_AHL3-15",
+        section: "AHL 3.15",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Determine the angle between two lines, and between a line and a plane; find the distance from a point to a line or plane in vector form."
+      },
+      {
+        id: "AA_AHL3-16",
+        section: "AHL 3.16",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Use vector methods to solve geometric problems, including finding intersections of lines and planes, and working with parallelism and perpendicularity in 3D."
+      },
+      {
+        id: "AA_AHL3-17",
+        section: "AHL 3.17",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Calculate areas of triangles and parallelograms using vector methods such as $\\tfrac12|\\mathbf{a} \\times \\mathbf{b}|$ or $|\\mathbf{a} \\times \\mathbf{b}|$."
+      },
+      {
+        id: "AA_AHL3-18",
+        section: "AHL 3.18",
+        topic: "Geometry and Trigonometry",
+        text:
+          "Use vectors to find volumes of solids such as parallelepipeds via scalar triple products; interpret geometric meaning of $\\mathbf{a} \\cdot (\\mathbf{b} \\times \\mathbf{c})$."
+      },
 
-  // =========================
-  // TOPIC 4 — STATISTICS & PROBABILITY (AHL 4.13–4.14)
-  // =========================
-  {
-    id: "AA_AHL4-13",
-    section: "AHL 4.13",
-    topic: "Statistics and Probability",
-    text: "Apply Bayes’ theorem to update probabilities for up to three events; compute $P(A\\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$ in tree-diagram and table contexts."
-  },
-  {
-    id: "AA_AHL4-14",
-    section: "AHL 4.14",
-    topic: "Statistics and Probability",
-    text: "Work with discrete and continuous random variables: calculate mean, variance and standard deviation; interpret and work with probability density functions, including piecewise-defined $f(x)$, and find mode and median of continuous distributions."
-  },
+      // TOPIC 4 — STATISTICS & PROBABILITY
+      {
+        id: "AA_AHL4-13",
+        section: "AHL 4.13",
+        topic: "Statistics and Probability",
+        text:
+          "Apply Bayes’ theorem to update probabilities for up to three events; compute $P(A\\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$ in tree-diagram and table contexts."
+      },
+      {
+        id: "AA_AHL4-14",
+        section: "AHL 4.14",
+        topic: "Statistics and Probability",
+        text:
+          "Work with discrete and continuous random variables: calculate mean, variance and standard deviation; interpret and work with probability density functions, including piecewise-defined $f(x)$, and find mode and median of continuous distributions."
+      },
 
-  // =========================
-  // TOPIC 5 — CALCULUS (AHL 5.10–5.19)
-  // =========================
-  {
-    id: "AA_AHL5-10",
-    section: "AHL 5.10",
-    topic: "Calculus",
-    text: "Use the second derivative $f''(x)$ or $\\dfrac{d^2y}{dx^2}$; apply the second derivative test to classify local maxima/minima; interpret concavity (concave up when $f''(x) > 0$, concave down when $f''(x) < 0$) and points of inflexion."
-  },
-  {
-    id: "AA_AHL5-11",
-    section: "AHL 5.11",
-    topic: "Calculus",
-    text: "Evaluate definite and indefinite integrals of $x^n$ (for rational $n$, including $n = -1$), $e^x$, $\\ln x$, $\\sin x$, $\\cos x$, $\\tan x$, $\\sec x$, $\\csc x$, $\\cot x$ and their simple composites using substitution $\\int f(g(x))g'(x)\\,dx$ and inspection."
-  },
-  {
-    id: "AA_AHL5-12",
-    section: "AHL 5.12",
-    topic: "Calculus",
-    text: "Find areas of regions enclosed by curves and the $x$- or $y$-axis, including where $f(x)$ changes sign; compute volumes of revolution about the $x$- or $y$-axis using $V = \\pi \\int_a^b y^2\\,dx$ or $V = \\pi \\int_a^b x^2\\,dy$."
-  },
-  {
-    id: "AA_AHL5-13",
-    section: "AHL 5.13",
-    topic: "Calculus",
-    text: "Solve kinematics problems using displacement $s(t)$, velocity $v(t)$ and acceleration $a(t)$ where $v = \\dfrac{ds}{dt}$ and $a = \\dfrac{dv}{dt} = \\dfrac{d^2 s}{dt^2}$; interpret distance travelled via $\\int |v(t)|\\,dt$."
-  },
-  {
-    id: "AA_AHL5-14",
-    section: "AHL 5.14",
-    topic: "Calculus",
-    text: "Set up first-order differential equations from context (for example $\\dfrac{dy}{dx} = ky$ for exponential growth/decay) and solve by separation of variables to obtain general and particular solutions."
-  },
-  {
-    id: "AA_AHL5-15",
-    section: "AHL 5.15",
-    topic: "Calculus",
-    text: "Interpret slope fields (direction fields) for first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$ and relate them to qualitative behaviour of solution curves."
-  },
-  {
-    id: "AA_AHL5-16",
-    section: "AHL 5.16",
-    topic: "Calculus",
-    text: "Use Euler’s method (and similar stepwise numerical methods) to approximate solutions of first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$; implement iterative formulas such as $x_{n+1} = x_n + h$, $y_{n+1} = y_n + hf(x_n,y_n)$."
-  },
-  {
-    id: "AA_AHL5-17",
-    section: "AHL 5.17",
-    topic: "Calculus",
-    text: "Analyse phase portraits and solution behaviour for coupled first-order linear systems $\\dfrac{dx}{dt} = ax + by$, $\\dfrac{dy}{dt} = cx + dy$; classify equilibrium points qualitatively from eigenvalues."
-  },
-  {
-    id: "AA_AHL5-18",
-    section: "AHL 5.18",
-    topic: "Calculus",
-    text: "Solve first-order differential equations of the form $\\dfrac{dy}{dx} = f\\!\\left(\\dfrac{y}{x}\\right)$ using the substitution $y = vx$; solve linear equations $y' + P(x)y = Q(x)$ via integrating factors; apply Euler’s method to such equations and simple systems."
-  },
-  {
-    id: "AA_AHL5-19",
-    section: "AHL 5.19",
-    topic: "Calculus",
-    text: "Work with Maclaurin series to obtain expansions for $e^x$, $\\sin x$, $\\cos x$, $\\ln(1 + x)$ and $(1 + x)^p$ for rational $p$; use substitution, differentiation and integration of known series to generate new ones."
-  }
-];
-
-
+      // TOPIC 5 — CALCULUS
+      {
+        id: "AA_AHL5-10",
+        section: "AHL 5.10",
+        topic: "Calculus",
+        text:
+          "Use the second derivative $f''(x)$ or $\\dfrac{d^2y}{dx^2}$; apply the second derivative test to classify local maxima/minima; interpret concavity (concave up when $f''(x) > 0$, concave down when $f''(x) < 0$) and points of inflexion."
+      },
+      {
+        id: "AA_AHL5-11",
+        section: "AHL 5.11",
+        topic: "Calculus",
+        text:
+          "Evaluate definite and indefinite integrals of $x^n$ (for rational $n$, including $n = -1$), $e^x$, $\\ln x$, $\\sin x$, $\\cos x$, $\\tan x$, $\\sec x$, $\\csc x$, $\\cot x$ and their simple composites using substitution $\\int f(g(x))g'(x)\\,dx$ and inspection."
+      },
+      {
+        id: "AA_AHL5-12",
+        section: "AHL 5.12",
+        topic: "Calculus",
+        text:
+          "Find areas of regions enclosed by curves and the $x$- or $y$-axis, including where $f(x)$ changes sign; compute volumes of revolution about the $x$- or $y$-axis using $V = \\pi \\int_a^b y^2\\,dx$ or $V = \\pi \\int_a^b x^2\\,dy$."
+      },
+      {
+        id: "AA_AHL5-13",
+        section: "AHL 5.13",
+        topic: "Calculus",
+        text:
+          "Solve kinematics problems using displacement $s(t)$, velocity $v(t)$ and acceleration $a(t)$ where $v = \\dfrac{ds}{dt}$ and $a = \\dfrac{dv}{dt} = \\dfrac{d^2 s}{dt^2}$; interpret distance travelled via $\\int |v(t)|\\,dt$."
+      },
+      {
+        id: "AA_AHL5-14",
+        section: "AHL 5.14",
+        topic: "Calculus",
+        text:
+          "Set up first-order differential equations from context (for example $\\dfrac{dy}{dx} = ky$ for exponential growth/decay) and solve by separation of variables to obtain general and particular solutions."
+      },
+      {
+        id: "AA_AHL5-15",
+        section: "AHL 5.15",
+        topic: "Calculus",
+        text:
+          "Interpret slope fields (direction fields) for first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$ and relate them to qualitative behaviour of solution curves."
+      },
+      {
+        id: "AA_AHL5-16",
+        section: "AHL 5.16",
+        topic: "Calculus",
+        text:
+          "Use Euler’s method (and similar stepwise numerical methods) to approximate solutions of first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$; implement iterative formulas such as $x_{n+1} = x_n + h$, $y_{n+1} = y_n + hf(x_n,y_n)$."
+      },
+      {
+        id: "AA_AHL5-17",
+        section: "AHL 5.17",
+        topic: "Calculus",
+        text:
+          "Analyse phase portraits and solution behaviour for coupled first-order linear systems $\\dfrac{dx}{dt} = ax + by$, $\\dfrac{dy}{dt} = cx + dy$; classify equilibrium points qualitatively from eigenvalues."
+      },
+      {
+        id: "AA_AHL5-18",
+        section: "AHL 5.18",
+        topic: "Calculus",
+        text:
+          "Solve first-order differential equations of the form $\\dfrac{dy}{dx} = f\\!\\left(\\dfrac{y}{x}\\right)$ using the substitution $y = vx$; solve linear equations $y' + P(x)y = Q(x)$ via integrating factors; apply Euler’s method to such equations and simple systems."
+      },
+      {
+        id: "AA_AHL5-19",
+        section: "AHL 5.19",
+        topic: "Calculus",
+        text:
+          "Work with Maclaurin series to obtain expansions for $e^x$, $\\sin x$, $\\cos x$, $\\ln(1 + x)$ and $(1 + x)^p$ for rational $p$; use substitution, differentiation and integration of known series to generate new ones."
+      }
+    ];
 
     // Sample textbook references – add your actual exercise URLs in `url` fields
     const TEXTBOOK_REFERENCES = [
@@ -972,7 +1047,7 @@
         id: "tb-0",
         label: "Haese IB AA SL, Ch 1.1–1.2",
         detail: "Scientific notation, operations with numbers (SL 1.1).",
-        url: "" // e.g. "https://your-text-link.com/ex1"
+        url: ""
       },
       {
         id: "tb-1",
@@ -1399,6 +1474,14 @@
     }
 
     /**********************************************************
+     * UTIL – topic slug for CSS class
+     **********************************************************/
+    function topicSlug(topic) {
+      if (!topic) return "unknown";
+      return topic.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    }
+
+    /**********************************************************
      * CARD CREATION
      **********************************************************/
     function createCard(data, type) {
@@ -1426,12 +1509,17 @@
 
       const pill = document.createElement("div");
       pill.className = "pill";
-      pill.classList.add(`pill-${type}`);
+
       if (type === "syllabus") {
-        pill.textContent = inferTopicFromSection(data.section);
+        pill.classList.add("pill-syllabus");
+        const slug = topicSlug(data.topic);
+        pill.classList.add(`topic-${slug}`);
+        pill.textContent = data.topic || "AA Syllabus";
       } else if (type === "textbook") {
+        pill.classList.add("pill-textbook");
         pill.textContent = "Text reference";
       } else {
+        pill.classList.add("pill-resource");
         pill.textContent = "Note";
       }
 
@@ -1476,14 +1564,6 @@
       card.addEventListener("dragend", handleDragEnd);
 
       return card;
-    }
-
-    function inferTopicFromSection(section) {
-      if (!section) return "Number & algebra";
-      if (section.startsWith("SL 1") || section.startsWith("AHL 1")) {
-        return "Topic 1: Number & algebra";
-      }
-      return "AA syllabus";
     }
 
     /**********************************************************
