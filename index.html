@@ -738,64 +738,232 @@
      * DATA – Topic 1 (Number & Algebra) syllabus objectives
      * LaTeX is allowed in `text`.
      **********************************************************/
-    const SYLLABUS_OBJECTIVES = [
+   const SYLLABUS_OBJECTIVES = [
+  // =========================
+  // TOPIC 1 — NUMBER & ALGEBRA (AHL 1.10–1.16)
+  // =========================
   {
     id: "AA_AHL1-10",
     section: "AHL 1.10",
-    text:
-      "Counting principles, including permutations ${}_nP_r$ and combinations $\\binom{n}{r}$, and " +
-      "extension of the binomial theorem to fractional and negative indices, that is $(a+b)^n$ for $n\\in\\mathbb{Q}$ " +
-      "under suitable convergence conditions."
+    topic: "Number and Algebra",
+    text: "Use counting principles, permutations $\\,_nP_r$ and combinations $\\,_nC_r$, and apply the binomial theorem $(a + b)^n$ for integer, negative and fractional $n$."
   },
   {
     id: "AA_AHL1-11",
     section: "AHL 1.11",
-    text:
-      "Partial fraction decomposition of rational functions where the denominator has at most two distinct linear factors " +
-      "and $\\deg(\\text{numerator}) < \\deg(\\text{denominator})$, for example " +
-      "$\\dfrac{2x+1}{x^2+x-2} = \\dfrac{1}{x-1} + \\dfrac{1}{x+2}$, and use in later topics such as integration."
+    topic: "Number and Algebra",
+    text: "Decompose rational functions into partial fractions where the denominator has at most two distinct linear factors and $\\deg(\\text{numerator}) < \\deg(\\text{denominator})$."
   },
   {
     id: "AA_AHL1-12",
     section: "AHL 1.12",
-    text:
-      "Complex numbers with $i^2 = -1$; Cartesian form $z = a + bi$; terminology of real part $\\Re(z)$, imaginary part " +
-      "$\\Im(z)$, conjugate $\\overline{z}$, modulus $|z|$, and argument $\\arg(z)$; representation in the complex plane; " +
-      "solving quadratic equations $ax^2+bx+c=0$ with $b^2-4ac<0$ using complex roots."
+    topic: "Number and Algebra",
+    text: "Work with complex numbers in Cartesian form $z = a + bi$: real and imaginary parts, conjugate $\\overline{z}$, modulus $|z|$, argument $\\arg(z)$; perform arithmetic and represent points on the Argand diagram."
   },
   {
     id: "AA_AHL1-13",
     section: "AHL 1.13",
-    text:
-      "Modulus–argument (polar) form of complex numbers: $z = r(\\cos\\theta + i\\sin\\theta) = r\\,\\text{cis}\\,\\theta$, " +
-      "and (optionally) Euler form $z = re^{i\\theta}$. Performing sums, products and quotients in Cartesian and polar/Euler form " +
-      "and interpreting these operations geometrically (for example, rotations and scalings in the Argand diagram)."
+    topic: "Number and Algebra",
+    text: "Use modulus–argument (polar) and Euler form $z = r(\\cos\\theta + i\\sin\\theta) = re^{i\\theta}$; convert between Cartesian, polar and Euler forms and interpret sums, products and quotients geometrically."
   },
   {
     id: "AA_AHL1-14",
     section: "AHL 1.14",
-    text:
-      "Complex conjugate roots of quadratic and higher-degree polynomial equations with real coefficients, occurring in pairs " +
-      "$(a+bi, a-bi)$. De Moivre’s theorem $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and its " +
-      "extension to rational exponents, including applications to powers and roots of complex numbers."
+    topic: "Number and Algebra",
+    text: "Solve polynomial equations with real coefficients using complex roots (including conjugate pairs); apply De Moivre’s theorem $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and extend to rational exponents to find powers and roots of complex numbers."
   },
   {
     id: "AA_AHL1-15",
     section: "AHL 1.15",
-    text:
-      "Proof by mathematical induction: establishing a base case, assuming the result for $n=k$ and proving it for $n=k+1$. " +
-      "Using induction in a range of contexts such as formulas for sums of sequences, divisibility results, statements about " +
-      "complex numbers, and identities involving derivatives or higher powers."
+    topic: "Number and Algebra",
+    text: "Use proof by mathematical induction (for results such as series, identities, powers); use proof by contradiction, and construct / explain counterexamples to show that a statement is not always true."
   },
   {
     id: "AA_AHL1-16",
     section: "AHL 1.16",
-    text:
-      "Solving systems of linear equations (up to three equations in three unknowns) by algebraic methods and with technology, " +
-      "for example using row reduction or matrix methods to find unique solutions, show inconsistency, or identify infinitely " +
-      "many solutions."
+    topic: "Number and Algebra",
+    text: "Solve systems of linear equations (up to three equations in three unknowns) using algebraic methods and/or matrix approaches; interpret the nature of the solution set (unique, none, infinitely many)."
+  },
+
+  // =========================
+  // TOPIC 2 — FUNCTIONS (AHL 2.12–2.16)
+  // =========================
+  {
+    id: "AA_AHL2-12",
+    section: "AHL 2.12",
+    topic: "Functions",
+    text: "Analyse polynomial functions and their graphs; use the factor and remainder theorems; determine sums and products of roots for polynomial equations."
+  },
+  {
+    id: "AA_AHL2-13",
+    section: "AHL 2.13",
+    topic: "Functions",
+    text: "Work with rational functions, including asymptotic behaviour; simplify and manipulate expressions such as $f(x) = \\dfrac{ax^2 + bx + c}{dx + e}$ or $\\dfrac{ax + b}{cx^2 + dx + e}$."
+  },
+  {
+    id: "AA_AHL2-14",
+    section: "AHL 2.14",
+    topic: "Functions",
+    text: "Investigate odd and even functions; identify and analyse self-inverse functions; find inverse functions $f^{-1}(x)$ including appropriate domain restrictions so that $f$ is one-to-one."
+  },
+  {
+    id: "AA_AHL2-15",
+    section: "AHL 2.15",
+    topic: "Functions",
+    text: "Solve inequalities of the form $g(x) \\ge f(x)$, both graphically and algebraically, for functions including polynomials up to degree $3$ and other standard functions; use technology where analytic methods are not suitable."
+  },
+  {
+    id: "AA_AHL2-16",
+    section: "AHL 2.16",
+    topic: "Functions",
+    text: "Interpret and sketch transformations and related graphs such as $y = |f(x)|$, $y = f(|x|)$, $y = \\dfrac{1}{f(x)}$, $y = f(ax + b)$, and $y = [f(x)]^2$, and solve related equations and inequalities involving these forms."
+  },
+
+  // =========================
+  // TOPIC 3 — GEOMETRY & TRIGONOMETRY (AHL 3.9–3.18)
+  // =========================
+  {
+    id: "AA_AHL3-09",
+    section: "AHL 3.9",
+    topic: "Geometry and Trigonometry",
+    text: "Understand fractals and self-similarity; explore geometric constructions and sequences that exhibit fractal behaviour (for example, the Koch snowflake or Sierpiński triangle)."
+  },
+  {
+    id: "AA_AHL3-10",
+    section: "AHL 3.10",
+    topic: "Geometry and Trigonometry",
+    text: "Use compound angle identities for sine and cosine (such as $\\sin(\\alpha \\pm \\beta)$, $\\cos(\\alpha \\pm \\beta)$) and derive double-angle formulae including for $\\tan 2\\theta$."
+  },
+  {
+    id: "AA_AHL3-11",
+    section: "AHL 3.11",
+    topic: "Geometry and Trigonometry",
+    text: "Apply the sine rule and cosine rule in more advanced contexts; solve non-right-angled triangle problems in two and three dimensions including ambiguous cases."
+  },
+  {
+    id: "AA_AHL3-12",
+    section: "AHL 3.12",
+    topic: "Geometry and Trigonometry",
+    text: "Use trigonometric equations and identities to solve more complex equations such as $a\\sin(kx) + b\\cos(kx) = c$ over specified domains."
+  },
+  {
+    id: "AA_AHL3-13",
+    section: "AHL 3.13",
+    topic: "Geometry and Trigonometry",
+    text: "Define and calculate the scalar (dot) product of vectors; use it to find the angle between vectors and the acute angle between two lines."
+  },
+  {
+    id: "AA_AHL3-14",
+    section: "AHL 3.14",
+    topic: "Geometry and Trigonometry",
+    text: "Use vector equations of lines in $\\mathbb{R}^2$ and $\\mathbb{R}^3$, $\\mathbf{r} = \\mathbf{a} + \\lambda \\mathbf{b}$; relate $\\mathbf{a}$ to position and $\\mathbf{b}$ to direction; work with parametric forms for lines."
+  },
+  {
+    id: "AA_AHL3-15",
+    section: "AHL 3.15",
+    topic: "Geometry and Trigonometry",
+    text: "Determine the angle between two lines, and between a line and a plane; find the distance from a point to a line or plane in vector form."
+  },
+  {
+    id: "AA_AHL3-16",
+    section: "AHL 3.16",
+    topic: "Geometry and Trigonometry",
+    text: "Use vector methods to solve geometric problems, including finding intersections of lines and planes, and working with parallelism and perpendicularity in 3D."
+  },
+  {
+    id: "AA_AHL3-17",
+    section: "AHL 3.17",
+    topic: "Geometry and Trigonometry",
+    text: "Calculate areas of triangles and parallelograms using vector methods such as $\\tfrac12|\\mathbf{a} \\times \\mathbf{b}|$ or $|\\mathbf{a} \\times \\mathbf{b}|$."
+  },
+  {
+    id: "AA_AHL3-18",
+    section: "AHL 3.18",
+    topic: "Geometry and Trigonometry",
+    text: "Use vectors to find volumes of solids such as parallelepipeds via scalar triple products; interpret geometric meaning of $\\mathbf{a} \\cdot (\\mathbf{b} \\times \\mathbf{c})$."
+  },
+
+  // =========================
+  // TOPIC 4 — STATISTICS & PROBABILITY (AHL 4.13–4.14)
+  // =========================
+  {
+    id: "AA_AHL4-13",
+    section: "AHL 4.13",
+    topic: "Statistics and Probability",
+    text: "Apply Bayes’ theorem to update probabilities for up to three events; compute $P(A\\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$ in tree-diagram and table contexts."
+  },
+  {
+    id: "AA_AHL4-14",
+    section: "AHL 4.14",
+    topic: "Statistics and Probability",
+    text: "Work with discrete and continuous random variables: calculate mean, variance and standard deviation; interpret and work with probability density functions, including piecewise-defined $f(x)$, and find mode and median of continuous distributions."
+  },
+
+  // =========================
+  // TOPIC 5 — CALCULUS (AHL 5.10–5.19)
+  // =========================
+  {
+    id: "AA_AHL5-10",
+    section: "AHL 5.10",
+    topic: "Calculus",
+    text: "Use the second derivative $f''(x)$ or $\\dfrac{d^2y}{dx^2}$; apply the second derivative test to classify local maxima/minima; interpret concavity (concave up when $f''(x) > 0$, concave down when $f''(x) < 0$) and points of inflexion."
+  },
+  {
+    id: "AA_AHL5-11",
+    section: "AHL 5.11",
+    topic: "Calculus",
+    text: "Evaluate definite and indefinite integrals of $x^n$ (for rational $n$, including $n = -1$), $e^x$, $\\ln x$, $\\sin x$, $\\cos x$, $\\tan x$, $\\sec x$, $\\csc x$, $\\cot x$ and their simple composites using substitution $\\int f(g(x))g'(x)\\,dx$ and inspection."
+  },
+  {
+    id: "AA_AHL5-12",
+    section: "AHL 5.12",
+    topic: "Calculus",
+    text: "Find areas of regions enclosed by curves and the $x$- or $y$-axis, including where $f(x)$ changes sign; compute volumes of revolution about the $x$- or $y$-axis using $V = \\pi \\int_a^b y^2\\,dx$ or $V = \\pi \\int_a^b x^2\\,dy$."
+  },
+  {
+    id: "AA_AHL5-13",
+    section: "AHL 5.13",
+    topic: "Calculus",
+    text: "Solve kinematics problems using displacement $s(t)$, velocity $v(t)$ and acceleration $a(t)$ where $v = \\dfrac{ds}{dt}$ and $a = \\dfrac{dv}{dt} = \\dfrac{d^2 s}{dt^2}$; interpret distance travelled via $\\int |v(t)|\\,dt$."
+  },
+  {
+    id: "AA_AHL5-14",
+    section: "AHL 5.14",
+    topic: "Calculus",
+    text: "Set up first-order differential equations from context (for example $\\dfrac{dy}{dx} = ky$ for exponential growth/decay) and solve by separation of variables to obtain general and particular solutions."
+  },
+  {
+    id: "AA_AHL5-15",
+    section: "AHL 5.15",
+    topic: "Calculus",
+    text: "Interpret slope fields (direction fields) for first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$ and relate them to qualitative behaviour of solution curves."
+  },
+  {
+    id: "AA_AHL5-16",
+    section: "AHL 5.16",
+    topic: "Calculus",
+    text: "Use Euler’s method (and similar stepwise numerical methods) to approximate solutions of first-order differential equations $\\dfrac{dy}{dx} = f(x,y)$; implement iterative formulas such as $x_{n+1} = x_n + h$, $y_{n+1} = y_n + hf(x_n,y_n)$."
+  },
+  {
+    id: "AA_AHL5-17",
+    section: "AHL 5.17",
+    topic: "Calculus",
+    text: "Analyse phase portraits and solution behaviour for coupled first-order linear systems $\\dfrac{dx}{dt} = ax + by$, $\\dfrac{dy}{dt} = cx + dy$; classify equilibrium points qualitatively from eigenvalues."
+  },
+  {
+    id: "AA_AHL5-18",
+    section: "AHL 5.18",
+    topic: "Calculus",
+    text: "Solve first-order differential equations of the form $\\dfrac{dy}{dx} = f\\!\\left(\\dfrac{y}{x}\\right)$ using the substitution $y = vx$; solve linear equations $y' + P(x)y = Q(x)$ via integrating factors; apply Euler’s method to such equations and simple systems."
+  },
+  {
+    id: "AA_AHL5-19",
+    section: "AHL 5.19",
+    topic: "Calculus",
+    text: "Work with Maclaurin series to obtain expansions for $e^x$, $\\sin x$, $\\cos x$, $\\ln(1 + x)$ and $(1 + x)^p$ for rational $p$; use substitution, differentiation and integration of known series to generate new ones."
   }
 ];
+
 
 
     // Sample textbook references – add your actual exercise URLs in `url` fields
