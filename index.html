@@ -739,157 +739,64 @@
      * LaTeX is allowed in `text`.
      **********************************************************/
     const SYLLABUS_OBJECTIVES = [
-      {
-        id: "syl-0",
-        section: "SL 1.1",
-        text:
-          "Operations with numbers in the form $a\\times 10^k$ where $1\\le a<10$ and $k\\in\\mathbb{Z}$."
-      },
-      {
-        id: "syl-1",
-        section: "SL 1.2",
-        text:
-          "Arithmetic sequences and series. Use of formulae for the $n$th term and the sum of the first $n$ terms of an arithmetic sequence."
-      },
-      {
-        id: "syl-2",
-        section: "SL 1.2",
-        text:
-          "Use of sigma notation $\\displaystyle \\sum_{k=1}^{n} a_k$ for sums of arithmetic sequences."
-      },
-      {
-        id: "syl-3",
-        section: "SL 1.2",
-        text:
-          "Applications of arithmetic sequences and series (for example, simple interest, linear growth)."
-      },
-      {
-        id: "syl-4",
-        section: "SL 1.3",
-        text:
-          "Geometric sequences and series. Use of formulae for the $n$th term and the sum of the first $n$ terms of a geometric sequence."
-      },
-      {
-        id: "syl-5",
-        section: "SL 1.3",
-        text:
-          "Use of sigma notation for sums of geometric sequences and interpretation of parameters $a$ and $r$."
-      },
-      {
-        id: "syl-6",
-        section: "SL 1.4",
-        text:
-          "Financial applications of geometric sequences and series (compound interest, loans, annuities, depreciation)."
-      },
-      {
-        id: "syl-7",
-        section: "SL 1.5",
-        text:
-          "Laws of exponents for rational exponents, including $a^{m/n} = \\sqrt[n]{a^m}$ for $a>0$."
-      },
-      {
-        id: "syl-8",
-        section: "SL 1.5",
-        text:
-          "Simplification of expressions involving integer and rational indices; use of index laws in algebraic contexts."
-      },
-      {
-        id: "syl-9",
-        section: "SL 1.6",
-        text:
-          "Introduction to logarithms as inverse functions of exponentials: $a^x = b \\iff \\log_a b = x$."
-      },
-      {
-        id: "syl-10",
-        section: "SL 1.6",
-        text:
-          "Laws of logarithms: $\\log_a(xy)=\\log_a x + \\log_a y$, $\\log_a(x/y)=\\log_a x - \\log_a y$, $\\log_a(x^k)=k\\log_a x$."
-      },
-      {
-        id: "syl-11",
-        section: "SL 1.6",
-        text:
-          "Change of base formula: $\\log_a x = \\dfrac{\\log_b x}{\\log_b a}$, including use with calculator bases."
-      },
-      {
-        id: "syl-12",
-        section: "SL 1.7",
-        text:
-          "Solving exponential and logarithmic equations, including those requiring use of logarithmic laws."
-      },
-      {
-        id: "syl-13",
-        section: "SL 1.8",
-        text:
-          "Binomial expansion of $(a+b)^n$ for $n\\in\\mathbb{N}$ using binomial coefficients $\\binom{n}{k}$."
-      },
-      {
-        id: "syl-14",
-        section: "SL 1.8",
-        text:
-          "Pascal’s triangle and its connection to binomial coefficients and binomial expansions."
-      },
-      {
-        id: "syl-15",
-        section: "SL 1.9",
-        text:
-          "Counting principles (multiplication and addition principles); permutations of $n$ distinct objects: ${}_nP_r$."
-      },
-      {
-        id: "syl-16",
-        section: "SL 1.9",
-        text:
-          "Simple combinations: $\\binom{n}{r}$ and their use in counting problems and binomial coefficients."
-      },
-      {
-        id: "syl-17",
-        section: "AHL 1.1",
-        text:
-          "Deeper applications of permutations and combinations, including constraints and multi-step selections."
-      },
-      {
-        id: "syl-18",
-        section: "AHL 1.1",
-        text:
-          "Extended binomial theorem: expansion of $(1+x)^n$ for rational $n$, $|x|<1$, and use for approximation."
-      },
-      {
-        id: "syl-19",
-        section: "AHL 1.1",
-        text:
-          "Proof by mathematical induction for statements involving positive integers (for example, sums and divisibility)."
-      },
-      {
-        id: "syl-20",
-        section: "AHL 1.1",
-        text:
-          "Proof by contradiction and the use of counterexamples to show that statements are not always true."
-      },
-      {
-        id: "syl-21",
-        section: "AHL 1.1",
-        text:
-          "Introduction to complex numbers: $z=a+bi$, real and imaginary parts, conjugate, modulus $|z|$, and argument $\\arg(z)$."
-      },
-      {
-        id: "syl-22",
-        section: "AHL 1.1",
-        text:
-          "Algebra of complex numbers (addition, subtraction, multiplication, division) and representation in the complex plane."
-      },
-      {
-        id: "syl-23",
-        section: "AHL 1.1",
-        text:
-          "Polar (modulus–argument) form $z=r(\\cos\\theta + i\\sin\\theta)$ and conversion between Cartesian and polar forms."
-      },
-      {
-        id: "syl-24",
-        section: "AHL 1.1",
-        text:
-          "De Moivre’s theorem: $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and its applications to powers and roots."
-      }
-    ];
+  {
+    id: "AA_AHL1-10",
+    section: "AHL 1.10",
+    text:
+      "Counting principles, including permutations ${}_nP_r$ and combinations $\\binom{n}{r}$, and " +
+      "extension of the binomial theorem to fractional and negative indices, that is $(a+b)^n$ for $n\\in\\mathbb{Q}$ " +
+      "under suitable convergence conditions."
+  },
+  {
+    id: "AA_AHL1-11",
+    section: "AHL 1.11",
+    text:
+      "Partial fraction decomposition of rational functions where the denominator has at most two distinct linear factors " +
+      "and $\\deg(\\text{numerator}) < \\deg(\\text{denominator})$, for example " +
+      "$\\dfrac{2x+1}{x^2+x-2} = \\dfrac{1}{x-1} + \\dfrac{1}{x+2}$, and use in later topics such as integration."
+  },
+  {
+    id: "AA_AHL1-12",
+    section: "AHL 1.12",
+    text:
+      "Complex numbers with $i^2 = -1$; Cartesian form $z = a + bi$; terminology of real part $\\Re(z)$, imaginary part " +
+      "$\\Im(z)$, conjugate $\\overline{z}$, modulus $|z|$, and argument $\\arg(z)$; representation in the complex plane; " +
+      "solving quadratic equations $ax^2+bx+c=0$ with $b^2-4ac<0$ using complex roots."
+  },
+  {
+    id: "AA_AHL1-13",
+    section: "AHL 1.13",
+    text:
+      "Modulus–argument (polar) form of complex numbers: $z = r(\\cos\\theta + i\\sin\\theta) = r\\,\\text{cis}\\,\\theta$, " +
+      "and (optionally) Euler form $z = re^{i\\theta}$. Performing sums, products and quotients in Cartesian and polar/Euler form " +
+      "and interpreting these operations geometrically (for example, rotations and scalings in the Argand diagram)."
+  },
+  {
+    id: "AA_AHL1-14",
+    section: "AHL 1.14",
+    text:
+      "Complex conjugate roots of quadratic and higher-degree polynomial equations with real coefficients, occurring in pairs " +
+      "$(a+bi, a-bi)$. De Moivre’s theorem $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and its " +
+      "extension to rational exponents, including applications to powers and roots of complex numbers."
+  },
+  {
+    id: "AA_AHL1-15",
+    section: "AHL 1.15",
+    text:
+      "Proof by mathematical induction: establishing a base case, assuming the result for $n=k$ and proving it for $n=k+1$. " +
+      "Using induction in a range of contexts such as formulas for sums of sequences, divisibility results, statements about " +
+      "complex numbers, and identities involving derivatives or higher powers."
+  },
+  {
+    id: "AA_AHL1-16",
+    section: "AHL 1.16",
+    text:
+      "Solving systems of linear equations (up to three equations in three unknowns) by algebraic methods and with technology, " +
+      "for example using row reduction or matrix methods to find unique solutions, show inconsistency, or identify infinitely " +
+      "many solutions."
+  }
+];
+
 
     // Sample textbook references – add your actual exercise URLs in `url` fields
     const TEXTBOOK_REFERENCES = [
