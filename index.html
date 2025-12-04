@@ -5,6 +5,7 @@
   <title>IB AA Term Planner – Topic 1: Number & Algebra</title>
   <style>
     :root {
+      /* Default = dark theme */
       --bg: #020617;
       --bg-alt: #0b1120;
       --panel-bg: #020617;
@@ -18,6 +19,21 @@
       --text-muted: #9ca3af;
     }
 
+    /* Light theme overrides */
+    body[data-theme="light"] {
+      --bg: #e5e7eb;
+      --bg-alt: #f9fafb;
+      --panel-bg: #ffffff;
+      --card-bg: #ffffff;
+      --accent: #16a34a;
+      --accent-soft: rgba(22, 163, 74, 0.16);
+      --accent-blue: #0284c7;
+      --accent-purple: #7c3aed;
+      --border-subtle: rgba(148, 163, 184, 0.6);
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -26,7 +42,7 @@
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+      background: radial-gradient(circle at top, var(--bg-alt) 0, var(--bg) 55%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -45,6 +61,16 @@
       position: sticky;
       top: 0;
       z-index: 20;
+      color: #e5e7eb;
+    }
+
+    body[data-theme="light"] header {
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.85)
+      );
+      color: #f9fafb;
     }
 
     h1 {
@@ -65,11 +91,12 @@
       font-size: 0.75rem;
       padding: 0.1rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: #e5e7eb;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-top: 0.15rem;
+      background: rgba(15, 23, 42, 0.7);
     }
 
     .term-tabs {
@@ -84,7 +111,7 @@
       border: 1px solid var(--border-subtle);
       padding: 0.25rem 0.7rem;
       font-size: 0.8rem;
-      background: #020617;
+      background: rgba(15, 23, 42, 0.8);
       color: var(--text-muted);
       cursor: pointer;
     }
@@ -102,7 +129,25 @@
       align-items: center;
       gap: 1rem;
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: #e5e7eb;
+    }
+
+    .header-controls code {
+      background: rgba(15, 23, 42, 0.7);
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.25rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    #summaryLabel {
+      opacity: 0.85;
     }
 
     button {
@@ -112,7 +157,7 @@
       padding: 0.3rem 0.75rem;
       font-size: 0.8rem;
       background: #020617;
-      color: var(--text-main);
+      color: #f9fafb;
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
@@ -130,6 +175,11 @@
 
     button:hover {
       border-color: var(--accent);
+    }
+
+    body[data-theme="light"] button {
+      background: #0f172a;
+      color: #e5e7eb;
     }
 
     main {
@@ -170,7 +220,7 @@
     }
 
     .panel {
-      background: radial-gradient(circle at top left, #020617, #020617);
+      background: var(--panel-bg);
       border-radius: 1rem;
       border: 1px solid var(--border-subtle);
       padding: 0.75rem;
@@ -178,6 +228,10 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+    }
+
+    body[data-theme="light"] .panel {
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.25);
     }
 
     .panel-header {
@@ -208,7 +262,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--bg-alt);
     }
 
     .backlog-dropzone::-webkit-scrollbar,
@@ -265,11 +319,10 @@
       display: flex;
       flex-direction: column; /* weeks stacked vertically */
       gap: 0.6rem;
-      /* no internal scroll – page scrolls instead */
     }
 
     .week-row {
-      background: radial-gradient(circle at top, #020617, #020617);
+      background: var(--panel-bg);
       border-radius: 1rem;
       border: 1px solid var(--border-subtle);
       padding: 0.55rem 0.6rem 0.6rem;
@@ -277,6 +330,10 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+    }
+
+    body[data-theme="light"] .week-row {
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.2);
     }
 
     .week-header {
@@ -306,7 +363,7 @@
 
     .slot {
       border-radius: 0.75rem;
-      background: rgba(15, 23, 42, 0.96);
+      background: var(--bg-alt);
       border: 1px solid rgba(148, 163, 184, 0.5);
       padding: 0.35rem;
       display: flex;
@@ -332,6 +389,11 @@
       padding: 0.05rem 0.4rem;
       border: 1px solid rgba(148, 163, 184, 0.6);
       color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.08);
+    }
+
+    body[data-theme="light"] .slot-chip {
+      background: #e5e7eb;
     }
 
     .slot-dropzone {
@@ -353,7 +415,7 @@
 
     /* Cards */
     .card {
-      background: radial-gradient(circle at top left, #020617, #020617);
+      background: var(--card-bg);
       border-radius: 0.7rem;
       border: 1px solid rgba(148, 163, 184, 0.7);
       padding: 0.4rem 0.45rem;
@@ -368,10 +430,18 @@
         border-color 0.12s ease;
     }
 
+    body[data-theme="light"] .card {
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+    }
+
     .card:hover {
       transform: translateY(-1px);
       border-color: var(--accent);
       box-shadow: 0 15px 32px rgba(15, 23, 42, 0.95);
+    }
+
+    body[data-theme="light"] .card:hover {
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.28);
     }
 
     .card.dragging {
@@ -432,12 +502,58 @@
       color: var(--text-muted);
     }
 
+    .card-sub a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .card-sub a:hover {
+      text-decoration: underline;
+    }
+
     .pill {
       padding: 0.1rem 0.45rem;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.7);
       font-size: 0.7rem;
       color: var(--text-muted);
+    }
+
+    /* Topic bubbles – shaded per type, in both themes */
+    body[data-theme="dark"] .pill-syllabus {
+      background: rgba(34, 197, 94, 0.16);
+      color: #bbf7d0;
+      border-color: rgba(34, 197, 94, 0.7);
+    }
+
+    body[data-theme="dark"] .pill-textbook {
+      background: rgba(56, 189, 248, 0.16);
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+
+    body[data-theme="dark"] .pill-resource {
+      background: rgba(168, 85, 247, 0.16);
+      color: #ede9fe;
+      border-color: rgba(168, 85, 247, 0.7);
+    }
+
+    body[data-theme="light"] .pill-syllabus {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #16a34a;
+    }
+
+    body[data-theme="light"] .pill-textbook {
+      background: #e0f2fe;
+      color: #075985;
+      border-color: #0284c7;
+    }
+
+    body[data-theme="light"] .pill-resource {
+      background: #ede9fe;
+      color: #5b21b6;
+      border-color: #7c3aed;
     }
 
     .card-tag-label {
@@ -494,7 +610,7 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
   ></script>
 </head>
-<body>
+<body data-theme="dark">
   <header>
     <div class="header-top">
       <div>
@@ -513,7 +629,24 @@
         Each term has 10 weeks. Select a term, then drag cards into syllabus / textbook /
         resource lanes. Use LaTeX like <code>$a\times 10^k$</code> in syllabus text.
       </div>
-      <div id="summaryLabel"></div>
+      <div class="header-actions">
+        <span id="summaryLabel"></span>
+        <button id="themeToggleBtn" title="Toggle light/dark mode">
+          ☀ Light mode
+        </button>
+        <button id="exportBtn" title="Export planner as JSON">
+          ⭳ Export JSON
+        </button>
+        <button id="importBtn" title="Import planner from JSON">
+          ⭱ Import JSON
+        </button>
+        <input
+          type="file"
+          id="importFileInput"
+          accept="application/json"
+          style="display: none"
+        />
+      </div>
     </div>
   </header>
 
@@ -758,50 +891,57 @@
       }
     ];
 
-    // Sample textbook references
+    // Sample textbook references – add your actual exercise URLs in `url` fields
     const TEXTBOOK_REFERENCES = [
       {
         id: "tb-0",
         label: "Haese IB AA SL, Ch 1.1–1.2",
-        detail: "Scientific notation, operations with numbers (SL 1.1)."
+        detail: "Scientific notation, operations with numbers (SL 1.1).",
+        url: "" // e.g. "https://your-text-link.com/ex1"
       },
       {
         id: "tb-1",
         label: "Haese IB AA SL, Ch 2.1–2.2",
-        detail: "Arithmetic sequences and series (SL 1.2)."
+        detail: "Arithmetic sequences and series (SL 1.2).",
+        url: ""
       },
       {
         id: "tb-2",
         label: "Haese IB AA SL, Ch 2.3–2.4",
-        detail: "Geometric sequences, series, and financial applications (SL 1.3–1.4)."
+        detail: "Geometric sequences, series, and financial applications (SL 1.3–1.4).",
+        url: ""
       },
       {
         id: "tb-3",
         label: "Haese IB AA SL, Ch 3.1–3.3",
-        detail: "Indices and logarithms (SL 1.5–1.6)."
+        detail: "Indices and logarithms (SL 1.5–1.6).",
+        url: ""
       },
       {
         id: "tb-4",
         label: "Haese IB AA SL, Ch 4.1–4.3",
-        detail: "Binomial expansions and counting (SL 1.8–1.9)."
+        detail: "Binomial expansions and counting (SL 1.8–1.9).",
+        url: ""
       },
       {
         id: "tb-5",
         label: "Haese IB AA HL, Ch 1",
-        detail: "Extended binomial theorem, induction, complex numbers (AHL 1.1)."
+        detail: "Extended binomial theorem, induction, complex numbers (AHL 1.1).",
+        url: ""
       }
     ];
 
     /**********************************************************
-     * STATE
+     * STATE + THEME
      **********************************************************/
     const TERMS = 8;
     const WEEKS_PER_TERM = 10;
-    const STORAGE_KEY = "aa-term-planner-topic1-v3";
+    const STORAGE_KEY = "aa-term-planner-topic1-v4";
+    const THEME_KEY = "aa-planner-theme";
 
     const state = {
       currentTerm: 1,
-      layout: {}, // layout[termKey][weekKey] = { syllabus: [], textbook: [], resources: [] }
+      layout: {},
       backlog: {
         syllabus: [],
         textbook: [],
@@ -815,6 +955,7 @@
      * INIT
      **********************************************************/
     document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
       initState();
       buildTermTabs();
       buildPlanner();
@@ -823,8 +964,57 @@
       wireControls();
     });
 
+    function initTheme() {
+      const saved = localStorage.getItem(THEME_KEY) || "dark";
+      setTheme(saved);
+    }
+
+    function setTheme(theme) {
+      if (theme !== "light" && theme !== "dark") theme = "dark";
+      document.body.dataset.theme = theme;
+      const btn = document.getElementById("themeToggleBtn");
+      if (btn) {
+        btn.textContent =
+          theme === "dark" ? "☀ Light mode" : "🌙 Dark mode";
+      }
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    function toggleTheme() {
+      const current = document.body.dataset.theme || "dark";
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function ensureLayoutShape() {
+      for (let t = 1; t <= TERMS; t++) {
+        const termKey = `term-${t}`;
+        if (!state.layout[termKey]) state.layout[termKey] = {};
+        for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+          const weekKey = `week-${w}`;
+          if (!state.layout[termKey][weekKey]) {
+            state.layout[termKey][weekKey] = {
+              syllabus: [],
+              textbook: [],
+              resources: []
+            };
+          } else {
+            const wk = state.layout[termKey][weekKey];
+            wk.syllabus = Array.isArray(wk.syllabus) ? wk.syllabus : [];
+            wk.textbook = Array.isArray(wk.textbook) ? wk.textbook : [];
+            wk.resources = Array.isArray(wk.resources) ? wk.resources : [];
+          }
+        }
+      }
+      ["syllabus", "textbook", "resource"].forEach((k) => {
+        if (!Array.isArray(state.backlog[k])) state.backlog[k] = [];
+      });
+      if (typeof state.resources !== "object" || !state.resources) {
+        state.resources = {};
+      }
+    }
+
     function initState() {
-      // init empty weeks
+      // init layout + default backlog
       for (let t = 1; t <= TERMS; t++) {
         const termKey = `term-${t}`;
         state.layout[termKey] = state.layout[termKey] || {};
@@ -840,7 +1030,6 @@
         }
       }
 
-      // default backlog
       state.backlog.syllabus = SYLLABUS_OBJECTIVES.map((o) => o.id);
       state.backlog.textbook = TEXTBOOK_REFERENCES.map((t) => t.id);
       state.backlog.resource = [];
@@ -851,10 +1040,13 @@
         const saved = JSON.parse(raw);
         if (!saved || typeof saved !== "object") return;
         state.currentTerm = saved.currentTerm || 1;
-        state.layout = saved.layout || state.layout;
-        state.backlog = saved.backlog || state.backlog;
-        state.resources = saved.resources || {};
-        state.nextResourceId = saved.nextResourceId || 0;
+        if (saved.layout) state.layout = saved.layout;
+        if (saved.backlog) state.backlog = saved.backlog;
+        if (saved.resources) state.resources = saved.resources;
+        if (typeof saved.nextResourceId === "number") {
+          state.nextResourceId = saved.nextResourceId;
+        }
+        ensureLayoutShape();
       } catch (e) {
         console.warn("Could not parse saved layout", e);
       }
@@ -1159,6 +1351,7 @@
 
       const pill = document.createElement("div");
       pill.className = "pill";
+      pill.classList.add(`pill-${type}`);
       if (type === "syllabus") {
         pill.textContent = inferTopicFromSection(data.section);
       } else if (type === "textbook") {
@@ -1182,17 +1375,25 @@
 
       const sub = document.createElement("div");
       sub.className = "card-sub";
+
       if (type === "syllabus") {
         sub.textContent = "";
       } else if (type === "textbook") {
-        sub.textContent = data.detail || "";
+        const parts = [];
+        if (data.detail) parts.push(data.detail);
+        if (data.url) {
+          parts.push(
+            `<a href="${data.url}" target="_blank" rel="noopener noreferrer">Exercises ↗</a>`
+          );
+        }
+        sub.innerHTML = parts.join(" · ");
       } else {
         sub.textContent = data.detail || "";
       }
 
       card.appendChild(tagRow);
       card.appendChild(main);
-      if (sub.textContent.trim() !== "") {
+      if (sub.textContent.trim() !== "" || sub.innerHTML.trim() !== "") {
         card.appendChild(sub);
       }
 
@@ -1352,6 +1553,77 @@
     }
 
     /**********************************************************
+     * EXPORT / IMPORT JSON
+     **********************************************************/
+    function exportJSON() {
+      const exportObj = {
+        version: 1,
+        theme: document.body.dataset.theme || "dark",
+        state: {
+          currentTerm: state.currentTerm,
+          layout: state.layout,
+          backlog: state.backlog,
+          resources: state.resources,
+          nextResourceId: state.nextResourceId
+        }
+      };
+      const blob = new Blob([JSON.stringify(exportObj, null, 2)], {
+        type: "application/json"
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `aa-topic1-planner-${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function handleImportFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const obj = JSON.parse(e.target.result);
+          applyImportedState(obj);
+          alert("Import successful.");
+        } catch (err) {
+          console.error(err);
+          alert("Could not import JSON – check the file format.");
+        } finally {
+          event.target.value = "";
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function applyImportedState(importObj) {
+      if (!importObj || typeof importObj !== "object") return;
+      if (importObj.theme) setTheme(importObj.theme);
+
+      if (importObj.state) {
+        const s = importObj.state;
+        if (s.layout) state.layout = s.layout;
+        if (s.backlog) state.backlog = s.backlog;
+        if (s.resources) state.resources = s.resources;
+        if (typeof s.nextResourceId === "number") {
+          state.nextResourceId = s.nextResourceId;
+        }
+        if (typeof s.currentTerm === "number") {
+          state.currentTerm = s.currentTerm;
+        }
+      }
+      ensureLayoutShape();
+      buildTermTabs();
+      buildPlanner();
+      renderAll();
+      persistState();
+    }
+
+    /**********************************************************
      * CONTROLS
      **********************************************************/
     function wireControls() {
@@ -1374,7 +1646,7 @@
           };
           state.resources = {};
           state.nextResourceId = 0;
-          initState();
+          ensureLayoutShape();
           buildTermTabs();
           buildPlanner();
           renderAll();
@@ -1384,6 +1656,18 @@
       document
         .getElementById("newResourceBtn")
         .addEventListener("click", createNewResourceNote);
+
+      document
+        .getElementById("themeToggleBtn")
+        .addEventListener("click", toggleTheme);
+
+      document.getElementById("exportBtn").addEventListener("click", exportJSON);
+
+      const importInput = document.getElementById("importFileInput");
+      document.getElementById("importBtn").addEventListener("click", () => {
+        importInput.click();
+      });
+      importInput.addEventListener("change", handleImportFile);
     }
   </script>
 </body>
