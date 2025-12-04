@@ -288,6 +288,39 @@
       justify-content: flex-end;
     }
 
+    /* Syllabus topic tabs inside backlog panel */
+    .syllabus-topic-tabs {
+      margin-top: 0.35rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .syllabus-topic-tab {
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      padding: 0.15rem 0.5rem;
+      font-size: 0.72rem;
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .syllabus-topic-tab.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #bbf7d0;
+    }
+
+    body[data-theme="light"] .syllabus-topic-tab {
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    body[data-theme="light"] .syllabus-topic-tab.active {
+      color: #065f46;
+    }
+
     /* Planner (center) */
     .planner-area {
       flex: 1;
@@ -712,11 +745,12 @@
           <div>
             <div class="panel-title">Syllabus backlog</div>
             <div class="panel-subtitle">
-              Topic 1: Number & algebra (SL + AHL)
+              Topic-filtered backlog (unassigned cards only)
             </div>
           </div>
           <span id="syllabusBacklogCount" class="panel-subtitle"></span>
         </div>
+        <div id="syllabusTopicTabs" class="syllabus-topic-tabs"></div>
         <div
           class="backlog-dropzone"
           id="syllabusBacklog"
@@ -1098,7 +1132,8 @@
         resource: []
       },
       resources: {},
-      nextResourceId: 0
+      nextResourceId: 0,
+      syllabusTopicFilter: null
     };
 
     /**********************************************************
@@ -1107,7 +1142,9 @@
     document.addEventListener("DOMContentLoaded", () => {
       initTheme();
       initState();
+      ensureLayoutShape();
       buildTermTabs();
+      buildSyllabusTopicTabs();
       buildPlanner();
       buildBacklogs();
       renderAll();
@@ -1185,7 +1222,14 @@
       state.backlog.resource = [];
 
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
+      if (!raw) {
+        // default filter = first topic
+        const topics = Array.from(
+          new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+        );
+        state.syllabusTopicFilter = topics[0] || null;
+        return;
+      }
       try {
         const saved = JSON.parse(raw);
         if (!saved || typeof saved !== "object") return;
@@ -1196,9 +1240,20 @@
         if (typeof saved.nextResourceId === "number") {
           state.nextResourceId = saved.nextResourceId;
         }
-        ensureLayoutShape();
+        if (saved.syllabusTopicFilter) {
+          state.syllabusTopicFilter = saved.syllabusTopicFilter;
+        } else {
+          const topics = Array.from(
+            new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+          );
+          state.syllabusTopicFilter = topics[0] || null;
+        }
       } catch (e) {
         console.warn("Could not parse saved layout", e);
+        const topics = Array.from(
+          new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+        );
+        state.syllabusTopicFilter = topics[0] || null;
       }
     }
 
@@ -1208,7 +1263,8 @@
         layout: state.layout,
         backlog: state.backlog,
         resources: state.resources,
-        nextResourceId: state.nextResourceId
+        nextResourceId: state.nextResourceId,
+        syllabusTopicFilter: state.syllabusTopicFilter
       };
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -1246,6 +1302,34 @@
       document.getElementById(
         "currentTermLabel"
       ).textContent = `Term ${state.currentTerm}`;
+    }
+
+    function buildSyllabusTopicTabs() {
+      const container = document.getElementById("syllabusTopicTabs");
+      container.innerHTML = "";
+      const topics = Array.from(
+        new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+      );
+      if (!state.syllabusTopicFilter) {
+        state.syllabusTopicFilter = topics[0] || null;
+      }
+      topics.forEach((topic) => {
+        const btn = document.createElement("button");
+        btn.className =
+          "syllabus-topic-tab" +
+          (topic === state.syllabusTopicFilter ? " active" : "");
+        btn.textContent = topic;
+        btn.addEventListener("click", () => {
+          state.syllabusTopicFilter = topic;
+          document
+            .querySelectorAll(".syllabus-topic-tab")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderBacklogs(); // re-filter backlog
+          persistState();
+        });
+        container.appendChild(btn);
+      });
     }
 
     function buildPlanner() {
@@ -1361,30 +1445,45 @@
       textbookBacklog.innerHTML = "";
       resourceBacklog.innerHTML = "";
 
+      // Ensure we have a valid filter
+      const allTopics = Array.from(
+        new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+      );
+      if (!state.syllabusTopicFilter) {
+        state.syllabusTopicFilter = allTopics[0] || null;
+      }
+
+      // Filter syllabus backlog by selected topic
       state.backlog.syllabus.forEach((id) => {
         const obj = SYLLABUS_OBJECTIVES.find((o) => o.id === id);
-        if (obj) syllabusBacklog.appendChild(createCard(obj, "syllabus"));
+        if (!obj) return;
+        if (obj.topic === state.syllabusTopicFilter) {
+          syllabusBacklog.appendChild(createCard(obj, "syllabus"));
+        }
       });
 
+      // Textbook backlog – all unassigned
       state.backlog.textbook.forEach((id) => {
         const ref = TEXTBOOK_REFERENCES.find((t) => t.id === id);
         if (ref) textbookBacklog.appendChild(createCard(ref, "textbook"));
       });
 
+      // Resource backlog – all unassigned
       state.backlog.resource.forEach((id) => {
         const res = findResourceCard(id);
         if (res) resourceBacklog.appendChild(createCard(res, "resource"));
       });
 
+      // Counts (total unassigned, not per-topic)
       document.getElementById(
         "syllabusBacklogCount"
-      ).textContent = `${state.backlog.syllabus.length} cards`;
+      ).textContent = `${state.backlog.syllabus.length} unassigned`;
       document.getElementById(
         "textbookBacklogCount"
-      ).textContent = `${state.backlog.textbook.length} cards`;
+      ).textContent = `${state.backlog.textbook.length} unassigned`;
       document.getElementById(
         "resourceBacklogCount"
-      ).textContent = `${state.backlog.resource.length} cards`;
+      ).textContent = `${state.backlog.resource.length} unassigned`;
       retypesetMath();
     }
 
@@ -1686,21 +1785,29 @@
       const locType = dz.dataset.locationType;
 
       if (locType === "backlog") {
-        const newList = ids.slice();
-        newList.splice(index, 0, id);
-        if (type === "syllabus") state.backlog.syllabus = newList;
-        else if (type === "textbook") state.backlog.textbook = newList;
-        else state.backlog.resource = newList;
+        // Reorder within the visible subset (current filter), but keep
+        // other backlog items (from other topics) in their existing order
+        const visibleOther = ids; // cards currently visible in this backlog
+        const visibleFinal = visibleOther.slice();
+        visibleFinal.splice(index, 0, id);
+
+        const old = state.backlog[type];
+        const invisible = old.filter(
+          (x) => !visibleOther.includes(x) && x !== id
+        );
+        state.backlog[type] = visibleFinal.concat(invisible);
       } else if (locType === "week") {
         const weekKey = dz.dataset.weekKey;
         const slotType = dz.dataset.slotType;
         const termKey = `term-${state.currentTerm}`;
         const week = state.layout[termKey][weekKey];
-        const newList = ids.slice();
-        newList.splice(index, 0, id);
-        if (slotType === "syllabus") week.syllabus = newList;
-        else if (slotType === "textbook") week.textbook = newList;
-        else week.resources = newList;
+
+        const visibleFinal = ids.slice();
+        visibleFinal.splice(index, 0, id);
+
+        if (slotType === "syllabus") week.syllabus = visibleFinal;
+        else if (slotType === "textbook") week.textbook = visibleFinal;
+        else week.resources = visibleFinal;
       }
 
       persistState();
@@ -1719,7 +1826,8 @@
           layout: state.layout,
           backlog: state.backlog,
           resources: state.resources,
-          nextResourceId: state.nextResourceId
+          nextResourceId: state.nextResourceId,
+          syllabusTopicFilter: state.syllabusTopicFilter
         }
       };
       const blob = new Blob([JSON.stringify(exportObj, null, 2)], {
@@ -1770,9 +1878,13 @@
         if (typeof s.currentTerm === "number") {
           state.currentTerm = s.currentTerm;
         }
+        if (s.syllabusTopicFilter) {
+          state.syllabusTopicFilter = s.syllabusTopicFilter;
+        }
       }
       ensureLayoutShape();
       buildTermTabs();
+      buildSyllabusTopicTabs();
       buildPlanner();
       renderAll();
       persistState();
@@ -1801,8 +1913,13 @@
           };
           state.resources = {};
           state.nextResourceId = 0;
+          const topics = Array.from(
+            new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
+          );
+          state.syllabusTopicFilter = topics[0] || null;
           ensureLayoutShape();
           buildTermTabs();
+          buildSyllabusTopicTabs();
           buildPlanner();
           renderAll();
           persistState();
