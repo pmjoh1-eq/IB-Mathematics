@@ -1076,44 +1076,212 @@
     ];
 
     // Sample textbook references – add your actual exercise URLs in `url` fields
-    const TEXTBOOK_REFERENCES = [
-      {
-        id: "tb-0",
-        label: "Haese IB AA SL, Ch 1.1–1.2",
-        detail: "Scientific notation, operations with numbers (SL 1.1).",
-        url: ""
-      },
-      {
-        id: "tb-1",
-        label: "Haese IB AA SL, Ch 2.1–2.2",
-        detail: "Arithmetic sequences and series (SL 1.2).",
-        url: ""
-      },
-      {
-        id: "tb-2",
-        label: "Haese IB AA SL, Ch 2.3–2.4",
-        detail: "Geometric sequences, series, and financial applications (SL 1.3–1.4).",
-        url: ""
-      },
-      {
-        id: "tb-3",
-        label: "Haese IB AA SL, Ch 3.1–3.3",
-        detail: "Indices and logarithms (SL 1.5–1.6).",
-        url: ""
-      },
-      {
-        id: "tb-4",
-        label: "Haese IB AA SL, Ch 4.1–4.3",
-        detail: "Binomial expansions and counting (SL 1.8–1.9).",
-        url: ""
-      },
-      {
-        id: "tb-5",
-        label: "Haese IB AA HL, Ch 1",
-        detail: "Extended binomial theorem, induction, complex numbers (AHL 1.1).",
-        url: ""
-      }
-    ];
+   const textbookReferences = [
+  /* ----------------------------- AA CONTENT SL ----------------------------- */
+
+  {
+    id: "tb-0",
+    label: "Haese IB AA SL – Ch 1: The Binomial Theorem",
+    detail: "Factorial notation, binomial expansions, the binomial theorem, related problem solving.",
+    url: ""
+  },
+  {
+    id: "tb-1",
+    label: "Haese IB AA SL – Ch 2: Quadratic Functions",
+    detail: "Quadratic functions, graphs, discriminant, finding equations, intersections, optimisation and inequalities.",
+    url: ""
+  },
+  {
+    id: "tb-2",
+    label: "Haese IB AA SL – Ch 3: Functions",
+    detail: "Relations, functions, notation, domain and range, rational and composite functions, inverse and absolute value functions.",
+    url: ""
+  },
+  {
+    id: "tb-3",
+    label: "Haese IB AA SL – Ch 4: Transformations of Functions",
+    detail: "Translations, stretches, reflections, and miscellaneous transformations.",
+    url: ""
+  },
+  {
+    id: "tb-4",
+    label: "Haese IB AA SL – Ch 5: Exponential Functions",
+    detail: "Exponents, algebraic manipulation, exponential equations, growth and decay, natural exponential function.",
+    url: ""
+  },
+  {
+    id: "tb-5",
+    label: "Haese IB AA SL – Ch 6: Logarithms",
+    detail: "Logarithms (base 10 and base e), laws of logarithms, natural logarithms, change of base rule, solving exponential equations.",
+    url: ""
+  },
+  {
+    id: "tb-6",
+    label: "Haese IB AA SL – Ch 7: The Unit Circle and Radian Measure",
+    detail: "Radian measure, arc length and area, unit circle, multiples of π/6 and π/4, Pythagorean identity, finding angles.",
+    url: ""
+  },
+  {
+    id: "tb-7",
+    label: "Haese IB AA SL – Ch 8: Trigonometric Functions",
+    detail: "Periodic behaviour, sine and cosine functions, general sinusoidal functions, modelling, tangent function.",
+    url: ""
+  },
+  {
+    id: "tb-8",
+    label: "Haese IB AA SL – Ch 9: Trigonometric Equations and Identities",
+    detail: "Trigonometric equations, modelling, identities, double-angle identities.",
+    url: ""
+  },
+  {
+    id: "tb-9",
+    label: "Haese IB AA SL – Ch 10: Reasoning and Proof",
+    detail: "Logical connectives, proof by deduction, proof by equivalence, definitions.",
+    url: ""
+  },
+  {
+    id: "tb-10",
+    label: "Haese IB AA SL – Ch 11: Introduction to Differential Calculus",
+    detail: "Rates of change, instantaneous rates, limits, gradient of a tangent, derivative from first principles.",
+    url: ""
+  },
+  {
+    id: "tb-11",
+    label: "Haese IB AA SL – Ch 12: Rules of Differentiation",
+    detail: "Basic derivative rules, chain rule, product rule, quotient rule, derivatives of exponential, logarithmic, and trigonometric functions.",
+    url: ""
+  },
+  {
+    id: "tb-12",
+    label: "Haese IB AA SL – Ch 13: Properties of Curves",
+    detail: "Tangents, normals, increasing/decreasing functions, stationary points, shape of graphs, inflection points.",
+    url: ""
+  },
+  {
+    id: "tb-13",
+    label: "Haese IB AA SL – Ch 14: Applications of Differentiation",
+    detail: "Optimisation, rates of change, curve sketching applications.",
+    url: ""
+  },
+  {
+    id: "tb-14",
+    label: "Haese IB AA SL – Ch 15: Introduction to Integration",
+    detail: "Area under curves, Riemann sums, anti-differentiation, Fundamental Theorem of Calculus.",
+    url: ""
+  },
+  {
+    id: "tb-15",
+    label: "Haese IB AA SL – Ch 16: Techniques for Integration",
+    detail: "Basic integration rules, particular values, integration of f(ax + b), substitution.",
+    url: ""
+  },
+  {
+    id: "tb-16",
+    label: "Haese IB AA SL – Ch 17: Definite Integrals",
+    detail: "Definite integrals, area under and between curves, problem solving with integration.",
+    url: ""
+  },
+  {
+    id: "tb-17",
+    label: "Haese IB AA SL – Ch 18: Kinematics",
+    detail: "Displacement, velocity, acceleration, speed, calculus applications in motion.",
+    url: ""
+  },
+  {
+    id: "tb-18",
+    label: "Haese IB AA SL – Ch 19: Bivariate Statistics",
+    detail: "Scatterplots, Pearson correlation, regression lines, least squares, interpreting correlation.",
+    url: ""
+  },
+  {
+    id: "tb-19",
+    label: "Haese IB AA SL – Ch 20: Discrete Random Variables",
+    detail: "Probability distributions, expectation, binomial distribution, calculations and technology use.",
+    url: ""
+  },
+  {
+    id: "tb-20",
+    label: "Haese IB AA SL – Ch 21: The Normal Distribution",
+    detail: "Normal distribution, calculating probabilities, z-scores, quantiles.",
+    url: ""
+  },
+
+  /* ------------------------------- CORE SL ------------------------------- */
+
+  {
+    id: "tb-21",
+    label: "Haese Core SL – Ch 1: Straight Lines",
+    detail: "Equation of a line, graphing, perpendicular bisectors, simultaneous equations.",
+    url: ""
+  },
+  {
+    id: "tb-22",
+    label: "Haese Core SL – Ch 2: Sets and Venn Diagrams",
+    detail: "Sets, unions, intersections, complements, special sets, Venn diagram regions, set problems.",
+    url: ""
+  },
+  {
+    id: "tb-23",
+    label: "Haese Core SL – Ch 3: Surds and Exponents",
+    detail: "Surds, rationalisation, exponent laws, scientific notation.",
+    url: ""
+  },
+  {
+    id: "tb-24",
+    label: "Haese Core SL – Ch 4: Equations",
+    detail: "Equations of the form x² = k, power equations, factored form, quadratic equations, solving with technology.",
+    url: ""
+  },
+  {
+    id: "tb-25",
+    label: "Haese Core SL – Ch 5: Sequences and Series",
+    detail: "Number sequences, arithmetic and geometric sequences, growth and decay, financial mathematics, finite and infinite series.",
+    url: ""
+  },
+  {
+    id: "tb-26",
+    label: "Haese Core SL – Ch 6: Measurement",
+    detail: "Circles, arcs, sectors, surface area, volume, capacity.",
+    url: ""
+  },
+  {
+    id: "tb-27",
+    label: "Haese Core SL – Ch 7: Right-Angled Triangle Trigonometry",
+    detail: "Trig ratios, finding side lengths, angles, solving real problems, true bearings, angle between line and plane.",
+    url: ""
+  },
+  {
+    id: "tb-28",
+    label: "Haese Core SL – Ch 8: Non-Right-Angled Triangle Trigonometry",
+    detail: "Unit circle review, area formula, cosine rule, sine rule, ambiguous case.",
+    url: ""
+  },
+  {
+    id: "tb-29",
+    label: "Haese Core SL – Ch 9: Points in Space",
+    detail: "3D coordinate geometry, measurement, trigonometry in 3D.",
+    url: ""
+  },
+  {
+    id: "tb-30",
+    label: "Haese Core SL – Ch 10: Probability",
+    detail: "Experimental probability, two-way tables, sample spaces, theoretical probability, independence, conditional probability.",
+    url: ""
+  },
+  {
+    id: "tb-31",
+    label: "Haese Core SL – Ch 11: Sampling and Data",
+    detail: "Sampling errors, methods, data types, discrete and continuous data.",
+    url: ""
+  },
+  {
+    id: "tb-32",
+    label: "Haese Core SL – Ch 12: Statistics",
+    detail: "Measures of centre, frequency tables, grouped data, spread of data, box plots, cumulative frequency, variance and standard deviation.",
+    url: ""
+  }
+];
+
 
     /**********************************************************
      * STATE + THEME
