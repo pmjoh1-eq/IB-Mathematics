@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>IB AA Term Planner – Number & Algebra</title>
+  <title>IB AA Term Planner – Topic 1: Number & Algebra</title>
   <style>
     :root {
       --bg: #020617;
@@ -140,11 +140,21 @@
       min-height: 0;
     }
 
-    /* Left column: backlogs */
+    /* Left: syllabus + resources */
     .left-column {
       width: 320px;
-      min-width: 280px;
+      min-width: 260px;
       max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    /* Right: textbook references */
+    .right-column {
+      width: 280px;
+      min-width: 260px;
+      max-width: 340px;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
@@ -182,8 +192,8 @@
       margin-top: 0.25rem;
       border-radius: 0.75rem;
       border: 1px dashed rgba(148, 163, 184, 0.6);
-      min-height: 70px;
-      max-height: 220px;
+      min-height: 80px;
+      max-height: 240px;
       overflow-y: auto;
       padding: 0.4rem;
       display: flex;
@@ -208,7 +218,13 @@
       background: rgba(34, 197, 94, 0.07);
     }
 
-    /* Planner area */
+    .resource-btn-row {
+      margin-top: 0.35rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Planner (center) */
     .planner-area {
       flex: 1;
       min-width: 0;
@@ -238,21 +254,30 @@
       flex: 1;
       min-height: 0;
       display: flex;
-      gap: 0.75rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
+      flex-direction: column; /* weeks stacked vertically */
+      gap: 0.6rem;
+      overflow-y: auto;
+      padding-right: 0.3rem;
     }
 
-    .week-column {
-      min-width: 230px;
-      max-width: 260px;
+    .planner-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .planner-grid::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.55);
+      border-radius: 999px;
+    }
+
+    .week-row {
       background: radial-gradient(circle at top, #020617, #020617);
       border-radius: 1rem;
       border: 1px solid var(--border-subtle);
+      padding: 0.55rem 0.6rem 0.6rem;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8);
       display: flex;
       flex-direction: column;
-      padding: 0.6rem;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8);
+      gap: 0.4rem;
     }
 
     .week-header {
@@ -261,7 +286,6 @@
       align-items: center;
       padding-bottom: 0.35rem;
       border-bottom: 1px dashed rgba(148, 163, 184, 0.55);
-      margin-bottom: 0.35rem;
     }
 
     .week-name {
@@ -274,15 +298,22 @@
       color: var(--text-muted);
     }
 
+    .week-slots-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
     .slot {
-      margin-top: 0.4rem;
       border-radius: 0.75rem;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.96);
       border: 1px solid rgba(148, 163, 184, 0.5);
       padding: 0.35rem;
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.25rem;
+      min-height: 64px;
     }
 
     .slot-header {
@@ -305,7 +336,7 @@
     }
 
     .slot-dropzone {
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
       min-height: 40px;
       display: flex;
       flex-direction: column;
@@ -414,44 +445,61 @@
       opacity: 0.8;
     }
 
-    /* Resource button */
-    .resource-btn-row {
-      margin-top: 0.35rem;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    @media (max-width: 1100px) {
+    @media (max-width: 1200px) {
       main {
         flex-direction: column;
       }
-      .left-column {
+      .left-column,
+      .right-column {
         width: 100%;
         max-width: none;
         flex-direction: row;
         flex-wrap: wrap;
       }
       .panel {
-        flex: 1 1 280px;
+        flex: 1 1 260px;
       }
     }
 
-    @media (max-width: 840px) {
+    @media (max-width: 900px) {
       header {
         position: static;
       }
       main {
         padding: 0.75rem;
       }
+      .week-slots-row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
+
+  <!-- MathJax for LaTeX rendering in cards -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"]
+        ]
+      },
+      svg: { fontCache: "global" }
+    };
+  </script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
 </head>
 <body>
   <header>
     <div class="header-top">
       <div>
         <h1>IB AA Term Planner – Topic 1: Number & Algebra</h1>
-        <div class="badge">Drag syllabus and textbook cards into 8×10 week grid</div>
+        <div class="badge">
+          8 terms × 10 weeks • Syllabus / textbook / resources • LaTeX enabled
+        </div>
       </div>
       <button id="resetLayoutBtn" title="Reset all placements">
         ⟳ Reset layout
@@ -459,19 +507,24 @@
     </div>
     <div class="term-tabs" id="termTabs"></div>
     <div class="header-controls">
-      <div>Each term has 10 weeks. Select a term, then drag cards into week slots.</div>
+      <div>
+        Each term has 10 weeks. Select a term, then drag cards into syllabus / textbook /
+        resource lanes. Use LaTeX like <code>$a\times 10^k$</code> in syllabus text.
+      </div>
       <div id="summaryLabel"></div>
     </div>
   </header>
 
   <main>
+    <!-- LEFT: syllabus + resources -->
     <aside class="left-column">
-      <!-- Syllabus backlog -->
       <section class="panel">
         <div class="panel-header">
           <div>
             <div class="panel-title">Syllabus backlog</div>
-            <div class="panel-subtitle">Topic 1: Number & algebra (SL + AHL)</div>
+            <div class="panel-subtitle">
+              Topic 1: Number & algebra (SL + AHL)
+            </div>
           </div>
           <span id="syllabusBacklogCount" class="panel-subtitle"></span>
         </div>
@@ -483,29 +536,13 @@
         ></div>
       </section>
 
-      <!-- Textbook backlog -->
-      <section class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Textbook references</div>
-            <div class="panel-subtitle">Drag into textbook slots per week</div>
-          </div>
-          <span id="textbookBacklogCount" class="panel-subtitle"></span>
-        </div>
-        <div
-          class="backlog-dropzone"
-          id="textbookBacklog"
-          data-location-type="backlog"
-          data-accept-type="textbook"
-        ></div>
-      </section>
-
-      <!-- Resources backlog -->
       <section class="panel">
         <div class="panel-header">
           <div>
             <div class="panel-title">Resources / information</div>
-            <div class="panel-subtitle">Create extra notes & drag into weeks</div>
+            <div class="panel-subtitle">
+              Create extra notes (links, PDFs, activities) and drag into weeks
+            </div>
           </div>
           <span id="resourceBacklogCount" class="panel-subtitle"></span>
         </div>
@@ -516,87 +553,240 @@
           data-accept-type="resource"
         ></div>
         <div class="resource-btn-row">
-          <button id="newResourceBtn" class="primary">＋ New resource note</button>
+          <button id="newResourceBtn" class="primary">
+            ＋ New resource note
+          </button>
         </div>
       </section>
     </aside>
 
+    <!-- CENTER: planner -->
     <section class="planner-area">
       <div class="planner-header-row">
         <div>
-          <div class="planner-title">Weekly layout – <span id="currentTermLabel"></span></div>
+          <div class="planner-title">
+            Weekly layout – <span id="currentTermLabel"></span>
+          </div>
           <div class="planner-subtitle">
-            Each week has three lanes: syllabus objectives, textbook references, and additional resources.
+            Weeks run down the page. Within each week, left-to-right:
+            syllabus objectives, textbook references, and additional resources.
           </div>
         </div>
       </div>
       <div class="planner-grid" id="plannerGrid"></div>
     </section>
+
+    <!-- RIGHT: textbook references -->
+    <aside class="right-column">
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Textbook references</div>
+            <div class="panel-subtitle">
+              Drag into the textbook lane for each week
+            </div>
+          </div>
+          <span id="textbookBacklogCount" class="panel-subtitle"></span>
+        </div>
+        <div
+          class="backlog-dropzone"
+          id="textbookBacklog"
+          data-location-type="backlog"
+          data-accept-type="textbook"
+        ></div>
+      </section>
+    </aside>
   </main>
 
   <script>
     /**********************************************************
-     * DATA
-     * Syllabus objectives for Topic 1 (Number & Algebra)
+     * DATA – Topic 1 (Number & Algebra) syllabus objectives
+     * You can edit the `text` fields with LaTeX, e.g. $a\times 10^k$
      **********************************************************/
     const SYLLABUS_OBJECTIVES = [
-      { id: "syl-0", section: "SL 1.1", text: "Operations with numbers in the form a×10k where 1≤a<10 and k is an integer." },
-      { id: "syl-1", section: "SL 1.2", text: "Arithmetic sequences and series...gma notation for sums of arithmetic sequences." },
-      { id: "syl-2", section: "SL 1.2", text: "Applications." },
-      { id: "syl-3", section: "SL 1.2", text: "Analysis, interpretation and pr...odel is not perfectly arithmetic in real life." },
-      { id: "syl-4", section: "SL 1.4", text: "Use of sigma notation for the sums of geometric sequences." },
-      { id: "syl-5", section: "SL 1.4", text: "Applications." },
-      { id: "syl-6", section: "SL 1.5", text: "Financial applications of geome...es: • compound interest • annual depreciation." },
-      { id: "syl-7", section: "SL 1.6", text: "" },
-      { id: "syl-8", section: "SL 1.6", text: "Introduction to logarithms with...cal evaluation of logarithms using technology." },
-      { id: "syl-9", section: "SL 1.7", text: "Simple deductive proof, numeric...ymbols and notation for equality and identity." },
-      { id: "syl-10", section: "SL 1.7", text: "Laws of exponents with rational exponents." },
-      { id: "syl-11", section: "SL 1.8", text: "logaxm=mlogax for a, x, y>0" },
-      { id: "syl-12", section: "SL 1.8", text: "Change of base of a logarithm. logax= llooggbbax, for a, b, x>0" },
-      { id: "syl-13", section: "SL 1.8", text: "Solving exponential equations, including using logarithms." },
-      { id: "syl-14", section: "SL 1.9", text: "Sum of infinite convergent geometric sequences." },
-      { id: "syl-15", section: "SL 1.9", text: "The binomial theorem: expansion of (a+b)n,n∈ℕ." },
-      { id: "syl-16", section: "SL 1.9", text: "Use of Pascal’s triangle and nCr." },
-      { id: "syl-17", section: "AHL 1.1", text: "Counting principles, including permutations and combinations." },
-      { id: "syl-18", section: "AHL 1.1", text: "Extension of the binomial theo...actional and negative indices, ie (a+b)n, n∈ℚ." },
-      { id: "syl-19", section: "AHL 1.1", text: "Partial fractions." },
-      { id: "syl-20", section: "AHL 1.1", text: "Complex numbers: the number i,...aginary part, conjugate, modulus and argument." },
-      { id: "syl-21", section: "AHL 1.1", text: "The complex plane." },
-      { id: "syl-22", section: "AHL 1.1", text: "Modulus–argument (polar) form:...uler forms and their geometric interpretation." },
-      { id: "syl-23", section: "AHL 1.1", text: "Complex conjugate roots of qua...d polynomial equations with real coefficients." },
-      { id: "syl-24", section: "AHL 1.1", text: "Powers and roots of complex numbers." },
-      { id: "syl-25", section: "AHL 1.1", text: "Proof by mathematical induction." },
-      { id: "syl-26", section: "AHL 1.1", text: "Proof by contradiction." },
-      { id: "syl-27", section: "AHL 1.1", text: "Use of a counterexample to show that a statement is not always true." },
-      { id: "syl-28", section: "AHL 1.1", text: "including cases where there is...an infinite number of solutions or no solution." }
+      {
+        id: "syl-0",
+        section: "SL 1.1",
+        text:
+          "Operations with numbers in the form $a\\times 10^k$ where $1\\le a<10$ and $k\\in\\mathbb{Z}$."
+      },
+      {
+        id: "syl-1",
+        section: "SL 1.2",
+        text:
+          "Arithmetic sequences and series. Use of formulae for the $n$th term and the sum of the first $n$ terms of an arithmetic sequence."
+      },
+      {
+        id: "syl-2",
+        section: "SL 1.2",
+        text:
+          "Use of sigma notation $\\displaystyle \\sum_{k=1}^{n} a_k$ for sums of arithmetic sequences."
+      },
+      {
+        id: "syl-3",
+        section: "SL 1.2",
+        text:
+          "Applications of arithmetic sequences and series (for example, simple interest, linear growth)."
+      },
+      {
+        id: "syl-4",
+        section: "SL 1.3",
+        text:
+          "Geometric sequences and series. Use of formulae for the $n$th term and the sum of the first $n$ terms of a geometric sequence."
+      },
+      {
+        id: "syl-5",
+        section: "SL 1.3",
+        text:
+          "Use of sigma notation for sums of geometric sequences and interpretation of parameters $a$ and $r$."
+      },
+      {
+        id: "syl-6",
+        section: "SL 1.4",
+        text:
+          "Financial applications of geometric sequences and series (compound interest, loans, annuities, depreciation)."
+      },
+      {
+        id: "syl-7",
+        section: "SL 1.5",
+        text:
+          "Laws of exponents for rational exponents, including $a^{m/n} = \\sqrt[n]{a^m}$ for $a>0$."
+      },
+      {
+        id: "syl-8",
+        section: "SL 1.5",
+        text:
+          "Simplification of expressions involving integer and rational indices; use of index laws in algebraic contexts."
+      },
+      {
+        id: "syl-9",
+        section: "SL 1.6",
+        text:
+          "Introduction to logarithms as inverse functions of exponentials: $a^x = b \\iff \\log_a b = x$."
+      },
+      {
+        id: "syl-10",
+        section: "SL 1.6",
+        text:
+          "Laws of logarithms: $\\log_a(xy)=\\log_a x + \\log_a y$, $\\log_a(x/y)=\\log_a x - \\log_a y$, $\\log_a(x^k)=k\\log_a x$."
+      },
+      {
+        id: "syl-11",
+        section: "SL 1.6",
+        text:
+          "Change of base formula: $\\log_a x = \\dfrac{\\log_b x}{\\log_b a}$, including use with calculator bases."
+      },
+      {
+        id: "syl-12",
+        section: "SL 1.7",
+        text:
+          "Solving exponential and logarithmic equations, including those requiring use of logarithmic laws."
+      },
+      {
+        id: "syl-13",
+        section: "SL 1.8",
+        text:
+          "Binomial expansion of $(a+b)^n$ for $n\\in\\mathbb{N}$ using binomial coefficients $\\binom{n}{k}$."
+      },
+      {
+        id: "syl-14",
+        section: "SL 1.8",
+        text:
+          "Pascal’s triangle and its connection to binomial coefficients and binomial expansions."
+      },
+      {
+        id: "syl-15",
+        section: "SL 1.9",
+        text:
+          "Counting principles (multiplication and addition principles); permutations of $n$ distinct objects: ${}_nP_r$."
+      },
+      {
+        id: "syl-16",
+        section: "SL 1.9",
+        text:
+          "Simple combinations: $\\binom{n}{r}$ and their use in counting problems and binomial coefficients."
+      },
+      {
+        id: "syl-17",
+        section: "AHL 1.1",
+        text:
+          "Deeper applications of permutations and combinations, including constraints and multi-step selections."
+      },
+      {
+        id: "syl-18",
+        section: "AHL 1.1",
+        text:
+          "Extended binomial theorem: expansion of $(1+x)^n$ for rational $n$, $|x|<1$, and use for approximation."
+      },
+      {
+        id: "syl-19",
+        section: "AHL 1.1",
+        text:
+          "Proof by mathematical induction for statements involving positive integers (for example, sums and divisibility)."
+      },
+      {
+        id: "syl-20",
+        section: "AHL 1.1",
+        text:
+          "Proof by contradiction and the use of counterexamples to show that statements are not always true."
+      },
+      {
+        id: "syl-21",
+        section: "AHL 1.1",
+        text:
+          "Introduction to complex numbers: $z=a+bi$, real and imaginary parts, conjugate, modulus $|z|$, and argument $\\arg(z)$."
+      },
+      {
+        id: "syl-22",
+        section: "AHL 1.1",
+        text:
+          "Algebra of complex numbers (addition, subtraction, multiplication, division) and representation in the complex plane."
+      },
+      {
+        id: "syl-23",
+        section: "AHL 1.1",
+        text:
+          "Polar (modulus–argument) form $z=r(\\cos\\theta + i\\sin\\theta)$ and conversion between Cartesian and polar forms."
+      },
+      {
+        id: "syl-24",
+        section: "AHL 1.1",
+        text:
+          "De Moivre’s theorem: $[r(\\cos\\theta + i\\sin\\theta)]^n = r^n(\\cos n\\theta + i\\sin n\\theta)$ and its applications to powers and roots."
+      }
     ];
 
-    // Sample textbook reference cards – customise for your book
+    // Sample textbook references – customise for your own text
     const TEXTBOOK_REFERENCES = [
       {
         id: "tb-0",
         label: "Haese IB AA SL, Ch 1.1–1.2",
-        detail: "Scientific notation, operations with numbers, SL 1.1"
+        detail: "Scientific notation, operations with numbers (SL 1.1)."
       },
       {
         id: "tb-1",
         label: "Haese IB AA SL, Ch 2.1–2.2",
-        detail: "Arithmetic sequences & series, SL 1.2"
+        detail: "Arithmetic sequences and series (SL 1.2)."
       },
       {
         id: "tb-2",
-        label: "Haese IB AA SL, Ch 3.1–3.2",
-        detail: "Geometric sequences & series, SL 1.4–1.5"
+        label: "Haese IB AA SL, Ch 2.3–2.4",
+        detail: "Geometric sequences, series, and financial applications (SL 1.3–1.4)."
       },
       {
         id: "tb-3",
-        label: "Haese IB AA SL, Ch 4.1–4.3",
-        detail: "Exponents and logarithms, SL 1.6–1.8"
+        label: "Haese IB AA SL, Ch 3.1–3.3",
+        detail: "Indices and logarithms (SL 1.5–1.6)."
       },
       {
         id: "tb-4",
+        label: "Haese IB AA SL, Ch 4.1–4.3",
+        detail: "Binomial expansions and counting (SL 1.8–1.9)."
+      },
+      {
+        id: "tb-5",
         label: "Haese IB AA HL, Ch 1",
-        detail: "Binomial theorem, complex numbers, induction, AHL 1.1"
+        detail: "Extended binomial theorem, induction, complex numbers (AHL 1.1)."
       }
     ];
 
@@ -605,7 +795,7 @@
      **********************************************************/
     const TERMS = 8;
     const WEEKS_PER_TERM = 10;
-    const STORAGE_KEY = "aa-term-planner-topic1-v1";
+    const STORAGE_KEY = "aa-term-planner-topic1-v2";
 
     const state = {
       currentTerm: 1,
@@ -616,6 +806,7 @@
         textbook: [],
         resource: []
       },
+      resources: {},
       nextResourceId: 0
     };
 
@@ -625,14 +816,14 @@
     document.addEventListener("DOMContentLoaded", () => {
       initState();
       buildTermTabs();
-      buildPlannerColumns();
+      buildPlanner();
       buildBacklogs();
       renderAll();
       wireControls();
     });
 
     function initState() {
-      // initialise layout for all terms/weeks/slots
+      // initialise blank layout
       for (let t = 1; t <= TERMS; t++) {
         const termKey = `term-${t}`;
         state.layout[termKey] = state.layout[termKey] || {};
@@ -648,29 +839,21 @@
         }
       }
 
-      // Default backlog: all syllabus & textbook; no resources initially
+      // default backlog
       state.backlog.syllabus = SYLLABUS_OBJECTIVES.map((o) => o.id);
       state.backlog.textbook = TEXTBOOK_REFERENCES.map((t) => t.id);
       state.backlog.resource = [];
 
-      // Try load from localStorage
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
-
       try {
         const saved = JSON.parse(raw);
         if (!saved || typeof saved !== "object") return;
-
         state.currentTerm = saved.currentTerm || 1;
-        if (saved.layout) {
-          state.layout = saved.layout;
-        }
-        if (saved.backlog) {
-          state.backlog = saved.backlog;
-        }
-        if (typeof saved.nextResourceId === "number") {
-          state.nextResourceId = saved.nextResourceId;
-        }
+        state.layout = saved.layout || state.layout;
+        state.backlog = saved.backlog || state.backlog;
+        state.resources = saved.resources || {};
+        state.nextResourceId = saved.nextResourceId || 0;
       } catch (e) {
         console.warn("Could not parse saved layout", e);
       }
@@ -681,6 +864,7 @@
         currentTerm: state.currentTerm,
         layout: state.layout,
         backlog: state.backlog,
+        resources: state.resources,
         nextResourceId: state.nextResourceId
       };
       try {
@@ -721,14 +905,14 @@
       ).textContent = `Term ${state.currentTerm}`;
     }
 
-    function buildPlannerColumns() {
+    function buildPlanner() {
       const plannerGrid = document.getElementById("plannerGrid");
       plannerGrid.innerHTML = "";
       for (let w = 1; w <= WEEKS_PER_TERM; w++) {
         const weekKey = `week-${w}`;
-        const col = document.createElement("div");
-        col.className = "week-column";
-        col.dataset.week = String(w);
+        const row = document.createElement("div");
+        row.className = "week-row";
+        row.dataset.weekKey = weekKey;
 
         const header = document.createElement("div");
         header.className = "week-header";
@@ -739,9 +923,11 @@
         count.className = "week-count";
         count.id = `week-count-${weekKey}`;
         count.textContent = "0 items";
-
         header.appendChild(name);
         header.appendChild(count);
+
+        const slotsRow = document.createElement("div");
+        slotsRow.className = "week-slots-row";
 
         const syllabusSlot = createSlot(
           "Syllabus objectives",
@@ -759,11 +945,13 @@
           weekKey
         );
 
-        col.appendChild(header);
-        col.appendChild(syllabusSlot);
-        col.appendChild(textbookSlot);
-        col.appendChild(resourceSlot);
-        plannerGrid.appendChild(col);
+        slotsRow.appendChild(syllabusSlot);
+        slotsRow.appendChild(textbookSlot);
+        slotsRow.appendChild(resourceSlot);
+
+        row.appendChild(header);
+        row.appendChild(slotsRow);
+        plannerGrid.appendChild(row);
       }
     }
 
@@ -776,7 +964,6 @@
       const titleEl = document.createElement("div");
       titleEl.className = "slot-title";
       titleEl.textContent = title;
-
       const chip = document.createElement("div");
       chip.className = "slot-chip";
       chip.textContent =
@@ -785,26 +972,24 @@
           : slotType === "textbook"
           ? "Textbook cards only"
           : "Resource cards";
-
       header.appendChild(titleEl);
       header.appendChild(chip);
 
-      const dropzone = document.createElement("div");
-      dropzone.className = "slot-dropzone";
-      dropzone.dataset.locationType = "week";
-      dropzone.dataset.weekKey = weekKey;
-      dropzone.dataset.slotType = slotType;
-      if (slotType === "syllabus") {
-        dropzone.dataset.acceptType = "syllabus";
-      } else if (slotType === "textbook") {
-        dropzone.dataset.acceptType = "textbook";
-      } else {
-        dropzone.dataset.acceptType = "resource";
-      }
-      enableDropzone(dropzone);
+      const dz = document.createElement("div");
+      dz.className = "slot-dropzone";
+      dz.dataset.locationType = "week";
+      dz.dataset.weekKey = weekKey;
+      dz.dataset.slotType = slotType;
+      dz.dataset.acceptType =
+        slotType === "syllabus"
+          ? "syllabus"
+          : slotType === "textbook"
+          ? "textbook"
+          : "resource";
+      enableDropzone(dz);
 
       slot.appendChild(header);
-      slot.appendChild(dropzone);
+      slot.appendChild(dz);
       return slot;
     }
 
@@ -821,6 +1006,7 @@
       renderBacklogs();
       renderPlanner();
       updateSummaryLabel();
+      retypesetMath();
     }
 
     function renderBacklogs() {
@@ -859,7 +1045,7 @@
     }
 
     function renderPlanner() {
-      // Clear all week dropzones
+      // clear dropzones
       document.querySelectorAll(".slot-dropzone").forEach((dz) => {
         dz.innerHTML = "";
       });
@@ -867,63 +1053,49 @@
       const termKey = `term-${state.currentTerm}`;
       const termLayout = state.layout[termKey];
 
-      let totalInTerm = 0;
-
       for (let w = 1; w <= WEEKS_PER_TERM; w++) {
         const weekKey = `week-${w}`;
-        const weekLayout = termLayout[weekKey];
-        if (!weekLayout) continue;
+        const layout = termLayout[weekKey];
 
-        const syllabusDz = document.querySelector(
+        const sylDz = document.querySelector(
           `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="syllabus"]`
         );
-        const textbookDz = document.querySelector(
+        const tbDz = document.querySelector(
           `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="textbook"]`
         );
-        const resourcesDz = document.querySelector(
+        const resDz = document.querySelector(
           `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="resources"]`
         );
 
-        weekLayout.syllabus.forEach((id) => {
+        layout.syllabus.forEach((id) => {
           const obj = SYLLABUS_OBJECTIVES.find((o) => o.id === id);
-          if (obj && syllabusDz) {
-            syllabusDz.appendChild(createCard(obj, "syllabus"));
-            totalInTerm++;
-          }
+          if (obj && sylDz) sylDz.appendChild(createCard(obj, "syllabus"));
         });
 
-        weekLayout.textbook.forEach((id) => {
+        layout.textbook.forEach((id) => {
           const ref = TEXTBOOK_REFERENCES.find((t) => t.id === id);
-          if (ref && textbookDz) {
-            textbookDz.appendChild(createCard(ref, "textbook"));
-            totalInTerm++;
-          }
+          if (ref && tbDz) tbDz.appendChild(createCard(ref, "textbook"));
         });
 
-        weekLayout.resources.forEach((id) => {
+        layout.resources.forEach((id) => {
           const res = findResourceCard(id);
-          if (res && resourcesDz) {
-            resourcesDz.appendChild(createCard(res, "resource"));
-            totalInTerm++;
-          }
+          if (res && resDz) resDz.appendChild(createCard(res, "resource"));
         });
 
         const countEl = document.getElementById(`week-count-${weekKey}`);
         if (countEl) {
           const count =
-            weekLayout.syllabus.length +
-            weekLayout.textbook.length +
-            weekLayout.resources.length;
+            layout.syllabus.length +
+            layout.textbook.length +
+            layout.resources.length;
           countEl.textContent = `${count} item${count === 1 ? "" : "s"}`;
         }
       }
 
-      const totalSlots =
-        WEEKS_PER_TERM *
-        3; /* 3 columns per week, but count label is items, not slots */
       document.getElementById(
         "currentTermLabel"
       ).textContent = `Term ${state.currentTerm}`;
+      retypesetMath();
     }
 
     function updateSummaryLabel() {
@@ -935,10 +1107,10 @@
         const termKey = `term-${t}`;
         for (let w = 1; w <= WEEKS_PER_TERM; w++) {
           const weekKey = `week-${w}`;
-          const weekLayout = state.layout[termKey][weekKey];
-          placedSyllabus += weekLayout.syllabus.length;
-          placedTextbook += weekLayout.textbook.length;
-          placedResources += weekLayout.resources.length;
+          const week = state.layout[termKey][weekKey];
+          placedSyllabus += week.syllabus.length;
+          placedTextbook += week.textbook.length;
+          placedResources += week.resources.length;
         }
       }
 
@@ -950,6 +1122,12 @@
         `${placedSyllabus}/${totalSyllabus} syllabus, ` +
         `${placedTextbook}/${totalTextbook} textbook, ` +
         `${placedResources} resource notes placed`;
+    }
+
+    function retypesetMath() {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
     }
 
     /**********************************************************
@@ -1037,18 +1215,20 @@
     function createNewResourceNote() {
       const title = prompt("Resource / note title:");
       if (!title) return;
-      const detail = prompt("Optional details / link / description:") || "";
+      const detail =
+        prompt(
+          "Optional details / link / description (LaTeX allowed, eg $y=mx+c$):"
+        ) || "";
       const id = `res-${state.nextResourceId++}`;
-      if (!state.resources) state.resources = {};
       state.resources[id] = { id, title, detail };
       state.backlog.resource.push(id);
       persistState();
       renderBacklogs();
       updateSummaryLabel();
+      retypesetMath();
     }
 
     function findResourceCard(id) {
-      if (!state.resources) state.resources = {};
       return state.resources[id];
     }
 
@@ -1103,18 +1283,17 @@
         const { id, type } = payload;
         const acceptType = dz.dataset.acceptType;
         if (acceptType && type !== acceptType) return;
-
         moveCardToDropzone(id, type, dz);
       });
     }
 
     function moveCardToDropzone(id, type, dz) {
-      // Remove from all locations first
-      // Backlogs
+      // Remove from backlogs
       ["syllabus", "textbook", "resource"].forEach((kind) => {
         state.backlog[kind] = state.backlog[kind].filter((x) => x !== id);
       });
-      // Weeks
+
+      // Remove from all weeks/terms
       for (let t = 1; t <= TERMS; t++) {
         const termKey = `term-${t}`;
         for (let w = 1; w <= WEEKS_PER_TERM; w++) {
@@ -1159,7 +1338,6 @@
           ) {
             return;
           }
-          // Reset everything
           state.currentTerm = 1;
           state.layout = {};
           state.backlog = {
@@ -1169,9 +1347,9 @@
           };
           state.resources = {};
           state.nextResourceId = 0;
-          initState(); // rebuild empty weeks
+          initState();
           buildTermTabs();
-          buildPlannerColumns();
+          buildPlanner();
           renderAll();
           persistState();
         });
