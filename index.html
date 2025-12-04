@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AA Syllabus Term Planner</title>
+  <title>IB AA Term Planner – Number & Algebra</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-alt: #020617;
-      --card-bg: #0b1120;
+      --bg: #020617;
+      --bg-alt: #0b1120;
+      --panel-bg: #020617;
+      --card-bg: #020617;
       --accent: #22c55e;
-      --accent-soft: rgba(34, 197, 94, 0.18);
-      --border-subtle: rgba(148, 163, 184, 0.35);
+      --accent-soft: rgba(34, 197, 94, 0.16);
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
+      --border-subtle: rgba(148, 163, 184, 0.45);
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
-      --danger: #f97373;
     }
 
     * {
@@ -22,7 +24,8 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
       background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
       color: var(--text-main);
       min-height: 100vh;
@@ -31,92 +34,97 @@
     }
 
     header {
-      padding: 1.25rem 1.5rem 0.75rem;
+      padding: 1rem 1.5rem 0.5rem;
       border-bottom: 1px solid var(--border-subtle);
-      backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.75));
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.82)
+      );
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 20;
     }
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
     h1 {
       margin: 0;
       font-size: 1.2rem;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #e5e7eb;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
     }
 
     .badge {
       font-size: 0.75rem;
-      padding: 0.15rem 0.5rem;
+      padding: 0.1rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
+      border: 1px solid var(--border-subtle);
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      margin-top: 0.15rem;
     }
 
-    .header-controls {
+    .term-tabs {
       margin-top: 0.75rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-      justify-content: space-between;
+      gap: 0.4rem;
     }
 
-    .controls-left {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    select, input[type="number"] {
-      background: #020617;
-      color: var(--text-main);
+    .term-tab {
       border-radius: 999px;
       border: 1px solid var(--border-subtle);
-      padding: 0.25rem 0.6rem;
+      padding: 0.25rem 0.7rem;
       font-size: 0.8rem;
-      outline: none;
+      background: #020617;
+      color: var(--text-muted);
+      cursor: pointer;
     }
 
-    select:focus, input[type="number"]:focus {
+    .term-tab.active {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-soft);
+      background: var(--accent-soft);
+      color: #bbf7d0;
+    }
+
+    .header-controls {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
     button {
       cursor: pointer;
       border-radius: 999px;
       border: 1px solid var(--border-subtle);
-      padding: 0.35rem 0.8rem;
+      padding: 0.3rem 0.75rem;
       font-size: 0.8rem;
-      background: linear-gradient(to right, #020617, #020617);
+      background: #020617;
       color: var(--text-main);
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
     button.primary {
       border-color: var(--accent);
-      background: radial-gradient(circle at top left, rgba(34,197,94,0.25), #020617);
+      background: radial-gradient(
+        circle at top left,
+        rgba(34, 197, 94, 0.3),
+        #020617
+      );
       color: #ecfdf5;
     }
 
@@ -132,31 +140,31 @@
       min-height: 0;
     }
 
-    /* Left panel: backlog + filters */
-    .left-panel {
-      width: 280px;
-      min-width: 260px;
-      max-width: 340px;
+    /* Left column: backlogs */
+    .left-column {
+      width: 320px;
+      min-width: 280px;
+      max-width: 360px;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
 
     .panel {
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,1));
+      background: radial-gradient(circle at top left, #020617, #020617);
       border-radius: 1rem;
       border: 1px solid var(--border-subtle);
       padding: 0.75rem;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.75);
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+      gap: 0.4rem;
     }
 
     .panel-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 0.5rem;
     }
 
@@ -165,65 +173,43 @@
       font-weight: 600;
     }
 
-    .search-input {
-      width: 100%;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: #020617;
-      color: var(--text-main);
-      font-size: 0.8rem;
-      padding: 0.3rem 0.6rem;
-      outline: none;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-soft);
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem;
-    }
-
-    .chip {
-      padding: 0.15rem 0.5rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      font-size: 0.7rem;
+    .panel-subtitle {
+      font-size: 0.72rem;
       color: var(--text-muted);
-      cursor: pointer;
-      background: #020617;
     }
 
-    .chip.active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: #bbf7d0;
-    }
-
-    .backlog-list {
+    .backlog-dropzone {
       margin-top: 0.25rem;
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      min-height: 70px;
+      max-height: 220px;
       overflow-y: auto;
-      max-height: calc(100vh - 260px);
-      padding-right: 0.25rem;
+      padding: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
-    .backlog-list::-webkit-scrollbar,
+    .backlog-dropzone::-webkit-scrollbar,
     .planner-grid::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
 
-    .backlog-list::-webkit-scrollbar-thumb,
+    .backlog-dropzone::-webkit-scrollbar-thumb,
     .planner-grid::-webkit-scrollbar-thumb {
-      background: rgba(148,163,184,0.5);
+      background: rgba(148, 163, 184, 0.55);
       border-radius: 999px;
     }
 
-    /* Planner grid */
-    .planner-wrapper {
+    .backlog-dropzone.is-over {
+      border-color: var(--accent);
+      background: rgba(34, 197, 94, 0.07);
+    }
+
+    /* Planner area */
+    .planner-area {
       flex: 1;
       min-width: 0;
       display: flex;
@@ -251,31 +237,31 @@
     .planner-grid {
       flex: 1;
       min-height: 0;
-      overflow-x: auto;
       display: flex;
       gap: 0.75rem;
+      overflow-x: auto;
       padding-bottom: 0.5rem;
     }
 
     .week-column {
-      min-width: 190px;
-      max-width: 220px;
+      min-width: 230px;
+      max-width: 260px;
       background: radial-gradient(circle at top, #020617, #020617);
       border-radius: 1rem;
       border: 1px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
-      padding: 0.55rem;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+      padding: 0.6rem;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8);
     }
 
     .week-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 0.3rem;
-      border-bottom: 1px dashed rgba(148,163,184,0.5);
-      margin-bottom: 0.25rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.55);
+      margin-bottom: 0.35rem;
     }
 
     .week-name {
@@ -288,59 +274,96 @@
       color: var(--text-muted);
     }
 
-    .dropzone {
-      flex: 1;
-      padding-top: 0.25rem;
+    .slot {
+      margin-top: 0.4rem;
+      border-radius: 0.75rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 0.35rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      min-height: 80px;
+      gap: 0.3rem;
+    }
+
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+
+    .slot-title {
+      font-weight: 600;
+    }
+
+    .slot-chip {
+      font-size: 0.65rem;
+      border-radius: 999px;
+      padding: 0.05rem 0.4rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+
+    .slot-dropzone {
+      margin-top: 0.2rem;
+      min-height: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.1rem;
+      border-radius: 0.5rem;
       transition: background 0.15s ease, border-color 0.15s ease;
     }
 
-    .dropzone.is-over {
-      background: rgba(34,197,94,0.07);
-      border-radius: 0.75rem;
-      border: 1px dashed rgba(34,197,94,0.7);
-      padding: 0.35rem;
+    .slot-dropzone.is-over {
+      background: rgba(34, 197, 94, 0.07);
+      border: 1px dashed rgba(34, 197, 94, 0.7);
+      padding: 0.2rem;
     }
 
     /* Cards */
     .card {
       background: radial-gradient(circle at top left, #020617, #020617);
-      border-radius: 0.75rem;
-      border: 1px solid rgba(148,163,184,0.7);
-      padding: 0.45rem 0.5rem;
+      border-radius: 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 0.4rem 0.45rem;
       cursor: grab;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      box-shadow: 0 10px 24px rgba(15,23,42,0.75);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      gap: 0.2rem;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.85);
+      font-size: 0.75rem;
       position: relative;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        border-color 0.12s ease;
     }
 
     .card:hover {
       transform: translateY(-1px);
       border-color: var(--accent);
-      box-shadow: 0 14px 30px rgba(15,23,42,0.9);
+      box-shadow: 0 15px 32px rgba(15, 23, 42, 0.95);
     }
 
     .card.dragging {
       opacity: 0.7;
-      box-shadow: 0 18px 40px rgba(34,197,94,0.5);
       border-color: var(--accent);
+      box-shadow: 0 16px 34px rgba(34, 197, 94, 0.65);
       transform: scale(1.01);
     }
 
-    .card-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #22c55e;
+    .card-tag-row {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+    }
+
+    .card-tag {
+      display: inline-flex;
       align-items: center;
       gap: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .card-tag span.dot {
@@ -348,115 +371,77 @@
       height: 6px;
       border-radius: 999px;
       background: #22c55e;
-      box-shadow: 0 0 10px rgba(34,197,94,0.8);
     }
 
-    .card-title {
-      font-size: 0.8rem;
+    .card-tag.syllabus span.dot {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    .card-tag.textbook span.dot {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+    }
+
+    .card-tag.resource span.dot {
+      background: var(--accent-purple);
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+    }
+
+    .card-main {
+      font-size: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .card-main strong {
       font-weight: 600;
     }
 
-    .card-body {
-      font-size: 0.75rem;
+    .card-sub {
+      font-size: 0.7rem;
       color: var(--text-muted);
-      line-height: 1.35;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.15rem;
     }
 
     .pill {
-      font-size: 0.7rem;
       padding: 0.1rem 0.45rem;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      color: var(--text-muted);
-    }
-
-    .linkish {
+      border: 1px solid rgba(148, 163, 184, 0.7);
       font-size: 0.7rem;
-      color: #a5b4fc;
-      cursor: pointer;
+      color: var(--text-muted);
     }
 
-    .linkish:hover {
-      text-decoration: underline;
+    .card-tag-label {
+      opacity: 0.8;
     }
 
-    /* Detail panel */
-    .detail-panel {
-      width: 280px;
-      min-width: 240px;
-      max-width: 320px;
-      background: radial-gradient(circle at top, #020617, #020617);
-      border-radius: 1rem;
-      border: 1px solid var(--border-subtle);
-      padding: 0.75rem;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+    /* Resource button */
+    .resource-btn-row {
+      margin-top: 0.35rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .detail-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .detail-section {
-      font-size: 0.75rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .detail-heading {
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-top: 0.25rem;
-    }
-
-    .detail-text {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-      white-space: pre-wrap;
-    }
-
-    .detail-empty {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-style: italic;
+      justify-content: flex-end;
     }
 
     @media (max-width: 1100px) {
       main {
         flex-direction: column;
       }
-      .left-panel {
+      .left-column {
         width: 100%;
         max-width: none;
         flex-direction: row;
+        flex-wrap: wrap;
       }
       .panel {
-        flex: 1;
-      }
-      .detail-panel {
-        width: 100%;
-        max-width: none;
+        flex: 1 1 280px;
       }
     }
 
     @media (max-width: 840px) {
-      .left-panel {
-        flex-direction: column;
+      header {
+        position: static;
       }
-      .detail-panel {
-        order: 3;
+      main {
+        padding: 0.75rem;
       }
     }
   </style>
@@ -465,228 +450,736 @@
   <header>
     <div class="header-top">
       <div>
-        <h1>IB AA Syllabus Term Planner</h1>
-        <div class="badge">Draggable syllabus objectives</div>
+        <h1>IB AA Term Planner – Topic 1: Number & Algebra</h1>
+        <div class="badge">Drag syllabus and textbook cards into 8×10 week grid</div>
       </div>
-      <button id="resetLayoutBtn" title="Reset all cards back to the backlog">
+      <button id="resetLayoutBtn" title="Reset all placements">
         ⟳ Reset layout
       </button>
     </div>
+    <div class="term-tabs" id="termTabs"></div>
     <div class="header-controls">
-      <div class="controls-left">
-        <label>
-          Term weeks:
-          <input type="number" id="weeksInput" min="4" max="20" value="10" />
-        </label>
-        <button class="primary" id="applyWeeksBtn">Apply</button>
-      </div>
-      <div class="controls-right" style="font-size:0.75rem;color:var(--text-muted);">
-        Drag cards from the backlog into weeks. Click a card to see full details on the right.
-      </div>
+      <div>Each term has 10 weeks. Select a term, then drag cards into week slots.</div>
+      <div id="summaryLabel"></div>
     </div>
   </header>
 
   <main>
-    <section class="left-panel">
-      <div class="panel">
+    <aside class="left-column">
+      <!-- Syllabus backlog -->
+      <section class="panel">
         <div class="panel-header">
-          <div class="panel-title">Backlog</div>
-          <span style="font-size:0.7rem;color:var(--text-muted);" id="backlogCountLabel"></span>
+          <div>
+            <div class="panel-title">Syllabus backlog</div>
+            <div class="panel-subtitle">Topic 1: Number & algebra (SL + AHL)</div>
+          </div>
+          <span id="syllabusBacklogCount" class="panel-subtitle"></span>
         </div>
-        <input
-          type="text"
-          class="search-input"
-          id="searchInput"
-          placeholder="Filter by text or section code…"
-        />
-        <div class="chip-row" id="sectionFilterChips">
-          <!-- chips generated by JS -->
-        </div>
-        <div class="backlog-list dropzone" id="backlogDropzone" data-column-id="backlog"></div>
-      </div>
-    </section>
+        <div
+          class="backlog-dropzone"
+          id="syllabusBacklog"
+          data-location-type="backlog"
+          data-accept-type="syllabus"
+        ></div>
+      </section>
 
-    <section class="planner-wrapper">
+      <!-- Textbook backlog -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Textbook references</div>
+            <div class="panel-subtitle">Drag into textbook slots per week</div>
+          </div>
+          <span id="textbookBacklogCount" class="panel-subtitle"></span>
+        </div>
+        <div
+          class="backlog-dropzone"
+          id="textbookBacklog"
+          data-location-type="backlog"
+          data-accept-type="textbook"
+        ></div>
+      </section>
+
+      <!-- Resources backlog -->
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Resources / information</div>
+            <div class="panel-subtitle">Create extra notes & drag into weeks</div>
+          </div>
+          <span id="resourceBacklogCount" class="panel-subtitle"></span>
+        </div>
+        <div
+          class="backlog-dropzone"
+          id="resourceBacklog"
+          data-location-type="backlog"
+          data-accept-type="resource"
+        ></div>
+        <div class="resource-btn-row">
+          <button id="newResourceBtn" class="primary">＋ New resource note</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="planner-area">
       <div class="planner-header-row">
         <div>
-          <div class="planner-title">Weekly planner</div>
-          <div class="planner-subtitle">Move cards between weeks to build your teaching sequence.</div>
+          <div class="planner-title">Weekly layout – <span id="currentTermLabel"></span></div>
+          <div class="planner-subtitle">
+            Each week has three lanes: syllabus objectives, textbook references, and additional resources.
+          </div>
         </div>
       </div>
-      <div class="planner-grid" id="plannerGrid">
-        <!-- week columns generated by JS -->
-      </div>
+      <div class="planner-grid" id="plannerGrid"></div>
     </section>
-
-    <aside class="detail-panel">
-      <div class="detail-title">Objective details</div>
-      <div id="detailContent" class="detail-empty">
-        Click any card to see the full content and guidance.
-      </div>
-    </aside>
   </main>
 
   <script>
-    /*****************************************************************
-     *  DATA
-     *  Replace SAMPLE_OBJECTIVES below with your full list
-     *  (e.g. exported from Excel as JSON) if you want every item.
-     *****************************************************************/
-
-    const OBJECTIVES = [
-      // === SAMPLE DATA — replace / extend with your full list ===
-      {
-        section: "SL 1.1",
-        content: "Operations with numbers in the form a×10k where 1≤a<10 and k is an integer.",
-        guidance:
-          "Calculator or computer notation is not acceptable. For example, 5.2E30 is not acceptable and should be written as 5.2×1030."
-      },
-      {
-        section: "SL 1.2",
-        content:
-          "Arithmetic sequences and series. Use of the formulae for the nth term and the sum of the first n terms of an arithmetic sequence. Use of sigma notation for sums of arithmetic sequences.",
-        guidance:
-          "Spreadsheets, GDCs and graphing software may be used to generate sequences. Students are expected to identify the first term and the common difference."
-      },
-      {
-        section: "SL 1.2",
-        content: "Applications.",
-        guidance: "Examples include simple interest over a number of years."
-      },
-      {
-        section: "SL 1.2",
-        content:
-          "Analysis, interpretation and prediction where a model is not perfectly arithmetic in real life.",
-        guidance: "Students will need to approximate common differences."
-      },
-      {
-        section: "SL 1.4",
-        content: "Use of sigma notation for the sums of geometric sequences.",
-        guidance:
-          "If technology is used in examinations, students are expected to first write a correct mathematical expression for the sum of the required number of terms, then make use of technology."
-      },
-      {
-        section: "SL 2.1",
-        content: "Concept of function f(x), domain, range, and function notation.",
-        guidance:
-          "Students should be able to interpret domain and range from graphs and context."
-      },
-      {
-        section: "SL 4.5",
-        content:
-          "Concepts of trial, outcome, equally likely outcomes, sample space and event.",
-        guidance:
-          "Sample spaces can be represented in many ways, including tables, charts and tree diagrams."
-      }
-      // === END SAMPLE DATA ===
+    /**********************************************************
+     * DATA
+     * Syllabus objectives for Topic 1 (Number & Algebra)
+     **********************************************************/
+    const SYLLABUS_OBJECTIVES = [
+      { id: "syl-0", section: "SL 1.1", text: "Operations with numbers in the form a×10k where 1≤a<10 and k is an integer." },
+      { id: "syl-1", section: "SL 1.2", text: "Arithmetic sequences and series...gma notation for sums of arithmetic sequences." },
+      { id: "syl-2", section: "SL 1.2", text: "Applications." },
+      { id: "syl-3", section: "SL 1.2", text: "Analysis, interpretation and pr...odel is not perfectly arithmetic in real life." },
+      { id: "syl-4", section: "SL 1.4", text: "Use of sigma notation for the sums of geometric sequences." },
+      { id: "syl-5", section: "SL 1.4", text: "Applications." },
+      { id: "syl-6", section: "SL 1.5", text: "Financial applications of geome...es: • compound interest • annual depreciation." },
+      { id: "syl-7", section: "SL 1.6", text: "" },
+      { id: "syl-8", section: "SL 1.6", text: "Introduction to logarithms with...cal evaluation of logarithms using technology." },
+      { id: "syl-9", section: "SL 1.7", text: "Simple deductive proof, numeric...ymbols and notation for equality and identity." },
+      { id: "syl-10", section: "SL 1.7", text: "Laws of exponents with rational exponents." },
+      { id: "syl-11", section: "SL 1.8", text: "logaxm=mlogax for a, x, y>0" },
+      { id: "syl-12", section: "SL 1.8", text: "Change of base of a logarithm. logax= llooggbbax, for a, b, x>0" },
+      { id: "syl-13", section: "SL 1.8", text: "Solving exponential equations, including using logarithms." },
+      { id: "syl-14", section: "SL 1.9", text: "Sum of infinite convergent geometric sequences." },
+      { id: "syl-15", section: "SL 1.9", text: "The binomial theorem: expansion of (a+b)n,n∈ℕ." },
+      { id: "syl-16", section: "SL 1.9", text: "Use of Pascal’s triangle and nCr." },
+      { id: "syl-17", section: "AHL 1.1", text: "Counting principles, including permutations and combinations." },
+      { id: "syl-18", section: "AHL 1.1", text: "Extension of the binomial theo...actional and negative indices, ie (a+b)n, n∈ℚ." },
+      { id: "syl-19", section: "AHL 1.1", text: "Partial fractions." },
+      { id: "syl-20", section: "AHL 1.1", text: "Complex numbers: the number i,...aginary part, conjugate, modulus and argument." },
+      { id: "syl-21", section: "AHL 1.1", text: "The complex plane." },
+      { id: "syl-22", section: "AHL 1.1", text: "Modulus–argument (polar) form:...uler forms and their geometric interpretation." },
+      { id: "syl-23", section: "AHL 1.1", text: "Complex conjugate roots of qua...d polynomial equations with real coefficients." },
+      { id: "syl-24", section: "AHL 1.1", text: "Powers and roots of complex numbers." },
+      { id: "syl-25", section: "AHL 1.1", text: "Proof by mathematical induction." },
+      { id: "syl-26", section: "AHL 1.1", text: "Proof by contradiction." },
+      { id: "syl-27", section: "AHL 1.1", text: "Use of a counterexample to show that a statement is not always true." },
+      { id: "syl-28", section: "AHL 1.1", text: "including cases where there is...an infinite number of solutions or no solution." }
     ];
 
-    /*****************************************************************
-     *  STATE
-     *****************************************************************/
-    const state = {
-      weeks: 10,
-      // layout: columnId -> array of objective indices
-      layout: {},
-      filters: {
-        search: "",
-        sectionPrefix: null
+    // Sample textbook reference cards – customise for your book
+    const TEXTBOOK_REFERENCES = [
+      {
+        id: "tb-0",
+        label: "Haese IB AA SL, Ch 1.1–1.2",
+        detail: "Scientific notation, operations with numbers, SL 1.1"
       },
-      selectedId: null
+      {
+        id: "tb-1",
+        label: "Haese IB AA SL, Ch 2.1–2.2",
+        detail: "Arithmetic sequences & series, SL 1.2"
+      },
+      {
+        id: "tb-2",
+        label: "Haese IB AA SL, Ch 3.1–3.2",
+        detail: "Geometric sequences & series, SL 1.4–1.5"
+      },
+      {
+        id: "tb-3",
+        label: "Haese IB AA SL, Ch 4.1–4.3",
+        detail: "Exponents and logarithms, SL 1.6–1.8"
+      },
+      {
+        id: "tb-4",
+        label: "Haese IB AA HL, Ch 1",
+        detail: "Binomial theorem, complex numbers, induction, AHL 1.1"
+      }
+    ];
+
+    /**********************************************************
+     * STATE
+     **********************************************************/
+    const TERMS = 8;
+    const WEEKS_PER_TERM = 10;
+    const STORAGE_KEY = "aa-term-planner-topic1-v1";
+
+    const state = {
+      currentTerm: 1,
+      // layout[term][week][slotType] = array of cardIds
+      layout: {},
+      backlog: {
+        syllabus: [],
+        textbook: [],
+        resource: []
+      },
+      nextResourceId: 0
     };
 
-    const STORAGE_KEY = "aa-syllabus-planner-layout-v1";
-
-    /*****************************************************************
-     *  INIT
-     *****************************************************************/
+    /**********************************************************
+     * INIT
+     **********************************************************/
     document.addEventListener("DOMContentLoaded", () => {
-      // initial layout: everything in backlog
-      loadLayoutFromStorage();
-      buildSectionFilterChips();
+      initState();
+      buildTermTabs();
       buildPlannerColumns();
-      renderCards();
-      wireHeaderControls();
+      buildBacklogs();
+      renderAll();
+      wireControls();
     });
 
-    /*****************************************************************
-     *  STORAGE
-     *****************************************************************/
-    function saveLayoutToStorage() {
+    function initState() {
+      // initialise layout for all terms/weeks/slots
+      for (let t = 1; t <= TERMS; t++) {
+        const termKey = `term-${t}`;
+        state.layout[termKey] = state.layout[termKey] || {};
+        for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+          const weekKey = `week-${w}`;
+          if (!state.layout[termKey][weekKey]) {
+            state.layout[termKey][weekKey] = {
+              syllabus: [],
+              textbook: [],
+              resources: []
+            };
+          }
+        }
+      }
+
+      // Default backlog: all syllabus & textbook; no resources initially
+      state.backlog.syllabus = SYLLABUS_OBJECTIVES.map((o) => o.id);
+      state.backlog.textbook = TEXTBOOK_REFERENCES.map((t) => t.id);
+      state.backlog.resource = [];
+
+      // Try load from localStorage
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      try {
+        const saved = JSON.parse(raw);
+        if (!saved || typeof saved !== "object") return;
+
+        state.currentTerm = saved.currentTerm || 1;
+        if (saved.layout) {
+          state.layout = saved.layout;
+        }
+        if (saved.backlog) {
+          state.backlog = saved.backlog;
+        }
+        if (typeof saved.nextResourceId === "number") {
+          state.nextResourceId = saved.nextResourceId;
+        }
+      } catch (e) {
+        console.warn("Could not parse saved layout", e);
+      }
+    }
+
+    function persistState() {
       const payload = {
-        weeks: state.weeks,
-        layout: state.layout
+        currentTerm: state.currentTerm,
+        layout: state.layout,
+        backlog: state.backlog,
+        nextResourceId: state.nextResourceId
       };
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
       } catch (e) {
-        console.warn("Could not save layout to localStorage", e);
+        console.warn("Could not save layout", e);
       }
     }
 
-    function loadLayoutFromStorage() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        resetLayoutToDefault();
-        return;
-      }
-      try {
-        const parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== "object") throw new Error("bad");
-        state.weeks = parsed.weeks || 10;
-        state.layout = parsed.layout || {};
-        // Ensure all ids exist; if not, add to backlog
-        const seen = new Set();
-        for (const columnId in state.layout) {
-          state.layout[columnId] = state.layout[columnId].filter((idx) => {
-            const ok = typeof idx === "number" && OBJECTIVES[idx];
-            if (ok) seen.add(idx);
-            return ok;
-          });
-        }
-        const backlog = state.layout.backlog || [];
-        OBJECTIVES.forEach((_, idx) => {
-          if (!seen.has(idx)) backlog.push(idx);
+    /**********************************************************
+     * BUILD UI
+     **********************************************************/
+    function buildTermTabs() {
+      const tabsContainer = document.getElementById("termTabs");
+      tabsContainer.innerHTML = "";
+      for (let t = 1; t <= TERMS; t++) {
+        const btn = document.createElement("button");
+        btn.className = "term-tab" + (t === state.currentTerm ? " active" : "");
+        btn.textContent = `Term ${t}`;
+        btn.dataset.term = String(t);
+        btn.addEventListener("click", () => {
+          state.currentTerm = t;
+          document
+            .querySelectorAll(".term-tab")
+            .forEach((el) => el.classList.remove("active"));
+          btn.classList.add("active");
+          renderPlanner();
+          updateSummaryLabel();
+          document.getElementById(
+            "currentTermLabel"
+          ).textContent = `Term ${state.currentTerm}`;
+          persistState();
         });
-        state.layout.backlog = backlog;
-      } catch {
-        resetLayoutToDefault();
+        tabsContainer.appendChild(btn);
       }
-      const weeksInput = document.getElementById("weeksInput");
-      if (weeksInput) weeksInput.value = state.weeks;
+      document.getElementById(
+        "currentTermLabel"
+      ).textContent = `Term ${state.currentTerm}`;
     }
 
-    function resetLayoutToDefault() {
-      state.weeks = 10;
-      state.layout = { backlog: OBJECTIVES.map((_, idx) => idx) };
-      saveLayoutToStorage();
+    function buildPlannerColumns() {
+      const plannerGrid = document.getElementById("plannerGrid");
+      plannerGrid.innerHTML = "";
+      for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+        const weekKey = `week-${w}`;
+        const col = document.createElement("div");
+        col.className = "week-column";
+        col.dataset.week = String(w);
+
+        const header = document.createElement("div");
+        header.className = "week-header";
+        const name = document.createElement("div");
+        name.className = "week-name";
+        name.textContent = `Week ${w}`;
+        const count = document.createElement("div");
+        count.className = "week-count";
+        count.id = `week-count-${weekKey}`;
+        count.textContent = "0 items";
+
+        header.appendChild(name);
+        header.appendChild(count);
+
+        const syllabusSlot = createSlot(
+          "Syllabus objectives",
+          "syllabus",
+          weekKey
+        );
+        const textbookSlot = createSlot(
+          "Textbook references",
+          "textbook",
+          weekKey
+        );
+        const resourceSlot = createSlot(
+          "Additional resources / information",
+          "resources",
+          weekKey
+        );
+
+        col.appendChild(header);
+        col.appendChild(syllabusSlot);
+        col.appendChild(textbookSlot);
+        col.appendChild(resourceSlot);
+        plannerGrid.appendChild(col);
+      }
     }
 
-    /*****************************************************************
-     *  UI BUILD
-     *****************************************************************/
-    function wireHeaderControls() {
-      const weeksInput = document.getElementById("weeksInput");
-      const applyWeeksBtn = document.getElementById("applyWeeksBtn");
-      const resetBtn = document.getElementById("resetLayoutBtn");
-      const searchInput = document.getElementById("searchInput");
+    function createSlot(title, slotType, weekKey) {
+      const slot = document.createElement("div");
+      slot.className = "slot";
 
-      applyWeeksBtn.addEventListener("click", () => {
-        const val = parseInt(weeksInput.value, 10);
-        if (!isNaN(val) && val >= 4 && val <= 20) {
-          state.weeks = val;
-          buildPlannerColumns();
-          renderCards();
-          saveLayoutToStorage();
-        }
+      const header = document.createElement("div");
+      header.className = "slot-header";
+      const titleEl = document.createElement("div");
+      titleEl.className = "slot-title";
+      titleEl.textContent = title;
+
+      const chip = document.createElement("div");
+      chip.className = "slot-chip";
+      chip.textContent =
+        slotType === "syllabus"
+          ? "Syllabus cards only"
+          : slotType === "textbook"
+          ? "Textbook cards only"
+          : "Resource cards";
+
+      header.appendChild(titleEl);
+      header.appendChild(chip);
+
+      const dropzone = document.createElement("div");
+      dropzone.className = "slot-dropzone";
+      dropzone.dataset.locationType = "week";
+      dropzone.dataset.weekKey = weekKey;
+      dropzone.dataset.slotType = slotType;
+      if (slotType === "syllabus") {
+        dropzone.dataset.acceptType = "syllabus";
+      } else if (slotType === "textbook") {
+        dropzone.dataset.acceptType = "textbook";
+      } else {
+        dropzone.dataset.acceptType = "resource";
+      }
+      enableDropzone(dropzone);
+
+      slot.appendChild(header);
+      slot.appendChild(dropzone);
+      return slot;
+    }
+
+    function buildBacklogs() {
+      enableDropzone(document.getElementById("syllabusBacklog"));
+      enableDropzone(document.getElementById("textbookBacklog"));
+      enableDropzone(document.getElementById("resourceBacklog"));
+    }
+
+    /**********************************************************
+     * RENDERING
+     **********************************************************/
+    function renderAll() {
+      renderBacklogs();
+      renderPlanner();
+      updateSummaryLabel();
+    }
+
+    function renderBacklogs() {
+      const syllabusBacklog = document.getElementById("syllabusBacklog");
+      const textbookBacklog = document.getElementById("textbookBacklog");
+      const resourceBacklog = document.getElementById("resourceBacklog");
+
+      syllabusBacklog.innerHTML = "";
+      textbookBacklog.innerHTML = "";
+      resourceBacklog.innerHTML = "";
+
+      state.backlog.syllabus.forEach((id) => {
+        const obj = SYLLABUS_OBJECTIVES.find((o) => o.id === id);
+        if (obj) syllabusBacklog.appendChild(createCard(obj, "syllabus"));
       });
 
-      resetBtn.addEventListener("click", () => {
-        if (
-          confirm(
-            "Reset layout? All cards will be returned to the backlog and week assignments will be cleared."
-          )
-        ) {
-          resetLayoutToDefault();
+      state.backlog.textbook.forEach((id) => {
+        const ref = TEXTBOOK_REFERENCES.find((t) => t.id === id);
+        if (ref) textbookBacklog.appendChild(createCard(ref, "textbook"));
+      });
+
+      state.backlog.resource.forEach((id) => {
+        const res = findResourceCard(id);
+        if (res) resourceBacklog.appendChild(createCard(res, "resource"));
+      });
+
+      document.getElementById(
+        "syllabusBacklogCount"
+      ).textContent = `${state.backlog.syllabus.length} cards`;
+      document.getElementById(
+        "textbookBacklogCount"
+      ).textContent = `${state.backlog.textbook.length} cards`;
+      document.getElementById(
+        "resourceBacklogCount"
+      ).textContent = `${state.backlog.resource.length} cards`;
+    }
+
+    function renderPlanner() {
+      // Clear all week dropzones
+      document.querySelectorAll(".slot-dropzone").forEach((dz) => {
+        dz.innerHTML = "";
+      });
+
+      const termKey = `term-${state.currentTerm}`;
+      const termLayout = state.layout[termKey];
+
+      let totalInTerm = 0;
+
+      for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+        const weekKey = `week-${w}`;
+        const weekLayout = termLayout[weekKey];
+        if (!weekLayout) continue;
+
+        const syllabusDz = document.querySelector(
+          `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="syllabus"]`
+        );
+        const textbookDz = document.querySelector(
+          `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="textbook"]`
+        );
+        const resourcesDz = document.querySelector(
+          `.slot-dropzone[data-week-key="${weekKey}"][data-slot-type="resources"]`
+        );
+
+        weekLayout.syllabus.forEach((id) => {
+          const obj = SYLLABUS_OBJECTIVES.find((o) => o.id === id);
+          if (obj && syllabusDz) {
+            syllabusDz.appendChild(createCard(obj, "syllabus"));
+            totalInTerm++;
+          }
+        });
+
+        weekLayout.textbook.forEach((id) => {
+          const ref = TEXTBOOK_REFERENCES.find((t) => t.id === id);
+          if (ref && textbookDz) {
+            textbookDz.appendChild(createCard(ref, "textbook"));
+            totalInTerm++;
+          }
+        });
+
+        weekLayout.resources.forEach((id) => {
+          const res = findResourceCard(id);
+          if (res && resourcesDz) {
+            resourcesDz.appendChild(createCard(res, "resource"));
+            totalInTerm++;
+          }
+        });
+
+        const countEl = document.getElementById(`week-count-${weekKey}`);
+        if (countEl) {
+          const count =
+            weekLayout.syllabus.length +
+            weekLayout.textbook.length +
+            weekLayout.resources.length;
+          countEl.textContent = `${count} item${count === 1 ? "" : "s"}`;
+        }
+      }
+
+      const totalSlots =
+        WEEKS_PER_TERM *
+        3; /* 3 columns per week, but count label is items, not slots */
+      document.getElementById(
+        "currentTermLabel"
+      ).textContent = `Term ${state.currentTerm}`;
+    }
+
+    function updateSummaryLabel() {
+      let placedSyllabus = 0;
+      let placedTextbook = 0;
+      let placedResources = 0;
+
+      for (let t = 1; t <= TERMS; t++) {
+        const termKey = `term-${t}`;
+        for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+          const weekKey = `week-${w}`;
+          const weekLayout = state.layout[termKey][weekKey];
+          placedSyllabus += weekLayout.syllabus.length;
+          placedTextbook += weekLayout.textbook.length;
+          placedResources += weekLayout.resources.length;
+        }
+      }
+
+      const totalSyllabus = SYLLABUS_OBJECTIVES.length;
+      const totalTextbook = TEXTBOOK_REFERENCES.length;
+
+      const label = document.getElementById("summaryLabel");
+      label.textContent =
+        `${placedSyllabus}/${totalSyllabus} syllabus, ` +
+        `${placedTextbook}/${totalTextbook} textbook, ` +
+        `${placedResources} resource notes placed`;
+    }
+
+    /**********************************************************
+     * CARD CREATION
+     **********************************************************/
+    function createCard(data, type) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.draggable = true;
+      card.dataset.cardId = data.id;
+      card.dataset.cardType = type;
+
+      const tagRow = document.createElement("div");
+      tagRow.className = "card-tag-row";
+
+      const tag = document.createElement("div");
+      tag.className = `card-tag ${type}`;
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      const label = document.createElement("span");
+      label.className = "card-tag-label";
+      if (type === "syllabus") label.textContent = data.section || "Syllabus";
+      else if (type === "textbook") label.textContent = "Textbook";
+      else label.textContent = "Resource";
+
+      tag.appendChild(dot);
+      tag.appendChild(label);
+
+      const pill = document.createElement("div");
+      pill.className = "pill";
+      if (type === "syllabus") {
+        pill.textContent = inferTopicFromSection(data.section);
+      } else if (type === "textbook") {
+        pill.textContent = "Text reference";
+      } else {
+        pill.textContent = "Note";
+      }
+
+      tagRow.appendChild(tag);
+      tagRow.appendChild(pill);
+
+      const main = document.createElement("div");
+      main.className = "card-main";
+      if (type === "syllabus") {
+        main.innerHTML = `<strong>${data.section}</strong> — ${data.text}`;
+      } else if (type === "textbook") {
+        main.innerHTML = `<strong>${data.label}</strong>`;
+      } else {
+        main.innerHTML = `<strong>${data.title}</strong>`;
+      }
+
+      const sub = document.createElement("div");
+      sub.className = "card-sub";
+      if (type === "syllabus") {
+        sub.textContent = "";
+      } else if (type === "textbook") {
+        sub.textContent = data.detail || "";
+      } else {
+        sub.textContent = data.detail || "";
+      }
+
+      card.appendChild(tagRow);
+      card.appendChild(main);
+      if (sub.textContent.trim() !== "") {
+        card.appendChild(sub);
+      }
+
+      card.addEventListener("dragstart", handleDragStart);
+      card.addEventListener("dragend", handleDragEnd);
+
+      return card;
+    }
+
+    function inferTopicFromSection(section) {
+      if (!section) return "Number & algebra";
+      if (section.startsWith("SL 1") || section.startsWith("AHL 1")) {
+        return "Topic 1: Number & algebra";
+      }
+      return "AA syllabus";
+    }
+
+    /**********************************************************
+     * RESOURCE CARDS
+     **********************************************************/
+    function createNewResourceNote() {
+      const title = prompt("Resource / note title:");
+      if (!title) return;
+      const detail = prompt("Optional details / link / description:") || "";
+      const id = `res-${state.nextResourceId++}`;
+      if (!state.resources) state.resources = {};
+      state.resources[id] = { id, title, detail };
+      state.backlog.resource.push(id);
+      persistState();
+      renderBacklogs();
+      updateSummaryLabel();
+    }
+
+    function findResourceCard(id) {
+      if (!state.resources) state.resources = {};
+      return state.resources[id];
+    }
+
+    /**********************************************************
+     * DRAG & DROP
+     **********************************************************/
+    let currentDrag = null;
+
+    function handleDragStart(e) {
+      const id = this.dataset.cardId;
+      const type = this.dataset.cardType;
+      currentDrag = { id, type };
+      this.classList.add("dragging");
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", JSON.stringify({ id, type }));
+    }
+
+    function handleDragEnd() {
+      this.classList.remove("dragging");
+      currentDrag = null;
+    }
+
+    function enableDropzone(dz) {
+      dz.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const acceptType = dz.dataset.acceptType;
+        const dragType = currentDrag && currentDrag.type;
+        if (acceptType && dragType && acceptType !== dragType) {
+          e.dataTransfer.dropEffect = "none";
+          dz.classList.remove("is-over");
+          return;
+        }
+        e.dataTransfer.dropEffect = "move";
+        dz.classList.add("is-over");
+      });
+
+      dz.addEventListener("dragleave", () => {
+        dz.classList.remove("is-over");
+      });
+
+      dz.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dz.classList.remove("is-over");
+        const dataStr = e.dataTransfer.getData("text/plain");
+        if (!dataStr) return;
+        let payload;
+        try {
+          payload = JSON.parse(dataStr);
+        } catch {
+          return;
+        }
+        const { id, type } = payload;
+        const acceptType = dz.dataset.acceptType;
+        if (acceptType && type !== acceptType) return;
+
+        moveCardToDropzone(id, type, dz);
+      });
+    }
+
+    function moveCardToDropzone(id, type, dz) {
+      // Remove from all locations first
+      // Backlogs
+      ["syllabus", "textbook", "resource"].forEach((kind) => {
+        state.backlog[kind] = state.backlog[kind].filter((x) => x !== id);
+      });
+      // Weeks
+      for (let t = 1; t <= TERMS; t++) {
+        const termKey = `term-${t}`;
+        for (let w = 1; w <= WEEKS_PER_TERM; w++) {
+          const weekKey = `week-${w}`;
+          const week = state.layout[termKey][weekKey];
+          week.syllabus = week.syllabus.filter((x) => x !== id);
+          week.textbook = week.textbook.filter((x) => x !== id);
+          week.resources = week.resources.filter((x) => x !== id);
+        }
+      }
+
+      const locType = dz.dataset.locationType;
+      if (locType === "backlog") {
+        if (type === "syllabus") state.backlog.syllabus.push(id);
+        else if (type === "textbook") state.backlog.textbook.push(id);
+        else state.backlog.resource.push(id);
+      } else if (locType === "week") {
+        const weekKey = dz.dataset.weekKey;
+        const slotType = dz.dataset.slotType;
+        const termKey = `term-${state.currentTerm}`;
+        const week = state.layout[termKey][weekKey];
+        if (slotType === "syllabus") week.syllabus.push(id);
+        else if (slotType === "textbook") week.textbook.push(id);
+        else week.resources.push(id);
+      }
+
+      persistState();
+      renderAll();
+    }
+
+    /**********************************************************
+     * CONTROLS
+     **********************************************************/
+    function wireControls() {
+      document
+        .getElementById("resetLayoutBtn")
+        .addEventListener("click", () => {
+          if (
+            !confirm(
+              "Reset the entire planner? All cards will be moved back to the backlog for every term."
+            )
+          ) {
+            return;
+          }
+          // Reset everything
+          state.currentTerm = 1;
+          state.layout = {};
+          state.backlog = {
+            syllabus: SYLLABUS_OBJECTIVES.map((o) => o.id),
+            textbook: TEXTBOOK_REFERENCES.map((t) => t.id),
+            resource: []
+          };
+          state.resources = {};
+          state.nextResourceId = 0;
+          initState(); // rebuild empty weeks
+          buildTermTabs();
           buildPlannerColumns();
-          renderCard
+          renderAll();
+          persistState();
+        });
+
+      document
+        .getElementById("newResourceBtn")
+        .addEventListener("click", createNewResourceNote);
+    }
+  </script>
+</body>
+</html>
