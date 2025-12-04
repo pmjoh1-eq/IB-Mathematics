@@ -1,94 +1,692 @@
-Topic 1: Number & Algebra
-1.1 Operations with Numbers in the Form a × 10^k
-Operations with numbers in the form a × 10^k, where 1 ≤ a < 10 and k is an integer.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AA Syllabus Term Planner</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --card-bg: #0b1120;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.18);
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97373;
+    }
 
-1.2 Arithmetic Sequences and Series
-Use of the formulae for the nth term and the sum of the first n terms of the sequence.
+    * {
+      box-sizing: border-box;
+    }
 
-Use of sigma (Σ) notation for sums of arithmetic sequences.
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-Applications: analysis, interpretation, and prediction where a model is not perfectly arithmetic in real life.
+    header {
+      padding: 1.25rem 1.5rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(15,23,42,0.75));
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
 
-1.3 Geometric Sequences and Series
-Use of the formulae for the nth term and the sum of the first n terms of the sequence.
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-Use of sigma (Σ) notation for the sums of geometric sequences.
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
 
-Applications of the topics mentioned above.
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
 
-1.4 Financial Applications of Geometric Sequences and Series
-Compound interest: A = P(1 + r)^n
+    .header-controls {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-Annual depreciation.
+    .controls-left {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-1.6 Simple Deductive Proof (Numerical and Algebraic)
-How to lay out a Left-Hand Side (LHS) to Right-Hand Side (RHS) proof.
+    label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-Symbols and notation for equality (=) and identity (≡).
+    select, input[type="number"] {
+      background: #020617;
+      color: var(--text-main);
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
 
-1.7 Laws of Exponents with Rational Exponents
-Laws of logarithms:
+    select:focus, input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft);
+    }
 
-logₐ(xy) = logₐx + logₐy
+    button {
+      cursor: pointer;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.8rem;
+      font-size: 0.8rem;
+      background: linear-gradient(to right, #020617, #020617);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
 
-logₐ(x/y) = logₐx − logₐy
+    button.primary {
+      border-color: var(--accent);
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.25), #020617);
+      color: #ecfdf5;
+    }
 
-logₐ(x^m) = m·logₐx
+    button:hover {
+      border-color: var(--accent);
+    }
 
-Change of base formula: logₐx = log_bx / log_ba
+    main {
+      flex: 1;
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 1.5rem 1.5rem;
+      min-height: 0;
+    }
 
-Solving exponential equations, including using logarithms.
+    /* Left panel: backlog + filters */
+    .left-panel {
+      width: 280px;
+      min-width: 260px;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
 
-1.8 Sum of Infinite Convergent Geometric Sequences
-Formula: S = a / (1 − r), for |r| < 1
+    .panel {
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,1));
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+    }
 
-1.9 The Binomial Theorem
-Expansion of (a + b)^n, n ∈ ℕ
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
 
-Use of Pascal’s triangle and nCr.
+    .panel-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
 
-1.10 Counting Principles, Permutations, and Combinations
-Counting principles for arrangement and selection problems.
+    .search-input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #020617;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+      outline: none;
+    }
 
-Permutations and combinations.
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft);
+    }
 
-Extension of the binomial theorem to fractional and negative indices: (a + b)^n, where n ∈ Q.
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
 
-1.11 Partial Fractions
-Decomposition of rational expressions into partial fractions for integration and simplification.
+    .chip {
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: #020617;
+    }
 
-1.12 Complex Numbers
-The imaginary unit i, where i^2 = −1.
+    .chip.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #bbf7d0;
+    }
 
-Cartesian form: z = a + b·i.
+    .backlog-list {
+      margin-top: 0.25rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 260px);
+      padding-right: 0.25rem;
+    }
 
-Terms: real part, imaginary part, conjugate, modulus, and argument.
+    .backlog-list::-webkit-scrollbar,
+    .planner-grid::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
 
-Representation of complex numbers in the complex plane.
+    .backlog-list::-webkit-scrollbar-thumb,
+    .planner-grid::-webkit-scrollbar-thumb {
+      background: rgba(148,163,184,0.5);
+      border-radius: 999px;
+    }
 
-1.13 Modulus, Argument, and Polar Form
-Polar form: z = r(cos θ + i·sin θ) = r·cis θ.
+    /* Planner grid */
+    .planner-wrapper {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
 
-Equivalent exponential form: z = r·e^(iθ).
+    .planner-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
 
-Operations: sum, product, and quotient in Cartesian or polar form.
+    .planner-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
 
-Geometric interpretation of complex number operations.
+    .planner-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-1.15 Proof Methods
-Proof by mathematical induction.
+    .planner-grid {
+      flex: 1;
+      min-height: 0;
+      overflow-x: auto;
+      display: flex;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
 
-Proof by contradiction.
+    .week-column {
+      min-width: 190px;
+      max-width: 220px;
+      background: radial-gradient(circle at top, #020617, #020617);
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 0.55rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+    }
 
-Use of counterexamples to show that a statement is not always true.
+    .week-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px dashed rgba(148,163,184,0.5);
+      margin-bottom: 0.25rem;
+    }
 
-1.16 Solutions of Systems of Linear Equations
-Solving systems of linear equations with a maximum of three equations in three unknowns.
+    .week-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
 
-Cases considered:
+    .week-count {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
 
-Unique solution
+    .dropzone {
+      flex: 1;
+      padding-top: 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-height: 80px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
 
-Infinite number of solutions
+    .dropzone.is-over {
+      background: rgba(34,197,94,0.07);
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(34,197,94,0.7);
+      padding: 0.35rem;
+    }
 
-No solution
+    /* Cards */
+    .card {
+      background: radial-gradient(circle at top left, #020617, #020617);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      padding: 0.45rem 0.5rem;
+      cursor: grab;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.75);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      box-shadow: 0 14px 30px rgba(15,23,42,0.9);
+    }
+
+    .card.dragging {
+      opacity: 0.7;
+      box-shadow: 0 18px 40px rgba(34,197,94,0.5);
+      border-color: var(--accent);
+      transform: scale(1.01);
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #22c55e;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .card-tag span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .card-body {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.15rem;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: var(--text-muted);
+    }
+
+    .linkish {
+      font-size: 0.7rem;
+      color: #a5b4fc;
+      cursor: pointer;
+    }
+
+    .linkish:hover {
+      text-decoration: underline;
+    }
+
+    /* Detail panel */
+    .detail-panel {
+      width: 280px;
+      min-width: 240px;
+      max-width: 320px;
+      background: radial-gradient(circle at top, #020617, #020617);
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .detail-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .detail-section {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-heading {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+
+    .detail-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .detail-empty {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    @media (max-width: 1100px) {
+      main {
+        flex-direction: column;
+      }
+      .left-panel {
+        width: 100%;
+        max-width: none;
+        flex-direction: row;
+      }
+      .panel {
+        flex: 1;
+      }
+      .detail-panel {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .left-panel {
+        flex-direction: column;
+      }
+      .detail-panel {
+        order: 3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <div>
+        <h1>IB AA Syllabus Term Planner</h1>
+        <div class="badge">Draggable syllabus objectives</div>
+      </div>
+      <button id="resetLayoutBtn" title="Reset all cards back to the backlog">
+        ⟳ Reset layout
+      </button>
+    </div>
+    <div class="header-controls">
+      <div class="controls-left">
+        <label>
+          Term weeks:
+          <input type="number" id="weeksInput" min="4" max="20" value="10" />
+        </label>
+        <button class="primary" id="applyWeeksBtn">Apply</button>
+      </div>
+      <div class="controls-right" style="font-size:0.75rem;color:var(--text-muted);">
+        Drag cards from the backlog into weeks. Click a card to see full details on the right.
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="left-panel">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Backlog</div>
+          <span style="font-size:0.7rem;color:var(--text-muted);" id="backlogCountLabel"></span>
+        </div>
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Filter by text or section code…"
+        />
+        <div class="chip-row" id="sectionFilterChips">
+          <!-- chips generated by JS -->
+        </div>
+        <div class="backlog-list dropzone" id="backlogDropzone" data-column-id="backlog"></div>
+      </div>
+    </section>
+
+    <section class="planner-wrapper">
+      <div class="planner-header-row">
+        <div>
+          <div class="planner-title">Weekly planner</div>
+          <div class="planner-subtitle">Move cards between weeks to build your teaching sequence.</div>
+        </div>
+      </div>
+      <div class="planner-grid" id="plannerGrid">
+        <!-- week columns generated by JS -->
+      </div>
+    </section>
+
+    <aside class="detail-panel">
+      <div class="detail-title">Objective details</div>
+      <div id="detailContent" class="detail-empty">
+        Click any card to see the full content and guidance.
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    /*****************************************************************
+     *  DATA
+     *  Replace SAMPLE_OBJECTIVES below with your full list
+     *  (e.g. exported from Excel as JSON) if you want every item.
+     *****************************************************************/
+
+    const OBJECTIVES = [
+      // === SAMPLE DATA — replace / extend with your full list ===
+      {
+        section: "SL 1.1",
+        content: "Operations with numbers in the form a×10k where 1≤a<10 and k is an integer.",
+        guidance:
+          "Calculator or computer notation is not acceptable. For example, 5.2E30 is not acceptable and should be written as 5.2×1030."
+      },
+      {
+        section: "SL 1.2",
+        content:
+          "Arithmetic sequences and series. Use of the formulae for the nth term and the sum of the first n terms of an arithmetic sequence. Use of sigma notation for sums of arithmetic sequences.",
+        guidance:
+          "Spreadsheets, GDCs and graphing software may be used to generate sequences. Students are expected to identify the first term and the common difference."
+      },
+      {
+        section: "SL 1.2",
+        content: "Applications.",
+        guidance: "Examples include simple interest over a number of years."
+      },
+      {
+        section: "SL 1.2",
+        content:
+          "Analysis, interpretation and prediction where a model is not perfectly arithmetic in real life.",
+        guidance: "Students will need to approximate common differences."
+      },
+      {
+        section: "SL 1.4",
+        content: "Use of sigma notation for the sums of geometric sequences.",
+        guidance:
+          "If technology is used in examinations, students are expected to first write a correct mathematical expression for the sum of the required number of terms, then make use of technology."
+      },
+      {
+        section: "SL 2.1",
+        content: "Concept of function f(x), domain, range, and function notation.",
+        guidance:
+          "Students should be able to interpret domain and range from graphs and context."
+      },
+      {
+        section: "SL 4.5",
+        content:
+          "Concepts of trial, outcome, equally likely outcomes, sample space and event.",
+        guidance:
+          "Sample spaces can be represented in many ways, including tables, charts and tree diagrams."
+      }
+      // === END SAMPLE DATA ===
+    ];
+
+    /*****************************************************************
+     *  STATE
+     *****************************************************************/
+    const state = {
+      weeks: 10,
+      // layout: columnId -> array of objective indices
+      layout: {},
+      filters: {
+        search: "",
+        sectionPrefix: null
+      },
+      selectedId: null
+    };
+
+    const STORAGE_KEY = "aa-syllabus-planner-layout-v1";
+
+    /*****************************************************************
+     *  INIT
+     *****************************************************************/
+    document.addEventListener("DOMContentLoaded", () => {
+      // initial layout: everything in backlog
+      loadLayoutFromStorage();
+      buildSectionFilterChips();
+      buildPlannerColumns();
+      renderCards();
+      wireHeaderControls();
+    });
+
+    /*****************************************************************
+     *  STORAGE
+     *****************************************************************/
+    function saveLayoutToStorage() {
+      const payload = {
+        weeks: state.weeks,
+        layout: state.layout
+      };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (e) {
+        console.warn("Could not save layout to localStorage", e);
+      }
+    }
+
+    function loadLayoutFromStorage() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        resetLayoutToDefault();
+        return;
+      }
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") throw new Error("bad");
+        state.weeks = parsed.weeks || 10;
+        state.layout = parsed.layout || {};
+        // Ensure all ids exist; if not, add to backlog
+        const seen = new Set();
+        for (const columnId in state.layout) {
+          state.layout[columnId] = state.layout[columnId].filter((idx) => {
+            const ok = typeof idx === "number" && OBJECTIVES[idx];
+            if (ok) seen.add(idx);
+            return ok;
+          });
+        }
+        const backlog = state.layout.backlog || [];
+        OBJECTIVES.forEach((_, idx) => {
+          if (!seen.has(idx)) backlog.push(idx);
+        });
+        state.layout.backlog = backlog;
+      } catch {
+        resetLayoutToDefault();
+      }
+      const weeksInput = document.getElementById("weeksInput");
+      if (weeksInput) weeksInput.value = state.weeks;
+    }
+
+    function resetLayoutToDefault() {
+      state.weeks = 10;
+      state.layout = { backlog: OBJECTIVES.map((_, idx) => idx) };
+      saveLayoutToStorage();
+    }
+
+    /*****************************************************************
+     *  UI BUILD
+     *****************************************************************/
+    function wireHeaderControls() {
+      const weeksInput = document.getElementById("weeksInput");
+      const applyWeeksBtn = document.getElementById("applyWeeksBtn");
+      const resetBtn = document.getElementById("resetLayoutBtn");
+      const searchInput = document.getElementById("searchInput");
+
+      applyWeeksBtn.addEventListener("click", () => {
+        const val = parseInt(weeksInput.value, 10);
+        if (!isNaN(val) && val >= 4 && val <= 20) {
+          state.weeks = val;
+          buildPlannerColumns();
+          renderCards();
+          saveLayoutToStorage();
+        }
+      });
+
+      resetBtn.addEventListener("click", () => {
+        if (
+          confirm(
+            "Reset layout? All cards will be returned to the backlog and week assignments will be cleared."
+          )
+        ) {
+          resetLayoutToDefault();
+          buildPlannerColumns();
+          renderCard
