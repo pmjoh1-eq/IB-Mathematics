@@ -1,0 +1,678 @@
+:root {
+  /* Default = dark theme */
+  --bg: #020617;
+  --bg-alt: #0b1120;
+  --panel-bg: #020617;
+  --card-bg: #020617;
+  --accent: #22c55e;
+  --accent-soft: rgba(34, 197, 94, 0.16);
+  --accent-blue: #38bdf8;
+  --accent-purple: #a855f7;
+  --border-subtle: rgba(148, 163, 184, 0.45);
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+}
+
+/* Light theme overrides */
+body[data-theme="light"] {
+  --bg: #e5e7eb;
+  --bg-alt: #f9fafb;
+  --panel-bg: #ffffff;
+  --card-bg: #ffffff;
+  --accent: #16a34a;
+  --accent-soft: rgba(22, 163, 74, 0.16);
+  --accent-blue: #0284c7;
+  --accent-purple: #7c3aed;
+  --border-subtle: rgba(148, 163, 184, 0.6);
+  --text-main: #0f172a;
+  --text-muted: #6b7280;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top, var(--bg-alt) 0, var(--bg) 55%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 1rem 1.5rem 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.96),
+    rgba(15, 23, 42, 0.82)
+  );
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  color: #e5e7eb;
+}
+
+body[data-theme="light"] header {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.9),
+    rgba(15, 23, 42, 0.85)
+  );
+  color: #f9fafb;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.header-top-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  color: #e5e7eb;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.term-tabs {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.term-tab {
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.term-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: #bbf7d0;
+}
+
+.header-controls {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: #e5e7eb;
+}
+
+.header-controls code {
+  background: rgba(15, 23, 42, 0.7);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+#summaryLabel {
+  opacity: 0.85;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  background: #020617;
+  color: #f9fafb;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+button.primary {
+  border-color: var(--accent);
+  background: radial-gradient(
+    circle at top left,
+    rgba(34, 197, 94, 0.3),
+    #020617
+  );
+  color: #ecfdf5;
+}
+
+button:hover {
+  border-color: var(--accent);
+}
+
+body[data-theme="light"] button {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+/* Left: syllabus + resources */
+.left-column {
+  width: 320px;
+  min-width: 260px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: sticky;
+  top: 110px; /* below header */
+  align-self: flex-start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Right: textbook references */
+.right-column {
+  width: 280px;
+  min-width: 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: sticky;
+  top: 110px;
+  align-self: flex-start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.panel {
+  background: var(--panel-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  padding: 0.75rem;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.75);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+body[data-theme="light"] .panel {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.25);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panel-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.panel-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.backlog-dropzone {
+  margin-top: 0.25rem;
+  border-radius: 0.75rem;
+  border: 1px dashed rgba(148, 163, 184, 0.6);
+  min-height: 80px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--bg-alt);
+}
+
+.backlog-dropzone::-webkit-scrollbar,
+.planner-grid::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.backlog-dropzone::-webkit-scrollbar-thumb,
+.planner-grid::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
+}
+
+.backlog-dropzone.is-over {
+  border-color: var(--accent);
+  background: rgba(34, 197, 94, 0.07);
+}
+
+.resource-btn-row {
+  margin-top: 0.35rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Syllabus topic tabs inside backlog panel */
+.syllabus-topic-tabs {
+  margin-top: 0.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.syllabus-topic-tab {
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+  background: rgba(15, 23, 42, 0.75);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.syllabus-topic-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: #bbf7d0;
+}
+
+body[data-theme="light"] .syllabus-topic-tab {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+body[data-theme="light"] .syllabus-topic-tab.active {
+  color: #065f46;
+}
+
+/* Planner (center) */
+.planner-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.planner-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.planner-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.planner-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.planner-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* weeks stacked vertically */
+  gap: 0.6rem;
+}
+
+.week-row {
+  background: var(--panel-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  padding: 0.55rem 0.6rem 0.6rem;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+body[data-theme="light"] .week-row {
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.2);
+}
+
+.week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.55);
+}
+
+.week-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.week-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.week-slots-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.slot {
+  border-radius: 0.75rem;
+  background: var(--bg-alt);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  padding: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 64px;
+}
+
+.slot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.slot-title {
+  font-weight: 600;
+}
+
+.slot-chip {
+  font-size: 0.65rem;
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  color: var(--text-muted);
+  background: rgba(15, 23, 42, 0.08);
+}
+
+body[data-theme="light"] .slot-chip {
+  background: #e5e7eb;
+}
+
+.slot-dropzone {
+  margin-top: 0.15rem;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.1rem;
+  border-radius: 0.5rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.slot-dropzone.is-over {
+  background: rgba(34, 197, 94, 0.07);
+  border: 1px dashed rgba(34, 197, 94, 0.7);
+  padding: 0.2rem;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 0.7rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 0.4rem 0.45rem;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.85);
+  font-size: 0.75rem;
+  position: relative;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+body[data-theme="light"] .card {
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 15px 32px rgba(15, 23, 42, 0.95);
+}
+
+body[data-theme="light"] .card:hover {
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.28);
+}
+
+.card.dragging {
+  opacity: 0.7;
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px rgba(34, 197, 94, 0.65);
+  transform: scale(1.01);
+}
+
+.card-tag-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.68rem;
+}
+
+.card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card-tag span.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.card-tag.syllabus span.dot {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+.card-tag.textbook span.dot {
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+.card-tag.resource span.dot {
+  background: var(--accent-purple);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+}
+
+.card-main {
+  font-size: 0.75rem;
+  color: var(--text-main);
+}
+
+.card-main strong {
+  font-weight: 600;
+}
+
+.card-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.card-sub a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+.card-sub a:hover {
+  text-decoration: underline;
+}
+
+.pill {
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Topic bubbles – per-topic colours (syllabus) */
+
+/* Dark theme */
+body[data-theme="dark"] .pill-syllabus.topic-number-and-algebra {
+  background: rgba(34, 197, 94, 0.16);
+  color: #bbf7d0;
+  border-color: rgba(34, 197, 94, 0.7);
+}
+
+body[data-theme="dark"] .pill-syllabus.topic-functions {
+  background: rgba(56, 189, 248, 0.16);
+  color: #e0f2fe;
+  border-color: rgba(56, 189, 248, 0.7);
+}
+
+body[data-theme="dark"] .pill-syllabus.topic-geometry-and-trigonometry {
+  background: rgba(129, 140, 248, 0.2);
+  color: #e0e7ff;
+  border-color: rgba(129, 140, 248, 0.8);
+}
+
+body[data-theme="dark"] .pill-syllabus.topic-statistics-and-probability {
+  background: rgba(251, 191, 36, 0.18);
+  color: #fef3c7;
+  border-color: rgba(251, 191, 36, 0.8);
+}
+
+body[data-theme="dark"] .pill-syllabus.topic-calculus {
+  background: rgba(244, 114, 182, 0.2);
+  color: #fce7f3;
+  border-color: rgba(244, 114, 182, 0.85);
+}
+
+/* Light theme */
+body[data-theme="light"] .pill-syllabus.topic-number-and-algebra {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #16a34a;
+}
+
+body[data-theme="light"] .pill-syllabus.topic-functions {
+  background: #e0f2fe;
+  color: #075985;
+  border-color: #0284c7;
+}
+
+body[data-theme="light"] .pill-syllabus.topic-geometry-and-trigonometry {
+  background: #e0e7ff;
+  color: #3730a3;
+  border-color: #4f46e5;
+}
+
+body[data-theme="light"] .pill-syllabus.topic-statistics-and-probability {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #f59e0b;
+}
+
+body[data-theme="light"] .pill-syllabus.topic-calculus {
+  background: #fce7f3;
+  color: #9d174d;
+  border-color: #f472b6;
+}
+
+/* Textbook + resource pills keep their colour by type */
+
+body[data-theme="dark"] .pill-textbook {
+  background: rgba(56, 189, 248, 0.16);
+  color: #e0f2fe;
+  border-color: rgba(56, 189, 248, 0.7);
+}
+
+body[data-theme="dark"] .pill-resource {
+  background: rgba(168, 85, 247, 0.16);
+  color: #ede9fe;
+  border-color: rgba(168, 85, 247, 0.7);
+}
+
+body[data-theme="light"] .pill-textbook {
+  background: #e0f2fe;
+  color: #075985;
+  border-color: #0284c7;
+}
+
+body[data-theme="light"] .pill-resource {
+  background: #ede9fe;
+  color: #5b21b6;
+  border-color: #7c3aed;
+}
+
+.card-tag-label {
+  opacity: 0.8;
+}
+
+@media (max-width: 1200px) {
+  main {
+    flex-direction: column;
+  }
+  .left-column,
+  .right-column {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: none;
+  }
+  .panel {
+    flex: 1 1 260px;
+  }
+}
+
+@media (max-width: 900px) {
+  header {
+    position: static;
+  }
+  main {
+    padding: 0.75rem;
+  }
+  .week-slots-row {
+    grid-template-columns: 1fr;
+  }
+}
