@@ -592,6 +592,12 @@ body[data-theme="light"] .card:hover {
   color: #1d3a8a;
 }
 
+.pill-textbook.book-haese-ib-aa-sl { background: var(--book-aa-sl); }
+.pill-textbook.book-haese-ib-aa-hl { background: var(--book-aa-hl); }
+.pill-textbook.book-haese-core-hl { background: var(--book-core-hl); }
+.pill-textbook.book-haese-core-sl { background: var(--book-core-sl); }
+.pill-textbook.book-haese-ib-ai-sl { background: var(--book-ai-sl); }
+
 /* Optional: tabs + card actions */
 .tab-button {
   border: none;
