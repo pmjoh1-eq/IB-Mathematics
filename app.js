@@ -563,9 +563,16 @@ function createCard(data, type, placementInfo) {
     const slug = topicSlug(data.topic);
     pill.classList.add(`topic-${slug}`);
     pill.textContent = data.topic || "AA Syllabus";
-  } else if (type === "textbook") {
-    pill.classList.add("pill-textbook");
-    pill.textContent = "Text reference";
+    } else if (type === "textbook") {
+      pill.classList.add("pill-textbook");
+
+      // extract textbook name before the first "–"
+      const bookName = (data.label.split("–")[0] || "Textbook").trim();
+      pill.textContent = bookName;
+
+      // add a slugged class so CSS can colour by book
+      const slug = bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      pill.classList.add(`book-${slug}`);
   } else {
     pill.classList.add("pill-resource");
     pill.textContent = "Note";
