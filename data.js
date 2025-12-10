@@ -893,5 +893,72 @@
     label: "Haese Core HL – Ch 17: Trigonometric Functions",
     detail: "Periodic behaviour, sine and cosine functions, general sinusoidal models, fitting data, tangent function, trig equations and modelling.",
     url: ""
+  },
+       {
+    id: "tb-67",
+    label: "Haese IB AA HL – Ch 18: Properties of Curves",
+    detail: "Tangents and normals, increasing and decreasing functions, stationary points, graph shape and points of inflection, understanding functions and their derivatives, and an introduction to l’Hôpital’s rule with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-68",
+    label: "Haese IB AA HL – Ch 19: Applications of Differentiation",
+    detail: "Rates of change, optimisation problems and related rates, with mixed applications and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-69",
+    label: "Haese IB AA HL – Ch 20: Introduction to Integration",
+    detail: "Approximating the area under a curve, the Riemann integral, antidifferentiation, the Fundamental Theorem of Calculus and introductory area problems with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-70",
+    label: "Haese IB AA HL – Ch 21: Techniques for Integration",
+    detail: "Discovering integrals, rules for integration, particular values, integrating f(ax + b), partial fractions, substitution and integration by parts, followed by mixed problems and review.",
+    url: ""
+  },
+  {
+    id: "tb-71",
+    label: "Haese IB AA HL – Ch 22: Definite Integrals",
+    detail: "Definite integrals, definite integrals involving substitution, area under a curve and between two functions, regions between a curve and the y-axis, solids of revolution, and problem solving (including improper integrals).",
+    url: ""
+  },
+  {
+    id: "tb-72",
+    label: "Haese IB AA HL – Ch 23: Kinematics",
+    detail: "Displacement, velocity, acceleration and speed interpreted via calculus, with modelling examples and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-73",
+    label: "Haese IB AA HL – Ch 24: Maclaurin Series",
+    detail: "Maclaurin series and convergence, series for composite functions, addition and subtraction of series, differentiation and integration of series, multiplication and division of series, with applications and review.",
+    url: ""
+  },
+  {
+    id: "tb-74",
+    label: "Haese IB AA HL – Ch 25: Differential Equations",
+    detail: "Differential equations and solution methods: Euler’s method for numerical integration, equations of the form dy/dx = f(x), separable equations, logistic growth, homogeneous equations of the form dy/dx = f(y/x), integrating factor method, and series solutions from differential equations.",
+    url: ""
+  },
+  {
+    id: "tb-75",
+    label: "Haese IB AA HL – Ch 26: Bivariate Statistics",
+    detail: "Association between numerical variables, Pearson’s product–moment correlation coefficient, line of best fit by eye, least squares regression line and the regression line of y on x, with interpretation and review.",
+    url: ""
+  },
+  {
+    id: "tb-76",
+    label: "Haese IB AA HL – Ch 27: Discrete Random Variables",
+    detail: "Discrete random variables and probability distributions, expectation, variance and standard deviation, linear transformations of X, the binomial distribution, technology for binomial probabilities, and the mean and standard deviation of a binomial distribution.",
+    url: ""
+  },
+  {
+    id: "tb-77",
+    label: "Haese IB AA HL – Ch 28: Continuous Random Variables",
+    detail: "Probability density functions, measures of centre and spread for continuous distributions, the normal distribution, calculating normal probabilities, the standard normal distribution and normal quantiles, with review exercises.",
+    url: ""
   }
+
     ];
