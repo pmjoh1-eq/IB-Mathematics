@@ -551,6 +551,72 @@ body[data-theme="light"] .card:hover {
   color: var(--text-muted);
   white-space: nowrap;
 }
+/* Base pill style (you likely already have something similar) */
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* One colour per textbook */
+.pill-aa-sl {
+  background-color: #e0f2ff;
+  color: #0057a3;
+}
+
+.pill-aa-hl {
+  background-color: #e0ffe5;
+  color: #046c4e;
+}
+
+.pill-core-sl {
+  background-color: #fff3d6;
+  color: #946200;
+}
+
+.pill-core-hl {
+  background-color: #f3e0ff;
+  color: #5b2b99;
+}
+
+.pill-ai-sl {
+  background-color: #ffe0ef;
+  color: #9b174c;
+}
+
+/* Fallback */
+.pill-textbook-default {
+  background-color: #e0e7ff;
+  color: #1d3a8a;
+}
+
+/* Optional: tabs + card actions */
+.tab-button {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.tab-button--active {
+  background: #111827;
+  color: #fff;
+}
+
+.card-actions {
+  margin-top: 0.5rem;
+}
+
+.card-link {
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 /* Topic bubbles – per-topic colours (syllabus) */
 
