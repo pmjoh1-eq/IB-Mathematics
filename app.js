@@ -12,7 +12,8 @@ const state = {
   textbookById: new Map(), // id -> textbook card (with placements[])
   resources: {},           // id -> { id, title, detail, placements[] }
   nextResourceId: 0,
-  syllabusTopicFilter: null
+  syllabusTopicFilter: null,
+  textbookBookFilter: null // new: which textbook tab is active in backlog
 };
 
 /**********************************************************
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadState();
   buildTermTabs();
   buildSyllabusTopicTabs();
+  buildTextbookTabs();
   buildPlanner();
   buildBacklogs();
   renderAll();
@@ -67,12 +69,20 @@ function initCards() {
     state.textbookById.set(t.id, t);
   });
 
-  // Default topic filter = first topic
-  const topics = Array.from(
-    new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
-  );
+  // Default syllabus topic filter = first topic
+  const topics = Array.from(new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic)));
   if (!state.syllabusTopicFilter && topics.length > 0) {
     state.syllabusTopicFilter = topics[0];
+  }
+
+  // Default textbook filter = first textbook name
+  const books = Array.from(
+    new Set(
+      TEXTBOOK_REFERENCES.map((t) => t.textbook || extractBookNameFromLabel(t.label))
+    )
+  );
+  if (!state.textbookBookFilter && books.length > 0) {
+    state.textbookBookFilter = books[0];
   }
 }
 
@@ -124,6 +134,9 @@ function loadState() {
     if (s.syllabusTopicFilter) {
       state.syllabusTopicFilter = s.syllabusTopicFilter;
     }
+    if (s.textbookBookFilter) {
+      state.textbookBookFilter = s.textbookBookFilter;
+    }
   } catch (e) {
     console.warn("Error loading saved state", e);
   }
@@ -152,7 +165,8 @@ function saveState() {
       textbookPlacements,
       resources: state.resources,
       nextResourceId: state.nextResourceId,
-      syllabusTopicFilter: state.syllabusTopicFilter
+      syllabusTopicFilter: state.syllabusTopicFilter,
+      textbookBookFilter: state.textbookBookFilter
     }
   };
 
@@ -164,7 +178,7 @@ function saveState() {
 }
 
 /**********************************************************
- * TERM TABS + TOPIC TABS
+ * TERM TABS + TOPIC / TEXTBOOK TABS
  **********************************************************/
 function buildTermTabs() {
   const tabsContainer = document.getElementById("termTabs");
@@ -196,10 +210,9 @@ function buildTermTabs() {
 
 function buildSyllabusTopicTabs() {
   const container = document.getElementById("syllabusTopicTabs");
+  if (!container) return;
   container.innerHTML = "";
-  const topics = Array.from(
-    new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic))
-  );
+  const topics = Array.from(new Set(SYLLABUS_OBJECTIVES.map((o) => o.topic)));
   if (!state.syllabusTopicFilter && topics.length > 0) {
     state.syllabusTopicFilter = topics[0];
   }
@@ -213,6 +226,39 @@ function buildSyllabusTopicTabs() {
       state.syllabusTopicFilter = topic;
       document
         .querySelectorAll(".syllabus-topic-tab")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderBacklogs();
+      saveState();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function buildTextbookTabs() {
+  const container = document.getElementById("textbookTabs");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const books = Array.from(
+    new Set(
+      TEXTBOOK_REFERENCES.map((t) => t.textbook || extractBookNameFromLabel(t.label))
+    )
+  );
+  if (!state.textbookBookFilter && books.length > 0) {
+    state.textbookBookFilter = books[0];
+  }
+
+  books.forEach((bookName) => {
+    const btn = document.createElement("button");
+    btn.className =
+      "textbook-tab" +
+      (bookName === state.textbookBookFilter ? " active" : "");
+    btn.textContent = bookName;
+    btn.addEventListener("click", () => {
+      state.textbookBookFilter = bookName;
+      document
+        .querySelectorAll(".textbook-tab")
         .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderBacklogs();
@@ -355,8 +401,10 @@ function renderBacklogs() {
     }
   });
 
-  // Textbook backlog: cards with placements.length === 0
+  // Textbook backlog: cards with placements.length === 0, filtered by textbook
   TEXTBOOK_REFERENCES.forEach((ref) => {
+    const bookName = ref.textbook || extractBookNameFromLabel(ref.label);
+    if (bookName !== state.textbookBookFilter) return;
     if (!cardHasPlacements(ref)) {
       unplacedTextbook++;
       textbookBacklog.appendChild(createCard(ref, "textbook", null));
@@ -391,7 +439,12 @@ function getLanePlacements(term, week, lane) {
     SYLLABUS_OBJECTIVES.forEach((card) => {
       (card.placements || []).forEach((p, idx) => {
         if (p.term === term && p.week === week && p.lane === lane) {
-          results.push({ cardType: "syllabus", card, placement: p, placementIndex: idx });
+          results.push({
+            cardType: "syllabus",
+            card,
+            placement: p,
+            placementIndex: idx
+          });
         }
       });
     });
@@ -399,7 +452,12 @@ function getLanePlacements(term, week, lane) {
     TEXTBOOK_REFERENCES.forEach((card) => {
       (card.placements || []).forEach((p, idx) => {
         if (p.term === term && p.week === week && p.lane === lane) {
-          results.push({ cardType: "textbook", card, placement: p, placementIndex: idx });
+          results.push({
+            cardType: "textbook",
+            card,
+            placement: p,
+            placementIndex: idx
+          });
         }
       });
     });
@@ -407,7 +465,12 @@ function getLanePlacements(term, week, lane) {
     Object.values(state.resources).forEach((card) => {
       (card.placements || []).forEach((p, idx) => {
         if (p.term === term && p.week === week && p.lane === lane) {
-          results.push({ cardType: "resource", card, placement: p, placementIndex: idx });
+          results.push({
+            cardType: "resource",
+            card,
+            placement: p,
+            placementIndex: idx
+          });
         }
       });
     });
@@ -516,6 +579,18 @@ function topicSlug(topic) {
   return topic.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
+function bookSlug(bookName) {
+  if (!bookName) return "unknown-book";
+  return bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+function extractBookNameFromLabel(label) {
+  if (!label) return "Textbook";
+  // e.g. "Haese IB AA HL – Ch 1: ..." → "Haese IB AA HL"
+  const parts = label.split("–");
+  return parts[0].trim();
+}
+
 /**********************************************************
  * CARD CREATION
  **********************************************************/
@@ -549,7 +624,7 @@ function createCard(data, type, placementInfo) {
   const label = document.createElement("span");
   label.className = "card-tag-label";
   if (type === "syllabus") label.textContent = data.section || "Syllabus";
-  else if (type === "textbook") label.textContent = "Textbook";
+  else if (type === "textbook") label.textContent = "Text reference";
   else label.textContent = "Resource";
 
   tag.appendChild(dot);
@@ -563,16 +638,14 @@ function createCard(data, type, placementInfo) {
     const slug = topicSlug(data.topic);
     pill.classList.add(`topic-${slug}`);
     pill.textContent = data.topic || "AA Syllabus";
-    } else if (type === "textbook") {
-      pill.classList.add("pill-textbook");
+  } else if (type === "textbook") {
+    pill.classList.add("pill-textbook");
 
-      // extract textbook name before the first "–"
-      const bookName = (data.label.split("–")[0] || "Textbook").trim();
-      pill.textContent = bookName;
+    const bookName = data.textbook || extractBookNameFromLabel(data.label);
+    pill.textContent = bookName;
 
-      // add a slugged class so CSS can colour by book
-      const slug = bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      pill.classList.add(`book-${slug}`);
+    const slug = bookSlug(bookName);
+    pill.classList.add(`book-${slug}`); // CSS can colour per book
   } else {
     pill.classList.add("pill-resource");
     pill.textContent = "Note";
@@ -601,7 +674,7 @@ function createCard(data, type, placementInfo) {
     if (data.detail) parts.push(data.detail);
     if (data.url) {
       parts.push(
-        `<a href="${data.url}" target="_blank" rel="noopener noreferrer">Exercises ↗</a>`
+        `<a href="${data.url}" target="_blank" rel="noopener noreferrer">Open chapter ↗</a>`
       );
     }
     sub.innerHTML = parts.join(" · ");
@@ -682,6 +755,8 @@ function handleDragEnd() {
 }
 
 function enableDropzone(dz) {
+  if (!dz) return;
+
   dz.addEventListener("dragover", (e) => {
     e.preventDefault();
     if (!currentDrag) return;
@@ -861,10 +936,7 @@ function reorderWithinLane(type, id, sourcePlacement, dropIndex) {
     return ao - bo;
   });
 
-  if (
-    placementIndex < 0 ||
-    placementIndex >= lanePlacements.length
-  ) {
+  if (placementIndex < 0 || placementIndex >= lanePlacements.length) {
     return;
   }
 
@@ -911,7 +983,8 @@ function exportJSON() {
       textbookPlacements,
       resources: state.resources,
       nextResourceId: state.nextResourceId,
-      syllabusTopicFilter: state.syllabusTopicFilter
+      syllabusTopicFilter: state.syllabusTopicFilter,
+      textbookBookFilter: state.textbookBookFilter
     }
   };
 
@@ -957,6 +1030,7 @@ function applyImportedState(importObj) {
   // Clear placements first
   SYLLABUS_OBJECTIVES.forEach((c) => (c.placements = []));
   TEXTBOOK_REFERENCES.forEach((c) => (c.placements = []));
+  Object.values(state.resources).forEach((r) => (r.placements = []));
 
   if (s.syllabusPlacements && typeof s.syllabusPlacements === "object") {
     Object.entries(s.syllabusPlacements).forEach(([id, placements]) => {
@@ -982,10 +1056,14 @@ function applyImportedState(importObj) {
     typeof s.nextResourceId === "number" ? s.nextResourceId : 0;
   state.currentTerm =
     typeof s.currentTerm === "number" ? s.currentTerm : 1;
-  state.syllabusTopicFilter = s.syllabusTopicFilter || state.syllabusTopicFilter;
+  state.syllabusTopicFilter =
+    s.syllabusTopicFilter || state.syllabusTopicFilter;
+  state.textbookBookFilter =
+    s.textbookBookFilter || state.textbookBookFilter;
 
   buildTermTabs();
   buildSyllabusTopicTabs();
+  buildTextbookTabs();
   buildPlanner();
   renderAll();
   saveState();
