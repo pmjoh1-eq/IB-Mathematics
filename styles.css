@@ -618,6 +618,57 @@ body[data-theme="light"] .pill-syllabus.topic-calculus {
 
 /* Textbook + resource pills keep their colour by type */
 
+/* Dark theme textbook colours */
+body[data-theme="dark"] .pill-textbook.book-haese-ib-aa-sl {
+  background: rgba(56, 189, 248, 0.16);
+  color: #e0f2fe;
+  border-color: rgba(56, 189, 248, 0.7);
+}
+
+body[data-theme="dark"] .pill-textbook.book-haese-core-sl {
+  background: rgba(129, 140, 248, 0.2);
+  color: #e0e7ff;
+  border-color: rgba(129, 140, 248, 0.8);
+}
+
+body[data-theme="dark"] .pill-textbook.book-haese-ib-aa-hl {
+  background: rgba(244, 114, 182, 0.2);
+  color: #fce7f3;
+  border-color: rgba(244, 114, 182, 0.85);
+}
+
+body[data-theme="dark"] .pill-textbook.book-haese-core-hl {
+  background: rgba(34, 197, 94, 0.16);
+  color: #bbf7d0;
+  border-color: rgba(34, 197, 94, 0.7);
+}
+
+/* Light theme variants */
+body[data-theme="light"] .pill-textbook.book-haese-ib-aa-sl {
+  background: #e0f2fe;
+  color: #075985;
+  border-color: #0284c7;
+}
+
+body[data-theme="light"] .pill-textbook.book-haese-core-sl {
+  background: #e0e7ff;
+  color: #3730a3;
+  border-color: #4f46e5;
+}
+
+body[data-theme="light"] .pill-textbook.book-haese-ib-aa-hl {
+  background: #fce7f3;
+  color: #9d174d;
+  border-color: #f472b6;
+}
+
+body[data-theme="light"] .pill-textbook.book-haese-core-hl {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #16a34a;
+}
+
+
 body[data-theme="dark"] .pill-textbook {
   background: rgba(56, 189, 248, 0.16);
   color: #e0f2fe;
