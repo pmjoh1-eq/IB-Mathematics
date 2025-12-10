@@ -618,6 +618,21 @@ body[data-theme="light"] .pill-syllabus.topic-calculus {
 
 /* Textbook + resource pills keep their colour by type */
 
+/* Dark theme – AI SL textbook pill */
+body[data-theme="dark"] .pill-textbook.book-haese-ib-ai-sl {
+  background: rgba(59, 130, 246, 0.2);   /* nice blue-ish */
+  color: #dbeafe;
+  border-color: rgba(59, 130, 246, 0.85);
+}
+
+/* Light theme – AI SL textbook pill */
+body[data-theme="light"] .pill-textbook.book-haese-ib-ai-sl {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #3b82f6;
+}
+
+
 /* Dark theme textbook colours */
 body[data-theme="dark"] .pill-textbook.book-haese-ib-aa-sl {
   background: rgba(56, 189, 248, 0.16);
