@@ -959,6 +959,111 @@
     label: "Haese IB AA HL – Ch 28: Continuous Random Variables",
     detail: "Probability density functions, measures of centre and spread for continuous distributions, the normal distribution, calculating normal probabilities, the standard normal distribution and normal quantiles, with review exercises.",
     url: ""
+  },
+       // -------------------- Haese IB AI SL – Content --------------------
+
+  {
+    id: "tb-78",
+    label: "Haese IB AI SL – Ch 1: Approximations and Error",
+    detail: "Rounding numbers and approximations, errors in measurement, absolute and percentage error, with mixed applications and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-79",
+    label: "Haese IB AI SL – Ch 2: Loans and Annuities",
+    detail: "Simple and compound interest loans, annuities, finance formulas and calculator techniques, with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-80",
+    label: "Haese IB AI SL – Ch 3: Functions",
+    detail: "Relations and functions, function notation, domain and range, graphs of functions, sign diagrams, transformations and inverse functions.",
+    url: ""
+  },
+  {
+    id: "tb-81",
+    label: "Haese IB AI SL – Ch 4: Modelling",
+    detail: "The modelling cycle, linear models, piecewise linear models and systems of equations used in real-world modelling contexts.",
+    url: ""
+  },
+  {
+    id: "tb-82",
+    label: "Haese IB AI SL – Ch 5: Bivariate Statistics",
+    detail: "Association between numerical variables, Pearson’s correlation coefficient, line of best fit by eye, least squares regression and Spearman’s rank correlation.",
+    url: ""
+  },
+  {
+    id: "tb-83",
+    label: "Haese IB AI SL – Ch 6: Quadratic Functions",
+    detail: "Quadratic functions and graphs, intercepts and symmetry, vertex and axis, finding quadratics from graphs, intersections and quadratic models.",
+    url: ""
+  },
+  {
+    id: "tb-84",
+    label: "Haese IB AI SL – Ch 7: Direct and Inverse Variation",
+    detail: "Direct variation and power models, inverse variation and power models, determining variation models and using technology to fit them.",
+    url: ""
+  },
+  {
+    id: "tb-85",
+    label: "Haese IB AI SL – Ch 8: Exponentials and Logarithms",
+    detail: "Exponential functions and graphs, exponential equations, growth and decay, the natural exponential, base-10 and natural logarithms and their applications.",
+    url: ""
+  },
+  {
+    id: "tb-86",
+    label: "Haese IB AI SL – Ch 9: Trigonometric Functions",
+    detail: "The unit circle, periodic behaviour, sine and cosine functions, general sinusoidal functions and modelling periodic behaviour.",
+    url: ""
+  },
+  {
+    id: "tb-87",
+    label: "Haese IB AI SL – Ch 10: Differentiation",
+    detail: "Rates of change, instantaneous rate of change, limits, gradients of tangents, the derivative function, basic differentiation rules and introductory review.",
+    url: ""
+  },
+  {
+    id: "tb-88",
+    label: "Haese IB AI SL – Ch 11: Properties of Curves",
+    detail: "Tangents and normals, increasing and decreasing functions, stationary points and graph shape, with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-89",
+    label: "Haese IB AI SL – Ch 12: Applications of Differentiation",
+    detail: "Applications of derivatives to rates of change, optimisation and modelling with calculus in applied contexts.",
+    url: ""
+  },
+  {
+    id: "tb-90",
+    label: "Haese IB AI SL – Ch 13: Integration",
+    detail: "Approximating area under a curve, the Riemann integral, Fundamental Theorem of Calculus, antiderivatives, rules for integration, particular values and definite integrals.",
+    url: ""
+  },
+  {
+    id: "tb-91",
+    label: "Haese IB AI SL – Ch 14: Discrete Random Variables",
+    detail: "Random variables and discrete probability distributions, expectation, the binomial distribution, technology for binomial probabilities and binomial mean and standard deviation.",
+    url: ""
+  },
+  {
+    id: "tb-92",
+    label: "Haese IB AI SL – Ch 15: The Normal Distribution",
+    detail: "Introduction to the normal distribution, calculating probabilities and quantiles, with worked examples and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-93",
+    label: "Haese IB AI SL – Ch 16: Hypothesis Testing",
+    detail: "Statistical hypotheses, Student’s t-test, two-sample t-tests for comparing means, χ² goodness-of-fit tests and χ² tests for independence.",
+    url: ""
+  },
+  {
+    id: "tb-94",
+    label: "Haese IB AI SL – Ch 17: Voronoi Diagrams",
+    detail: "Voronoi diagrams and their construction, adding sites, nearest-neighbour interpolation and the largest empty circle problem in applied settings.",
+    url: ""
   }
+
 
     ];
