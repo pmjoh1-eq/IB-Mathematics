@@ -684,5 +684,214 @@
     label: "Haese Core SL – Ch 12: Statistics",
     detail: "Measures of centre, frequency tables, grouped data, spread of data, box plots, cumulative frequency, variance and standard deviation.",
     url: ""
+  },
+       // -------------------- Haese IB AA HL – Content --------------------
+
+  {
+    id: "tb-33",
+    label: "Haese IB AA HL – Ch 1: Further Trigonometry",
+    detail: "Reciprocal and inverse trigonometric functions, algebra with trig functions, double and compound angle identities, mixed problems and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-34",
+    label: "Haese IB AA HL – Ch 2: Exponential Functions",
+    detail: "Rational exponents, exponential equations and functions, growth and decay, the natural exponential function, applications and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-35",
+    label: "Haese IB AA HL – Ch 3: Logarithms",
+    detail: "Logarithms in different bases, laws of logarithms, natural logs, change of base rule, solving exponential equations and logarithmic functions.",
+    url: ""
+  },
+  {
+    id: "tb-36",
+    label: "Haese IB AA HL – Ch 4: Introduction to Complex Numbers",
+    detail: "Definition of complex numbers, algebraic operations, equality, complex conjugates, factorisation using complex numbers and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-37",
+    label: "Haese IB AA HL – Ch 5: Real Polynomials",
+    detail: "Polynomial notation and algebra, expressions with polynomials, zeros, roots and factors, polynomial equality and long division.",
+    url: ""
+  },
+  {
+    id: "tb-38",
+    label: "Haese IB AA HL – Ch 6: Further Functions",
+    detail: "Even and odd functions, graphs of [f(x)]², absolute value functions, rational functions and partial fractions, with applications and review.",
+    url: ""
+  },
+  {
+    id: "tb-39",
+    label: "Haese IB AA HL – Ch 7: Counting",
+    detail: "Product and sum principles, factorial notation, permutations and combinations, introductory counting problems and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-40",
+    label: "Haese IB AA HL – Ch 8: The Binomial Theorem",
+    detail: "Binomial expansions and the binomial theorem for integer and rational indices, applications and review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-41",
+    label: "Haese IB AA HL – Ch 9: Reasoning and Proof",
+    detail: "Logical connectives, proof by deduction and equivalence, definitions, proof by exhaustion, counterexample, contraposition and contradiction.",
+    url: ""
+  },
+  {
+    id: "tb-42",
+    label: "Haese IB AA HL – Ch 10: Proof by Mathematical Induction",
+    detail: "The process and principle of mathematical induction with worked examples and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-43",
+    label: "Haese IB AA HL – Ch 11: Linear Algebra",
+    detail: "Systems of linear equations, row operations, solving 2×2 and 3×3 systems, and applications with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-44",
+    label: "Haese IB AA HL – Ch 12: Vectors",
+    detail: "Vectors and scalars, geometric operations, vectors in the plane and in space, scalar and vector products, geometry with vectors and review.",
+    url: ""
+  },
+  {
+    id: "tb-45",
+    label: "Haese IB AA HL – Ch 13: Vector Applications",
+    detail: "Vector equations of lines and planes, angles between lines, constant velocity problems, distances, intersections and relationships between lines.",
+    url: ""
+  },
+  {
+    id: "tb-46",
+    label: "Haese IB AA HL – Ch 14: Complex Numbers (Polar and Advanced)",
+    detail: "Complex plane, modulus and argument, geometry in the complex plane, polar and Euler forms, De Moivre’s theorem and roots of complex numbers.",
+    url: ""
+  },
+  {
+    id: "tb-47",
+    label: "Haese IB AA HL – Ch 15: Limits",
+    detail: "Limit concepts, existence of limits, limits at infinity, trigonometric limits, continuity and introductory analysis with limits.",
+    url: ""
+  },
+  {
+    id: "tb-48",
+    label: "Haese IB AA HL – Ch 16: Introduction to Differential Calculus",
+    detail: "Rates of change, instantaneous rate, gradient of a tangent, derivative function, differentiation from first principles and differentiability.",
+    url: ""
+  },
+  {
+    id: "tb-49",
+    label: "Haese IB AA HL – Ch 17: Rules of Differentiation",
+    detail: "Standard rules, chain, product and quotient rules, derivatives of exponential, logarithmic and trigonometric functions, higher derivatives and implicit differentiation.",
+    url: ""
+  },
+
+  // -------------------- Haese Core HL – Core topics --------------------
+
+  {
+    id: "tb-50",
+    label: "Haese Core HL – Ch 1: Straight Lines",
+    detail: "Lines in the Cartesian plane, graphing straight lines, perpendicular bisectors, simultaneous equations and review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-51",
+    label: "Haese Core HL – Ch 2: Sets and Venn Diagrams",
+    detail: "Set notation, unions and intersections, complements, special number sets, interval notation, Venn diagrams and problem solving.",
+    url: ""
+  },
+  {
+    id: "tb-52",
+    label: "Haese Core HL – Ch 3: Surds and Exponents",
+    detail: "Surds and radicals, division by surds, exponents and exponent laws, scientific notation and related exercises.",
+    url: ""
+  },
+  {
+    id: "tb-53",
+    label: "Haese Core HL – Ch 4: Equations",
+    detail: "Power equations, factored equations, quadratic equations, solving polynomial and other equations including technology use.",
+    url: ""
+  },
+  {
+    id: "tb-54",
+    label: "Haese Core HL – Ch 5: Sequences and Series",
+    detail: "Number patterns, arithmetic and geometric sequences, growth and decay, financial maths, finite and infinite series and review.",
+    url: ""
+  },
+  {
+    id: "tb-55",
+    label: "Haese Core HL – Ch 6: Measurement",
+    detail: "Circles, arcs and sectors, surface area, volume and capacity with mixed applications and review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-56",
+    label: "Haese Core HL – Ch 7: Right Angled Triangle Trigonometry",
+    detail: "Trig ratios, inverse trig ratios, right triangles in geometry, problem solving with trigonometry, bearings and angles between line and plane.",
+    url: ""
+  },
+  {
+    id: "tb-57",
+    label: "Haese Core HL – Ch 8: The Unit Circle and Radian Measure",
+    detail: "Radian measure, arc length and sector area, unit circle, key angles, Pythagorean identity, angle finding and straight line connections.",
+    url: ""
+  },
+  {
+    id: "tb-58",
+    label: "Haese Core HL – Ch 9: Non-Right Angled Triangle Trigonometry",
+    detail: "Area of a triangle, sine and cosine rules, non-right-angled trigonometry problems and review sets.",
+    url: ""
+  },
+  {
+    id: "tb-59",
+    label: "Haese Core HL – Ch 10: Points in Space",
+    detail: "3D coordinate geometry, measurement and trigonometry in space including review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-60",
+    label: "Haese Core HL – Ch 11: Probability",
+    detail: "Experimental probability, two-way tables, sample spaces, theoretical probability, addition law, independence, conditional probability and Bayes’ theorem.",
+    url: ""
+  },
+  {
+    id: "tb-61",
+    label: "Haese Core HL – Ch 12: Sampling and Data",
+    detail: "Sampling errors and methods, designing surveys, data types, simple and grouped discrete data, continuous data and review.",
+    url: ""
+  },
+  {
+    id: "tb-62",
+    label: "Haese Core HL – Ch 13: Statistics",
+    detail: "Measures of centre and spread, frequency tables, grouped data, range, IQR, outliers, box plots, cumulative frequency, variance and standard deviation.",
+    url: ""
+  },
+  {
+    id: "tb-63",
+    label: "Haese Core HL – Ch 14: Quadratic Functions",
+    detail: "Quadratic functions and graphs, discriminant, finding equations from graphs, intersections, optimisation and inequalities.",
+    url: ""
+  },
+  {
+    id: "tb-64",
+    label: "Haese Core HL – Ch 15: Functions",
+    detail: "Relations and functions, notation, domain and range, rational, composite and inverse functions, with applications and review.",
+    url: ""
+  },
+  {
+    id: "tb-65",
+    label: "Haese Core HL – Ch 16: Transformations of Functions",
+    detail: "Translations, stretches, reflections, miscellaneous transformations and graphs of y = 1/f(x) with review exercises.",
+    url: ""
+  },
+  {
+    id: "tb-66",
+    label: "Haese Core HL – Ch 17: Trigonometric Functions",
+    detail: "Periodic behaviour, sine and cosine functions, general sinusoidal models, fitting data, tangent function, trig equations and modelling.",
+    url: ""
   }
     ];
