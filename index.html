@@ -51,9 +51,28 @@
       </div> -->
       <div class="header-actions">
         <span id="summaryLabel"></span>
-        <button id="themeToggleBtn" title="Toggle light/dark mode">
-          ☀ Light mode
-        </button>
+<div class="top-controls">
+  <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
+
+  <!-- NEW: Course filter -->
+  <label for="classFilterSelect" class="course-label">Course:</label>
+  <select id="classFilterSelect" class="course-select">
+    <option value="AA_SL">AA SL</option>
+    <option value="AA_HL">AA HL</option>
+    <option value="AI_SL">AI SL</option>
+    <option value="AI_HL">AI HL</option>
+  </select>
+
+  <!-- existing buttons -->
+  <button id="resetLayoutBtn" type="button">Reset layout</button>
+  <button id="cleanPlannerBtn" type="button">Clean planner</button>
+  <button id="newResourceBtn" type="button">New resource</button>
+  <button id="exportBtn" type="button">Export JSON</button>
+  <button id="importBtn" type="button">Import JSON</button>
+  <input id="importFileInput" type="file" accept="application/json" style="display:none" />
+</div>
+
+        
         <button id="exportBtn" title="Export planner as JSON">
           ⭳ Export JSON
         </button>
