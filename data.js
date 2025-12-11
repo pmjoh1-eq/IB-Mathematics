@@ -23,6 +23,12 @@
     topic: "Number and Algebra",
     text: "Apply geometric sequences to financial situations, including compound interest $A = P(1+r)^n$ and depreciation problems."
   },
+    {
+    id: "AA_1-5",
+    section: "1.5",
+    topic: "Number and Algebra",
+    text: "Laws of exponents with integer exponents.  Introduction to logarithms with base 10 and $e$.  Numerical evaluation of logarithms using technology"
+  },
   {
     id: "AA_1-6",
     section: "1.6",
