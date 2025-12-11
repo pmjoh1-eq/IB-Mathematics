@@ -1,489 +1,489 @@
- const SYLLABUS_OBJECTIVES = [
+ const SYLLABUS_OBJECTIVES =[
   {
-    id: "AA_1-1",
-    section: "1.1",
-    topic: "Number and Algebra",
-    text: "Perform operations with numbers written in the form $a \\times 10^k$, where $1 \\le a < 10$ and $k \\in \\mathbb{Z}$."
+    "id": "AA_SL_1-1",
+    "section": "AA SL 1.1",
+    "topic": "AA SL Number and Algebra",
+    "text": "Operations with numbers in the form $a \\times 10^k$ where $1 \\le a < 10$ and $k$ is an integer."
   },
   {
-    id: "AA_1-2",
-    section: "1.2",
-    topic: "Number and Algebra",
-    text: "Use formulas for the $n$th term and the sum of the first $n$ terms of arithmetic sequences; express sums using $\\Sigma$ notation and interpret arithmetic models in context."
+    "id": "AA_SL_1-2",
+    "section": "AA SL 1.2",
+    "topic": "AA SL Number and Algebra",
+    "text": "Arithmetic sequences and series; use of the formulae for the $n$\\text{th} term and the sum of the first $n$ terms; sigma notation; applications and real-life modelling."
   },
   {
-    id: "AA_1-3",
-    section: "1.3",
-    topic: "Number and Algebra",
-    text: "Use formulas for the $n$th term and sum of the first $n$ terms of geometric sequences; use $\\Sigma$ notation and apply geometric models to real situations."
+    "id": "AA_SL_1-3",
+    "section": "AA SL 1.3",
+    "topic": "AA SL Number and Algebra",
+    "text": "Geometric sequences and series; formulae for the $n$\\text{th} term and sum; sigma notation; applications."
   },
   {
-    id: "AA_1-4",
-    section: "1.4",
-    topic: "Number and Algebra",
-    text: "Apply geometric sequences to financial situations, including compound interest $A = P(1+r)^n$ and depreciation problems."
+    "id": "AA_SL_1-4",
+    "section": "AA SL 1.4",
+    "topic": "AA SL Number and Algebra",
+    "text": "Financial applications: compound interest and depreciation."
   },
-    {
-    id: "AA_1-5",
-    section: "1.5",
-    topic: "Number and Algebra",
-    text: "Laws of exponents with integer exponents.  Introduction to logarithms with base 10 and $e$.  Numerical evaluation of logarithms using technology"
+  {
+    "id": "AA_SL_1-5",
+    "section": "AA SL 1.5",
+    "topic": "AA SL Number and Algebra",
+    "text": "Laws of exponents (integer exponents); introduction to logarithms (base 10 and $e$); numerical evaluation using technology."
+  },
+  {
+    "id": "AA_SL_1-6",
+    "section": "AA SL 1.6",
+    "topic": "AA SL Number and Algebra",
+    "text": "Simple deductive proof; LHS to RHS structure; equality and identity notation."
+  },
+  {
+    "id": "AA_SL_1-7",
+    "section": "AA SL 1.7",
+    "topic": "AA SL Number and Algebra",
+    "text": "Exponents and logarithms; rational exponents; laws of logarithms; change of base; solving exponential equations."
   },
   {
-    id: "AA_1-6",
-    section: "1.6",
-    topic: "Number and Algebra",
-    text: "Set out simple numerical and algebraic proofs from LHS to RHS; use correct notation for equality $(=)$ and identity $(\\equiv)$."
+    "id": "AA_SL_1-8",
+    "section": "AA SL 1.8",
+    "topic": "AA SL Number and Algebra",
+    "text": "Sum of infinite convergent geometric sequences."
   },
   {
-    id: "AA_1-7",
-    section: "1.7",
-    topic: "Number and Algebra",
-    text: "Use laws of logarithms: $\\log_a(xy) = \\log_a x + \\log_a y$, $\\log_a(x/y) = \\log_a x - \\log_a y$, $\\log_a(x^m) = m\\log_a x$, and the change-of-base formula $\\log_a x = \\dfrac{\\log_b x}{\\log_b a}$ to solve exponential equations."
+    "id": "AA_SL_1-9",
+    "section": "AA SL 1.9",
+    "topic": "AA SL Number and Algebra",
+    "text": "Binomial theorem; Pascal's triangle; combinations ${n \\choose r}$."
   },
   {
-    id: "AA_1-8",
-    section: "1.8",
-    topic: "Number and Algebra",
-    text: "Work with infinite convergent geometric series and use the sum formula $S = \\dfrac{a}{1-r}$ for $|r| < 1$."
+    "id": "AA_HL_1-10",
+    "section": "AA HL 1.10",
+    "topic": "AA HL Number and Algebra",
+    "text": "Counting principles: permutations and combinations; binomial theorem for fractional or negative indices."
   },
   {
-    id: "AA_1-9",
-    section: "1.9",
-    topic: "Number and Algebra",
-    text: "Expand $(a+b)^n$ for $n \\in \\mathbb{N}$ using the binomial theorem, Pascal’s triangle, and binomial coefficients $\\binom{n}{r}$."
+    "id": "AA_HL_1-11",
+    "section": "AA HL 1.11",
+    "topic": "AA HL Number and Algebra",
+    "text": "Partial fractions."
   },
   {
-    id: "AA_1-10",
-    section: "1.10",
-    topic: "Number and Algebra",
-    text: "Apply basic counting principles, permutations and combinations in selection and arrangement problems; extend binomial expansions to rational or negative indices $(a+b)^n$, $n \\in \\mathbb{Q}$."
+    "id": "AA_HL_1-12",
+    "section": "AA HL 1.12",
+    "topic": "AA HL Number and Algebra",
+    "text": "Complex numbers (introduction): definition of $i$; Cartesian form $z = a + bi$; real and imaginary parts, conjugate, modulus, argument; complex plane."
   },
   {
-    id: "AA_1-11",
-    section: "1.11",
-    topic: "Number and Algebra",
-    text: "Decompose rational expressions into partial fractions to simplify expressions and prepare for integration."
+    "id": "AA_HL_1-13",
+    "section": "AA HL 1.13",
+    "topic": "AA HL Number and Algebra",
+    "text": "Modulus-argument (polar) form; Euler form; sums, products, and quotients in all forms with geometric interpretation."
   },
   {
-    id: "AA_1-12",
-    section: "1.12",
-    topic: "Number and Algebra",
-    text: "Work with complex numbers $z = a + bi$, $i^2 = -1$; identify real and imaginary parts, modulus and argument; represent complex numbers in the Argand plane."
+    "id": "AA_HL_1-14",
+    "section": "AA HL 1.14",
+    "topic": "AA HL Number and Algebra",
+    "text": "Complex conjugate roots; De Moivre's theorem; powers and roots of complex numbers."
   },
   {
-    id: "AA_1-13",
-    section: "1.13",
-    topic: "Number and Algebra",
-    text: "Express complex numbers in polar form $z = r(\\cos\\theta + i\\sin\\theta) = r\\,\\text{cis}\\,\\theta$ and exponential form $z = re^{i\\theta}$; perform operations (addition, multiplication, division) in Cartesian and polar form and interpret them geometrically."
+    "id": "AA_HL_1-15",
+    "section": "AA HL 1.15",
+    "topic": "AA HL Number and Algebra",
+    "text": "Proof by induction and contradiction; use of counterexamples."
   },
   {
-    id: "AA_1-15",
-    section: "1.15",
-    topic: "Number and Algebra",
-    text: "Use proof techniques including mathematical induction, proof by contradiction, and counterexamples to test general statements."
+    "id": "AA_HL_1-16",
+    "section": "AA HL 1.16",
+    "topic": "AA HL Number and Algebra",
+    "text": "Systems of linear equations (up to 3 variables); unique, infinite, or no solutions."
   },
   {
-    id: "AA_1-16",
-    section: "1.16",
-    topic: "Number and Algebra",
-    text: "Solve systems of up to three linear equations in three unknowns; classify solution sets as unique, infinitely many, or none."
+    "id": "AA_SL_2-1",
+    "section": "AA SL 2.1",
+    "topic": "AA SL Functions",
+    "text": "Different forms of the equation of a straight line; gradient and intercepts; parallel lines ($m_1 = m_2$) and perpendicular lines ($m_1 m_2 = -1$)."
   },
-
-  /* --------------------------- TOPIC 2: FUNCTIONS --------------------------- */
-
   {
-    id: "AA_2-1",
-    section: "2.1",
-    topic: "Functions",
-    text: "Use different forms of linear equations such as $y = mx + c$; recognise that parallel lines have equal gradients and perpendicular lines satisfy $m_1 m_2 = -1$."
+    "id": "AA_SL_2-2",
+    "section": "AA SL 2.2",
+    "topic": "AA SL Functions",
+    "text": "Concept of a function: domain, range, and graph; function notation; modelling with functions; inverse functions and reflection in $y = x$."
   },
   {
-    id: "AA_2-2",
-    section: "2.2",
-    topic: "Functions",
-    text: "Understand the concept of a function, its domain and range; use function notation (e.g. $f(x)$, $v(t)$); view functions as mathematical models; interpret inverse functions as reflections in the line $y = x$."
+    "id": "AA_SL_2-3",
+    "section": "AA SL 2.3",
+    "topic": "AA SL Functions",
+    "text": "Graphing functions: sketches from context; graphs using technology; graphing sums and differences of functions."
   },
   {
-    id: "AA_2-3",
-    section: "2.3",
-    topic: "Functions",
-    text: "Interpret and sketch graphs of $y = f(x)$ from descriptions, tables, or contexts; use technology to graph functions and combinations such as $f(x) + g(x)$."
+    "id": "AA_SL_2-4",
+    "section": "AA SL 2.4",
+    "topic": "AA SL Functions",
+    "text": "Key features of graphs; intersections using technology; composite and inverse functions; identity function."
   },
   {
-    id: "AA_2-4",
-    section: "2.4",
-    topic: "Functions",
-    text: "Determine key graph features, including intersections of curves or lines, using analytical methods and technology."
+    "id": "AA_SL_2-6",
+    "section": "AA SL 2.6",
+    "topic": "AA SL Functions",
+    "text": "Quadratic functions and graph forms: standard form $f(x) = ax^2 + bx + c$; factor form $f(x) = a(x - p)(x - q)$; vertex form $f(x) = a(x - h)^2 + k$."
   },
   {
-    id: "AA_2-5",
-    section: "2.5",
-    topic: "Functions",
-    text: "Form composite functions $(f \\circ g)(x) = f(g(x))$ and work with inverse functions $f^{-1}(x)$ satisfying $(f \\circ f^{-1})(x) = x$ where appropriate."
+    "id": "AA_SL_2-7",
+    "section": "AA SL 2.7",
+    "topic": "AA SL Functions",
+    "text": "Solving quadratic equations and inequalities; discriminant $\\Delta = b^2 - 4ac$; reciprocal function and its self-inverse nature; rational functions $f(x) = \\dfrac{ax + b}{cx + d}$ and asymptotes."
   },
   {
-    id: "AA_2-6",
-    section: "2.6",
-    topic: "Functions",
-    text: "Represent quadratic functions in standard $ax^2 + bx + c$, factor, and vertex form; identify $y$-intercept, axis of symmetry, and vertex from these forms."
+    "id": "AA_SL_2-9",
+    "section": "AA SL 2.9",
+    "topic": "AA SL Functions",
+    "text": "Exponential and logarithmic functions: $f(x) = a^x$, $f(x) = e^x$, $f(x) = \\log_a x$, $f(x) = \\ln x$."
   },
   {
-    id: "AA_2-7",
-    section: "2.7",
-    topic: "Functions",
-    text: "Solve quadratic equations and inequalities using the quadratic formula $x = \\dfrac{-b \\pm \\sqrt{\\Delta}}{2a}$, where $\\Delta = b^2 - 4ac$, and interpret the discriminant to determine the nature of roots."
+    "id": "AA_SL_2-10",
+    "section": "AA SL 2.10",
+    "topic": "AA SL Functions",
+    "text": "Solving equations graphically and analytically; use of technology; real-life applications."
   },
   {
-    id: "AA_2-8",
-    section: "2.8",
-    topic: "Functions",
-    text: "Work with reciprocal functions such as $f(x) = 1/x$ and general rational functions $f(x) = \\dfrac{ax + b}{cx + d}$; identify key features including asymptotes."
+    "id": "AA_SL_2-11",
+    "section": "AA SL 2.11",
+    "topic": "AA SL Functions",
+    "text": "Graph transformations: translations and reflections; vertical and horizontal stretches; composite transformations."
   },
   {
-    id: "AA_2-9",
-    section: "2.9",
-    topic: "Functions",
-    text: "Understand and use exponential functions $f(x) = a^x$, $f(x) = e^x$ and logarithmic functions $f(x) = \\log_a x$, $f(x) = \\ln x$ in modelling situations."
+    "id": "AA_HL_2-12",
+    "section": "AA HL 2.12",
+    "topic": "AA HL Functions",
+    "text": "Polynomial functions: graphs, equations, zeros, and roots; factor and remainder theorems; sum and product of roots."
   },
   {
-    id: "AA_2-10",
-    section: "2.10",
-    topic: "Functions",
-    text: "Solve equations graphically and algebraically, including with technology, and interpret solutions in context."
+    "id": "AA_HL_2-13",
+    "section": "AA HL 2.13",
+    "topic": "AA HL Functions",
+    "text": "Rational functions."
   },
   {
-    id: "AA_2-11",
-    section: "2.11",
-    topic: "Functions",
-    text: "Apply graph transformations: vertical and horizontal translations, reflections in axes, and stretches/compressions; combine transformations in sequence."
+    "id": "AA_HL_2-14",
+    "section": "AA HL 2.14",
+    "topic": "AA HL Functions",
+    "text": "Odd and even functions; inverse functions with domain restrictions; self-inverse functions."
   },
   {
-    id: "AA_2-12",
-    section: "2.12",
-    topic: "Functions",
-    text: "Analyse polynomial functions: roots/zeros, factors, and their graphs; use factor and remainder theorems; relate sums and products of roots to coefficients."
+    "id": "AA_HL_2-15",
+    "section": "AA HL 2.15",
+    "topic": "AA HL Functions",
+    "text": "Solving inequalities of the form $g(x) \\ge f(x)$ using graphical and analytical methods."
   },
   {
-    id: "AA_2-13",
-    section: "2.13",
-    topic: "Functions",
-    text: "Study rational functions such as $f(x) = \\dfrac{ax + b}{cx^2 + dx + e}$ and $f(x) = \\dfrac{ax^2 + bx + c}{dx + e}$; identify asymptotes and graph behaviour."
+    "id": "AA_HL_2-16",
+    "section": "AA HL 2.16",
+    "topic": "AA HL Functions",
+    "text": "Modulus equations and inequalities."
   },
   {
-    id: "AA_2-14",
-    section: "2.14",
-    topic: "Functions",
-    text: "Recognise odd and even functions; find and interpret inverse functions, including domain restrictions; work with self-inverse functions."
+    "id": "AA_SL_3-1",
+    "section": "AA SL 3.1",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Distance and midpoint in 3D space; volume and surface area of 3D solids (pyramids, cones, spheres, hemispheres, and combinations); angle between lines and between a line and a plane."
   },
   {
-    id: "AA_2-15",
-    section: "2.15",
-    topic: "Functions",
-    text: "Solve inequalities such as $g(x) \\ge f(x)$ using graphical and algebraic methods."
+    "id": "AA_SL_3-2",
+    "section": "AA SL 3.2",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Sine, cosine, and tangent ratios; sine and cosine rules; area of a triangle."
   },
   {
-    id: "AA_2-16",
-    section: "2.16",
-    topic: "Functions",
-    text: "Work with special graphs and transformations such as $y = |f(x)|$, $y = f(|x|)$, $y = \\dfrac{1}{f(x)}$, $y = f(ax + b)$, and $y = (f(x))^2$."
+    "id": "AA_SL_3-3",
+    "section": "AA SL 3.3",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Applications of trigonometry in right and non-right triangles; Pythagoras's theorem; angles of elevation and depression; constructing labelled diagrams."
   },
-
-  /* -------------------- TOPIC 3: GEOMETRY & TRIGONOMETRY -------------------- */
-
   {
-    id: "AA_3-1",
-    section: "3.1",
-    topic: "Geometry and Trigonometry",
-    text: "Find volume and surface area of solids (right pyramids, cones, spheres, hemispheres, and combinations); determine angles between two lines or between a line and a plane."
+    "id": "AA_SL_3-4",
+    "section": "AA SL 3.4",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "The circle; radian measure of angles; arc length and sector area."
   },
   {
-    id: "AA_3-2",
-    section: "3.2",
-    topic: "Geometry and Trigonometry",
-    text: "Use right-angled trigonometry (sine, cosine, tangent); apply sine rule $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B} = \\dfrac{c}{\\sin C}$, cosine rule $c^2 = a^2 + b^2 - 2ab\\cos C$, and area formula $\\tfrac12 ab\\sin C$."
+    "id": "AA_SL_3-5",
+    "section": "AA SL 3.5",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Definitions of $\\sin \\theta$ and $\\cos \\theta$ using the unit circle; definition of $\\tan \\theta = \\dfrac{\\sin \\theta}{\\cos \\theta}$; ambiguous case in the sine rule."
   },
   {
-    id: "AA_3-3",
-    section: "3.3",
-    topic: "Geometry and Trigonometry",
-    text: "Apply trigonometry to real problems, including Pythagoras, angles of elevation and depression; construct labelled diagrams from word descriptions."
+    "id": "AA_SL_3-6",
+    "section": "AA SL 3.6",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Pythagorean identity $\\cos^2 \\theta + \\sin^2 \\theta = 1$; double angle identities for sine and cosine; relationships between trigonometric ratios."
   },
   {
-    id: "AA_3-4",
-    section: "3.4",
-    topic: "Geometry and Trigonometry",
-    text: "Use radian measure; compute arc length $s = r\\theta$ and sector area $A = \\tfrac12 r^2 \\theta$."
+    "id": "AA_SL_3-7",
+    "section": "AA SL 3.7",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Circular functions $\\sin x$, $\\cos x$, $\\tan x$; amplitude, periodic nature, and graphs; forms such as $f(x) = a\\sin(b(x + c)) + d$ and related transformations."
   },
   {
-    id: "AA_3-5",
-    section: "3.5",
-    topic: "Geometry and Trigonometry",
-    text: "Define $\\sin\\theta$ and $\\cos\\theta$ on the unit circle; use $\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$; handle the ambiguous case of the sine rule."
+    "id": "AA_SL_3-8",
+    "section": "AA SL 3.8",
+    "topic": "AA SL Geometry and Trigonometry",
+    "text": "Solving trigonometric equations in a finite interval using graphical and analytical methods, including quadratic forms involving $\\sin x$, $\\cos x$, or $\\tan x$."
   },
   {
-    id: "AA_3-6",
-    section: "3.6",
-    topic: "Geometry and Trigonometry",
-    text: "Use identities such as $\\sin^2 \\theta + \\cos^2 \\theta = 1$; apply double-angle and other basic trig identities; reason about sign and values of trig functions in different quadrants."
+    "id": "AA_HL_3-9",
+    "section": "AA HL 3.9",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Reciprocal trigonometric ratios: $\\sec \\theta$, $\\csc \\theta$, $\\cot \\theta$; Pythagorean identities; inverse trigonometric functions $\\arcsin$, $\\arccos$, $\\arctan$; graphs, domains, and ranges."
   },
   {
-    id: "AA_3-7",
-    section: "3.7",
-    topic: "Geometry and Trigonometry",
-    text: "Sketch graphs of $\\sin x$, $\\cos x$, $\\tan x$ and related functions; identify amplitude, period, and phase shift."
+    "id": "AA_HL_3-10",
+    "section": "AA HL 3.10",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Compound angle identities; double angle identity for $\\tan$."
   },
   {
-    id: "AA_3-8",
-    section: "3.8",
-    topic: "Geometry and Trigonometry",
-    text: "Solve trigonometric equations in given intervals and interpret solutions; use technology where appropriate."
+    "id": "AA_HL_3-11",
+    "section": "AA HL 3.11",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Trigonometric function relationships and symmetry properties of graphs."
   },
   {
-    id: "AA_3-12",
-    section: "3.12",
-    topic: "Geometry and Trigonometry",
-    text: "Understand vectors in 2D and 3D: components, magnitude $|\\mathbf{v}|$, unit vectors, position and displacement vectors; perform vector addition, subtraction, and scalar multiplication; prove geometric results using vectors."
+    "id": "AA_HL_3-12",
+    "section": "AA HL 3.12",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Vectors: position and displacement; representation with line segments; base vectors $\\mathbf{i}, \\mathbf{j}, \\mathbf{k}$; components and magnitude; geometric proofs with vectors."
   },
   {
-    id: "AA_3-13",
-    section: "3.13",
-    topic: "Geometry and Trigonometry",
-    text: "Work with the scalar (dot) product $\\mathbf{a}\\cdot\\mathbf{b}$; find the angle between two vectors; determine conditions for perpendicularity and parallelism."
+    "id": "AA_HL_3-13",
+    "section": "AA HL 3.13",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Scalar product (dot product); angle between vectors; perpendicular and parallel vectors."
   },
   {
-    id: "AA_3-14",
-    section: "3.14",
-    topic: "Geometry and Trigonometry",
-    text: "Use vector equations of lines in 2D and 3D, $\\mathbf{r} = \\mathbf{a} + \\lambda\\mathbf{b}$; find angles between lines; apply to simple kinematics problems."
+    "id": "AA_HL_3-14",
+    "section": "AA HL 3.14",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Vector equation of a line $\\mathbf{r} = \\mathbf{a} + \\lambda \\mathbf{b}$; angles between lines; applications in kinematics."
   },
   {
-    id: "AA_3-15",
-    section: "3.15",
-    topic: "Geometry and Trigonometry",
-    text: "Classify pairs of lines in space as coincident, parallel, intersecting, or skew; find intersection points where they exist."
+    "id": "AA_HL_3-15",
+    "section": "AA HL 3.15",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Coincident, parallel, intersecting, and skew lines; points of intersection."
   },
   {
-    id: "AA_3-16",
-    section: "3.16",
-    topic: "Geometry and Trigonometry",
-    text: "Use the vector (cross) product $\\mathbf{v} \\times \\mathbf{w}$; know its properties and interpret $|\\mathbf{v} \\times \\mathbf{w}|$ geometrically (area of parallelogram)."
+    "id": "AA_HL_3-16",
+    "section": "AA HL 3.16",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Vector product (cross product) $\\mathbf{v} \\times \\mathbf{w}$; properties and geometric meaning of $\\lvert \\mathbf{v} \\times \\mathbf{w} \\rvert$."
   },
   {
-    id: "AA_3-17",
-    section: "3.17",
-    topic: "Geometry and Trigonometry",
-    text: "Write vector equations of planes: $\\mathbf{r} = \\mathbf{a} + \\lambda\\mathbf{b} + \\mu\\mathbf{c}$ and $\\mathbf{r} \\cdot \\mathbf{n} = \\mathbf{a} \\cdot \\mathbf{n}$; use the Cartesian plane equation $ax + by + cz = d$."
+    "id": "AA_HL_3-17",
+    "section": "AA HL 3.17",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Vector and Cartesian equations of a plane: vector equation $\\mathbf{r} = \\mathbf{a} + \\lambda \\mathbf{b} + \\mu \\mathbf{c}$ and $\\mathbf{r} \\cdot \\mathbf{n} = \\mathbf{a} \\cdot \\mathbf{n}$; Cartesian form $ax + by + cz = d$."
   },
   {
-    id: "AA_3-18",
-    section: "3.18",
-    topic: "Geometry and Trigonometry",
-    text: "Find intersections of a line with a plane, of two planes, or three planes; compute angles between a line and a plane or between two planes."
+    "id": "AA_HL_3-18",
+    "section": "AA HL 3.18",
+    "topic": "AA HL Geometry and Trigonometry",
+    "text": "Intersections of a line and a plane, of two planes, and of three planes; angles between a line and a plane and between two planes."
   },
-
-  /* -------------------- TOPIC 4: STATISTICS & PROBABILITY -------------------- */
-
   {
-    id: "AA_4-1",
-    section: "4.1",
-    topic: "Statistics and Probability",
-    text: "Distinguish population and sample; identify random samples, discrete and continuous data; discuss reliability, bias, outliers, and sampling techniques."
+    "id": "AA_SL_4-1",
+    "section": "AA SL 4.1",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Population, sample, and random sample; discrete and continuous data; bias and reliability; outliers and sampling techniques."
   },
   {
-    id: "AA_4-2",
-    section: "4.2",
-    topic: "Statistics and Probability",
-    text: "Present data using frequency tables, histograms, and cumulative frequency graphs; use these to find median, quartiles, percentiles, range, and IQR; construct box-and-whisker plots."
+    "id": "AA_SL_4-2",
+    "section": "AA SL 4.2",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Data presentation: frequency tables and histograms; cumulative frequency and graphs; finding the median, quartiles, percentiles, range, and IQR; box and whisker diagrams."
   },
   {
-    id: "AA_4-3",
-    section: "4.3",
-    topic: "Statistics and Probability",
-    text: "Calculate and interpret mean, median, mode; estimate mean from grouped data; identify modal class; compute IQR, standard deviation, and variance; study effects of linear transformations."
+    "id": "AA_SL_4-3",
+    "section": "AA SL 4.3",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Central tendency: mean, median, mode; estimation from grouped data; modal class; dispersion: IQR, standard deviation, variance; effects of constant changes; quartiles of discrete data."
   },
   {
-    id: "AA_4-4",
-    section: "4.4",
-    topic: "Statistics and Probability",
-    text: "Analyse bivariate data with scatter diagrams; calculate Pearson’s correlation coefficient $r$; draw line of best fit by eye; interpret the regression line of $y$ on $x$."
+    "id": "AA_SL_4-4",
+    "section": "AA SL 4.4",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Linear correlation and Pearson's correlation; scatter plots and lines of best fit; regression line of $y$ on $x$; prediction and interpretation of parameters $a$ and $b$ in $y = ax + b$."
   },
   {
-    id: "AA_4-5",
-    section: "4.5",
-    topic: "Statistics and Probability",
-    text: "Use basic probability concepts: trials, outcomes, equally likely outcomes, sample space $U$, events; compute $P(A) = \\dfrac{n(A)}{n(U)}$; work with complements $A'$ and expected frequency."
+    "id": "AA_SL_4-5",
+    "section": "AA SL 4.5",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Trial, outcome, and relative frequency; sample space and event; complementary events; expected occurrences."
   },
   {
-    id: "AA_4-6",
-    section: "4.6",
-    topic: "Statistics and Probability",
-    text: "Use Venn diagrams, tree diagrams, sample space diagrams, and two-way tables; apply $P(A \\cup B)$, $P(A \\cap B)$; work with mutually exclusive events, conditional probability $P(A|B) = \\dfrac{P(A \\cap B)}{P(B)}$, and independence $P(A \\cap B) = P(A)P(B)$."
+    "id": "AA_SL_4-6",
+    "section": "AA SL 4.6",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Venn, tree, and sample space diagrams; combined events; mutually exclusive, conditional, and independent events."
   },
   {
-    id: "AA_4-7",
-    section: "4.7",
-    topic: "Statistics and Probability",
-    text: "Define discrete random variables; work with probability distributions and expected value $E(X)$ in applied contexts."
+    "id": "AA_SL_4-7",
+    "section": "AA SL 4.7",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Discrete random variables and distributions; expected value (mean); applications."
   },
   {
-    id: "AA_4-8",
-    section: "4.8",
-    topic: "Statistics and Probability",
-    text: "Use the binomial distribution; compute its mean and variance; identify suitable binomial modelling situations."
+    "id": "AA_SL_4-8",
+    "section": "AA SL 4.8",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Binomial distribution; mean and variance."
   },
   {
-    id: "AA_4-9",
-    section: "4.9",
-    topic: "Statistics and Probability",
-    text: "Use the normal distribution: understand shape and properties; perform normal probability and inverse normal calculations."
+    "id": "AA_SL_4-9",
+    "section": "AA SL 4.9",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Normal distribution curve; properties and diagrams; normal and inverse normal calculations."
   },
   {
-    id: "AA_4-10",
-    section: "4.10",
-    topic: "Statistics and Probability",
-    text: "Work with the regression line of $x$ on $y$ for prediction; interpret results appropriately."
+    "id": "AA_SL_4-10",
+    "section": "AA SL 4.10",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Regression line of $x$ on $y$ and its use for predictions."
   },
   {
-    id: "AA_4-11",
-    section: "4.11",
-    topic: "Statistics and Probability",
-    text: "Use formal conditional probability $P(A|B) = \\dfrac{P(A \\cap B)}{P(B)}$; characterise independence via $P(A|B) = P(A)$ and related conditions."
+    "id": "AA_SL_4-11",
+    "section": "AA SL 4.11",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Conditional probability; conditional probabilities; independent events."
   },
   {
-    id: "AA_4-12",
-    section: "4.12",
-    topic: "Statistics and Probability",
-    text: "Standardise normal variables; compute $z$-scores and use inverse normal methods, including when mean or standard deviation is unknown."
+    "id": "AA_SL_4-12",
+    "section": "AA SL 4.12",
+    "topic": "AA SL Statistics and Probability",
+    "text": "Standardization and the normal distribution; standardization ($z$-values); inverse normal with unknown mean or standard deviation."
   },
   {
-    id: "AA_4-13",
-    section: "4.13",
-    topic: "Statistics and Probability",
-    text: "Apply Bayes’ theorem for up to three events and interpret posterior probabilities in context."
+    "id": "AA_HL_4-13",
+    "section": "AA HL 4.13",
+    "topic": "AA HL Statistics and Probability",
+    "text": "Bayes' theorem (up to three events)."
   },
   {
-    id: "AA_4-14",
-    section: "4.14",
-    topic: "Statistics and Probability",
-    text: "Compute variance of a discrete random variable; work with continuous random variables and probability density functions; determine mode, median, mean, variance and standard deviation; understand effects of linear transformations of $X$."
+    "id": "AA_HL_4-14",
+    "section": "AA HL 4.14",
+    "topic": "AA HL Statistics and Probability",
+    "text": "Variance of discrete random variables; continuous random variables and density functions; mode and median of continuous random variables; mean, variance, and standard deviation (discrete and continuous); effects of linear transformations of $X$."
   },
-
-  /* --------------------------- TOPIC 5: CALCULUS --------------------------- */
-
   {
-    id: "AA_5-1",
-    section: "5.1",
-    topic: "Calculus",
-    text: "Understand the concept of a limit $\\lim_{x \\to a} f(x)$; interpret the derivative as a gradient function and as a rate of change."
+    "id": "AA_SL_5-1",
+    "section": "AA SL 5.1",
+    "topic": "AA SL Calculus",
+    "text": "Concept of a limit; derivative as gradient function and rate of change."
   },
   {
-    id: "AA_5-2",
-    section: "5.2",
-    topic: "Calculus",
-    text: "Interpret increasing and decreasing functions via the sign of $f'(x)$: $f'(x) > 0$, $f'(x) = 0$, $f'(x) < 0$."
+    "id": "AA_SL_5-2",
+    "section": "AA SL 5.2",
+    "topic": "AA SL Calculus",
+    "text": "Increasing and decreasing functions; interpretation of $f'(x) > 0$, $f'(x) = 0$, $f'(x) < 0$."
   },
   {
-    id: "AA_5-3",
-    section: "5.3",
-    topic: "Calculus",
-    text: "Differentiate polynomial functions such as $f(x) = a x^n + b x^m$, using the power rule."
+    "id": "AA_SL_5-3",
+    "section": "AA SL 5.3",
+    "topic": "AA SL Calculus",
+    "text": "Derivative of $f(x) = ax^n$ is $f'(x) = anx^{n-1}$ for $n \\in \\mathbb{Z}$; derivatives of polynomial functions with integer exponents."
   },
   {
-    id: "AA_5-4",
-    section: "5.4",
-    topic: "Calculus",
-    text: "Find equations of tangents and normals to a curve at a given point."
+    "id": "AA_SL_5-4",
+    "section": "AA SL 5.4",
+    "topic": "AA SL Calculus",
+    "text": "Tangents and normals at a point; equations of tangents and normals."
   },
   {
-    id: "AA_5-5",
-    section: "5.5",
-    topic: "Calculus",
-    text: "Introduce integration as anti-differentiation for functions of the form $f(x) = a x^n + b x^m$; use boundary conditions to find constants; evaluate definite integrals for areas under $y = f(x)$ where $f(x) \\ge 0$."
+    "id": "AA_SL_5-5",
+    "section": "AA SL 5.5",
+    "topic": "AA SL Calculus",
+    "text": "Integration as anti-differentiation; use of boundary conditions; definite integrals with technology; area under the curve $y = f(x)$ for $f(x) > 0$."
   },
   {
-    id: "AA_5-6",
-    section: "5.6",
-    topic: "Calculus",
-    text: "Differentiate elementary functions: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $\\ln x$; apply the chain rule, product rule, and quotient rule, including examples like $\\sin(3x-1)$."
+    "id": "AA_SL_5-6",
+    "section": "AA SL 5.6",
+    "topic": "AA SL Calculus",
+    "text": "Derivatives of $x^n$ (for $n \\in \\mathbb{Q}$), $\\sin x$, $\\cos x$, $e^x$, $\\ln x$; sum, multiple, chain, product, and quotient rules."
   },
   {
-    id: "AA_5-7",
-    section: "5.7",
-    topic: "Calculus",
-    text: "Interpret the second derivative $f''(x)$ and relate it to the behaviour of $f$ and $f'$ (concavity and inflection)."
+    "id": "AA_SL_5-7",
+    "section": "AA SL 5.7",
+    "topic": "AA SL Calculus",
+    "text": "Second derivative; relationship between $f$, $f'$, $f''$ and graphical behavior."
   },
   {
-    id: "AA_5-8",
-    section: "5.8",
-    topic: "Calculus",
-    text: "Find local maxima and minima; solve optimisation problems; identify points of inflection with zero and non-zero gradient."
+    "id": "AA_SL_5-8",
+    "section": "AA SL 5.8",
+    "topic": "AA SL Calculus",
+    "text": "Local maxima and minima; tests for extrema; optimization; points of inflection."
   },
   {
-    id: "AA_5-9",
-    section: "5.9",
-    topic: "Calculus",
-    text: "Apply differentiation and integration to kinematics: displacement $s$, velocity $v$, acceleration $a$, and total distance travelled for motion in one dimension."
+    "id": "AA_SL_5-9",
+    "section": "AA SL 5.9",
+    "topic": "AA SL Calculus",
+    "text": "Kinematics: displacement, velocity, acceleration; total distance travelled."
   },
   {
-    id: "AA_5-10",
-    section: "5.10",
-    topic: "Calculus",
-    text: "Evaluate indefinite integrals of $x^n$ ($n$ rational), $1/x$, $e^x$, and composites with linear functions $ax + b$ using inspection, reverse chain rule, or substitution."
+    "id": "AA_SL_5-10",
+    "section": "AA SL 5.10",
+    "topic": "AA SL Calculus",
+    "text": "Indefinite integrals; composite functions; reverse chain rule."
   },
   {
-    id: "AA_5-11",
-    section: "5.11",
-    topic: "Calculus",
-    text: "Evaluate definite integrals $\\int_a^b f(x)\\,dx$ analytically; interpret as area under curves (with $f(x)$ positive or negative) and area between curves."
+    "id": "AA_SL_5-11",
+    "section": "AA SL 5.11",
+    "topic": "AA SL Calculus",
+    "text": "Definite integrals (analytically); area under curves (positive or negative); area between curves."
   },
   {
-    id: "AA_5-12",
-    section: "5.12",
-    topic: "Calculus",
-    text: "Develop an informal understanding of continuity, differentiability, convergence and divergence; define derivative from first principles $f'(x) = \\lim_{h \\to 0} \\dfrac{f(x+h)-f(x)}{h}$; work with higher derivatives."
+    "id": "AA_HL_5-12",
+    "section": "AA HL 5.12",
+    "topic": "AA HL Calculus",
+    "text": "Continuity and differentiability; convergence and divergence of limits; higher-order derivatives."
   },
   {
-    id: "AA_5-13",
-    section: "5.13",
-    topic: "Calculus",
-    text: "Evaluate limits of the form $\\lim_{x \\to a} \\dfrac{f(x)}{g(x)}$ and $\\lim_{x \\to \\infty} \\dfrac{f(x)}{g(x)}$ using l’Hôpital’s rule and Maclaurin series; apply l’Hôpital repeatedly where needed."
+    "id": "AA_HL_5-13",
+    "section": "AA HL 5.13",
+    "topic": "AA HL Calculus",
+    "text": "Evaluation of limits; repeated use of l'H\\^opital's rule."
   },
   {
-    id: "AA_5-14",
-    section: "5.14",
-    topic: "Calculus",
-    text: "Use implicit differentiation; solve related rates problems; tackle optimisation problems that may involve endpoints."
+    "id": "AA_HL_5-14",
+    "section": "AA HL 5.14",
+    "topic": "AA HL Calculus",
+    "text": "Implicit differentiation; related rates of change; optimization problems."
   },
   {
-    id: "AA_5-15",
-    section: "5.15",
-    topic: "Calculus",
-    text: "Differentiate $\\tan x$, $\\sec x$, $\\csc x$, $\\cot x$, $a^x$, $\\log_a x$, $\\arcsin x$, $\\arccos x$, $\\arctan x$ and linear composites; integrate their derivatives; simplify integrands with partial fractions."
+    "id": "AA_HL_5-15",
+    "section": "AA HL 5.15",
+    "topic": "AA HL Calculus",
+    "text": "Derivatives of $\\tan x$, $\\sec x$, $\\csc x$, $\\cot x$, $a^x$, $\\log_a x$, $\\arcsin x$, $\\arccos x$, $\\arctan x$; indefinite integrals of these functions; composites with linear functions; partial fractions in integrals."
   },
   {
-    id: "AA_5-16",
-    section: "5.16",
-    topic: "Calculus",
-    text: "Use integration techniques including substitution and integration by parts; perform repeated integration by parts where necessary."
+    "id": "AA_HL_5-16",
+    "section": "AA HL 5.16",
+    "topic": "AA HL Calculus",
+    "text": "Integration by substitution; integration by parts (including repeated)."
   },
   {
-    id: "AA_5-17",
-    section: "5.17",
-    topic: "Calculus",
-    text: "Find the area of a region enclosed by a curve and the $y$-axis; compute volumes of revolution about the $x$-axis and $y$-axis."
+    "id": "AA_HL_5-17",
+    "section": "AA HL 5.17",
+    "topic": "AA HL Calculus",
+    "text": "Area under a curve to the $y$-axis; volumes of revolution about the $x$-axis or $y$-axis."
   },
   {
-    id: "AA_5-18",
-    section: "5.18",
-    topic: "Calculus",
-    text: "Solve first-order differential equations: use Euler’s method numerically; solve separable equations and homogeneous equations of the form $\\dfrac{dy}{dx} = f(y/x)$ via $y = vx$; solve linear equations $y' + P(x)y = Q(x)$ with integrating factors."
+    "id": "AA_HL_5-18",
+    "section": "AA HL 5.18",
+    "topic": "AA HL Calculus",
+    "text": "First-order differential equations; Euler's method; separable and homogeneous differential equations; integrating factor method."
   },
   {
-    id: "AA_5-19",
-    section: "5.19",
-    topic: "Calculus",
-    text: "Work with Maclaurin series for $e^x$, $\\sin x$, $\\cos x$, $\\ln(1+x)$, and $(1+x)^p$ ($p$ rational); derive further series using substitution, products, integration, differentiation, or from differential equations."
+    "id": "AA_HL_5-19",
+    "section": "AA HL 5.19",
+    "topic": "AA HL Calculus",
+    "text": "Maclaurin series: expansions for $e^x$, $\\sin x$, $\\cos x$, $\\ln(1 + x)$, $(1 + x)^p$ for $p \\in \\mathbb{Q}$; use of substitution, integration, and differentiation to find other series."
   }
 ];
 
