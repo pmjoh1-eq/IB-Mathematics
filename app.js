@@ -14,7 +14,7 @@ const state = {
   resources: {},
   nextResourceId: 0,
   syllabusTopicFilter: null,
-  textbookBookFilter: null
+  textbookBookFilter: null   // <--- add this
 };
 
 /**********************************************************
@@ -262,21 +262,32 @@ function buildSyllabusTopicTabs() {
 function buildTextbookTabs() {
   const container = document.getElementById("textbookTabs");
   if (!container) return;
+
   container.innerHTML = "";
 
-  const books = Array.from(
-    new Set(
-      TEXTBOOK_REFERENCES
-        .filter((t) => textbookAllowedForCourse(t, state.currentCourse))
-        .map((t) => t.textbook || extractBookNameFromLabel(t.label))
-    )
+  // 1. Collect unique book names from TEXTBOOK_REFERENCES
+  const allBooks = Array.from(
+    new Set(TEXTBOOK_REFERENCES.map((ref) => getBookName(ref)))
   );
 
-  if (!books.includes(state.textbookBookFilter)) {
-    state.textbookBookFilter = books[0] || null;
+  // 2. Filter books based on currentCourse (if NO chapter in that book is allowed, hide the tab)
+  const filteredBooks = allBooks.filter((bookName) =>
+    TEXTBOOK_REFERENCES.some((ref) => {
+      if (getBookName(ref) !== bookName) return false;
+      return textbookAllowedForCourse(ref, state.currentCourse);
+    })
+  );
+
+  // 3. Ensure current textbookBookFilter is valid
+  if (
+    !state.textbookBookFilter ||
+    !filteredBooks.includes(state.textbookBookFilter)
+  ) {
+    state.textbookBookFilter = filteredBooks[0] || null;
   }
 
-  books.forEach((bookName) => {
+  // 4. Build the buttons
+  filteredBooks.forEach((bookName) => {
     const btn = document.createElement("button");
     btn.className =
       "textbook-tab" +
@@ -289,11 +300,11 @@ function buildTextbookTabs() {
         .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderBacklogs();
-      saveState();
     });
     container.appendChild(btn);
   });
 }
+
 
 
 /**********************************************************
@@ -420,9 +431,9 @@ function renderBacklogs() {
   let unplacedTextbook = 0;
   let unplacedResources = 0;
 
-  // Syllabus backlog: placements.length === 0, filtered by course + topic
+  // Syllabus backlog: cards with placements.length === 0, filtered by topic + course (already working)
   SYLLABUS_OBJECTIVES.forEach((obj) => {
-    if (!syllabusMatchesCurrentCourse(obj, state.currentCourse)) return;
+    if (!syllabusAllowedForCourse(obj, state.currentCourse)) return;
     if (obj.topic !== state.syllabusTopicFilter) return;
     if (!cardHasPlacements(obj)) {
       unplacedSyllabus++;
@@ -430,19 +441,25 @@ function renderBacklogs() {
     }
   });
 
-  // Textbook backlog: placements.length === 0, filtered by course + textbook tab
+  // Textbook backlog: unplaced + allowed for course + matches selected textbook tab
   TEXTBOOK_REFERENCES.forEach((ref) => {
     if (!textbookAllowedForCourse(ref, state.currentCourse)) return;
-    const bookName = ref.textbook || extractBookNameFromLabel(ref.label);
-    if (state.textbookBookFilter && bookName !== state.textbookBookFilter)
+
+    const bookName = getBookName(ref);
+    if (
+      state.textbookBookFilter &&
+      bookName !== state.textbookBookFilter
+    ) {
       return;
+    }
+
     if (!cardHasPlacements(ref)) {
       unplacedTextbook++;
       textbookBacklog.appendChild(createCard(ref, "textbook", null));
     }
   });
 
-  // Resource backlog: placements.length === 0 (no course filter)
+  // Resource backlog (unchanged)
   Object.values(state.resources).forEach((res) => {
     if (!cardHasPlacements(res)) {
       unplacedResources++;
@@ -462,6 +479,7 @@ function renderBacklogs() {
 
   retypesetMath();
 }
+
 
 
 function getLanePlacements(term, week, lane) {
@@ -618,6 +636,18 @@ function bookSlug(bookName) {
   return bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
+function getBookName(ref) {
+  // Prefer explicit textbook property if present
+  if (ref && ref.textbook) return ref.textbook;
+
+  // Fallback: extract from label before the first "–"
+  if (ref && ref.label) {
+    const parts = ref.label.split(/–|-/);
+    return (parts[0] || "Textbook").trim();
+  }
+
+  return "Textbook";
+}
 
 function extractBookNameFromLabel(label) {
   try {
