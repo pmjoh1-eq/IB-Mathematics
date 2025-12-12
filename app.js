@@ -3,18 +3,18 @@
  **********************************************************/
 const TERMS = 8;
 const WEEKS_PER_TERM = 10;
-const STORAGE_KEY = "aa-term-planner-topic1-card-centric-v1";
+const STORAGE_KEY = "ib-math-planner-card-centric-v2";
 const THEME_KEY = "aa-planner-theme";
 
 const state = {
   currentTerm: 1,
-  currentCourse: "AA_SL",
-  syllabusById: new Map(),
-  textbookById: new Map(),
-  resources: {},
+  currentCourse: "AA_SL",        // AA_SL, AA_HL, AI_SL, AI_HL
+  syllabusById: new Map(),       // id -> syllabus card (with placements[])
+  textbookById: new Map(),       // id -> textbook card (with placements[])
+  resources: {},                 // id -> { id, title, detail, placements[] }
   nextResourceId: 0,
   syllabusTopicFilter: null,
-  textbookBookFilter: null   // <--- add this
+  textbookBookFilter: null       // which textbook tab is active
 };
 
 /**********************************************************
@@ -57,6 +57,109 @@ function toggleTheme() {
 }
 
 /**********************************************************
+ * COURSE FILTER HELPERS
+ **********************************************************/
+
+function getSyllabusCourseTag(obj) {
+  const s = obj.section || "";
+  const t = obj.topic || "";
+
+  if (s.includes("AA SL") || t.includes("AA SL")) return "AA_SL";
+  if (s.includes("AA HL") || t.includes("AA HL")) return "AA_HL";
+  if (s.includes("AI SL") || t.includes("AI SL")) return "AI_SL";
+  if (s.includes("AI HL") || t.includes("AI HL")) return "AI_HL";
+
+  // Fallback: try a looser match on topic prefix like "AI SL Functions"
+  if (/^AA SL/i.test(t)) return "AA_SL";
+  if (/^AA HL/i.test(t)) return "AA_HL";
+  if (/^AI SL/i.test(t)) return "AI_SL";
+  if (/^AI HL/i.test(t)) return "AI_HL";
+
+  // If unknown, allow by default
+  return null;
+}
+
+function getAllowedSyllabusTagsForCourse(course) {
+  switch (course) {
+    case "AA_SL":
+      return ["AA_SL"];
+    case "AA_HL":
+      return ["AA_SL", "AA_HL"]; // HL includes SL
+    case "AI_SL":
+      return ["AI_SL"];
+    case "AI_HL":
+      return ["AI_SL", "AI_HL"]; // HL includes SL
+    default:
+      return ["AA_SL", "AA_HL", "AI_SL", "AI_HL"];
+  }
+}
+
+function syllabusAllowedForCourse(obj, course) {
+  const tag = getSyllabusCourseTag(obj);
+  if (!tag) return true; // if we can't classify it, don't hide it
+  const allowed = getAllowedSyllabusTagsForCourse(course);
+  return allowed.includes(tag);
+}
+
+// --- Textbooks ---
+
+function getBookName(ref) {
+  if (ref && ref.textbook) return ref.textbook;
+  if (ref && ref.label) {
+    const parts = ref.label.split(/–|-/);
+    return (parts[0] || "Textbook").trim();
+  }
+  return "Textbook";
+}
+
+// Normalise textbook into logical group keys
+function getTextbookGroup(ref) {
+  const name = getBookName(ref);
+
+  if (name.includes("AA HL")) return "AA_HL_BOOK";
+  if (name.includes("AA SL")) return "AA_SL_BOOK";
+  if (name.includes("AI SL")) return "AI_SL_BOOK";
+  if (name.includes("AI HL")) return "AI_HL_BOOK";
+  if (name.includes("Core HL")) return "CORE_HL_BOOK";
+  if (name.includes("Core SL")) return "CORE_SL_BOOK";
+
+  return "OTHER_BOOK";
+}
+
+function getAllowedTextbookGroupsForCourse(course) {
+  switch (course) {
+    case "AA_SL":
+      // Reasonable assumption: AA SL uses AA SL + Core SL
+      return ["AA_SL_BOOK", "CORE_SL_BOOK"];
+    case "AA_HL":
+      // As per your note: Core SL, Core HL, AA SL, AA HL
+      return ["AA_SL_BOOK", "AA_HL_BOOK", "CORE_SL_BOOK", "CORE_HL_BOOK"];
+    case "AI_SL":
+      // As per your note: Core SL + AI SL
+      return ["AI_SL_BOOK", "CORE_SL_BOOK"];
+    case "AI_HL":
+      // Reasonable assumption: Core SL, Core HL, AI SL, AI HL
+      return ["AI_SL_BOOK", "AI_HL_BOOK", "CORE_SL_BOOK", "CORE_HL_BOOK"];
+    default:
+      return [
+        "AA_SL_BOOK",
+        "AA_HL_BOOK",
+        "AI_SL_BOOK",
+        "AI_HL_BOOK",
+        "CORE_SL_BOOK",
+        "CORE_HL_BOOK",
+        "OTHER_BOOK"
+      ];
+  }
+}
+
+function textbookAllowedForCourse(ref, course) {
+  const group = getTextbookGroup(ref);
+  const allowedGroups = getAllowedTextbookGroupsForCourse(course);
+  return allowedGroups.includes(group);
+}
+
+/**********************************************************
  * CARD INITIALISATION
  **********************************************************/
 function initCards() {
@@ -70,34 +173,21 @@ function initCards() {
     state.textbookById.set(t.id, t);
   });
 
-  // Default syllabus topic filter = first topic for current course
+  // Default topic filter = first topic for the default course
   const topics = Array.from(
     new Set(
       SYLLABUS_OBJECTIVES
-        .filter((o) => syllabusMatchesCurrentCourse(o, state.currentCourse))
+        .filter((o) => syllabusAllowedForCourse(o, state.currentCourse))
         .map((o) => o.topic)
     )
   );
   if (!state.syllabusTopicFilter && topics.length > 0) {
     state.syllabusTopicFilter = topics[0];
   }
-
-  // Default textbook filter = first textbook name for current course
-  const books = Array.from(
-    new Set(
-      TEXTBOOK_REFERENCES
-        .filter((t) => textbookAllowedForCourse(t, state.currentCourse))
-        .map((t) => t.textbook || extractBookNameFromLabel(t.label))
-    )
-  );
-  if (!state.textbookBookFilter && books.length > 0) {
-    state.textbookBookFilter = books[0];
-  }
 }
 
-
 /**********************************************************
- * LOAD / SAVE STATE (card-centric)
+ * LOAD / SAVE STATE
  **********************************************************/
 function loadState() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -105,6 +195,7 @@ function loadState() {
     state.currentTerm = 1;
     state.resources = {};
     state.nextResourceId = 0;
+    state.currentCourse = "AA_SL";
     return;
   }
 
@@ -112,8 +203,9 @@ function loadState() {
     const saved = JSON.parse(raw);
     const s = saved.internalState || saved;
 
-    // Current term
-    state.currentTerm = typeof s.currentTerm === "number" ? s.currentTerm : 1;
+    state.currentTerm =
+      typeof s.currentTerm === "number" ? s.currentTerm : 1;
+    state.currentCourse = s.currentCourse || "AA_SL";
 
     // Syllabus placements
     if (s.syllabusPlacements && typeof s.syllabusPlacements === "object") {
@@ -147,9 +239,6 @@ function loadState() {
     if (s.textbookBookFilter) {
       state.textbookBookFilter = s.textbookBookFilter;
     }
-    if (s.currentCourse) {
-      state.currentCourse = s.currentCourse;
-    }
   } catch (e) {
     console.warn("Error loading saved state", e);
   }
@@ -171,16 +260,16 @@ function saveState() {
   });
 
   const payload = {
-    version: 1,
+    version: 2,
     internalState: {
       currentTerm: state.currentTerm,
+      currentCourse: state.currentCourse,
       syllabusPlacements,
       textbookPlacements,
       resources: state.resources,
       nextResourceId: state.nextResourceId,
       syllabusTopicFilter: state.syllabusTopicFilter,
-      textbookBookFilter: state.textbookBookFilter,
-      currentCourse: state.currentCourse
+      textbookBookFilter: state.textbookBookFilter
     }
   };
 
@@ -192,7 +281,7 @@ function saveState() {
 }
 
 /**********************************************************
- * TERM TABS + TOPIC / TEXTBOOK TABS
+ * TERM TABS + TOPIC TABS + TEXTBOOK TABS
  **********************************************************/
 function buildTermTabs() {
   const tabsContainer = document.getElementById("termTabs");
@@ -224,13 +313,12 @@ function buildTermTabs() {
 
 function buildSyllabusTopicTabs() {
   const container = document.getElementById("syllabusTopicTabs");
-  if (!container) return;
   container.innerHTML = "";
 
   const topics = Array.from(
     new Set(
       SYLLABUS_OBJECTIVES
-        .filter((o) => syllabusMatchesCurrentCourse(o, state.currentCourse))
+        .filter((o) => syllabusAllowedForCourse(o, state.currentCourse))
         .map((o) => o.topic)
     )
   );
@@ -258,19 +346,17 @@ function buildSyllabusTopicTabs() {
   });
 }
 
-
-function () {
+function buildTextbookTabs() {
   const container = document.getElementById("textbookTabs");
   if (!container) return;
-
   container.innerHTML = "";
 
-  // 1. Collect unique book names from TEXTBOOK_REFERENCES
+  // All distinct book names
   const allBooks = Array.from(
     new Set(TEXTBOOK_REFERENCES.map((ref) => getBookName(ref)))
   );
 
-  // 2. Filter books based on currentCourse (if NO chapter in that book is allowed, hide the tab)
+  // Keep only books that have at least one chapter allowed for this course
   const filteredBooks = allBooks.filter((bookName) =>
     TEXTBOOK_REFERENCES.some((ref) => {
       if (getBookName(ref) !== bookName) return false;
@@ -278,7 +364,6 @@ function () {
     })
   );
 
-  // 3. Ensure current textbookBookFilter is valid
   if (
     !state.textbookBookFilter ||
     !filteredBooks.includes(state.textbookBookFilter)
@@ -286,7 +371,6 @@ function () {
     state.textbookBookFilter = filteredBooks[0] || null;
   }
 
-  // 4. Build the buttons
   filteredBooks.forEach((bookName) => {
     const btn = document.createElement("button");
     btn.className =
@@ -300,12 +384,11 @@ function () {
         .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderBacklogs();
+      saveState();
     });
     container.appendChild(btn);
   });
 }
-
-
 
 /**********************************************************
  * PLANNER GRID STRUCTURE
@@ -431,27 +514,24 @@ function renderBacklogs() {
   let unplacedTextbook = 0;
   let unplacedResources = 0;
 
-  // Syllabus backlog: cards with placements.length === 0, filtered by topic + course (already working)
+  // Syllabus backlog: filtered by course + topic, and unplaced
   SYLLABUS_OBJECTIVES.forEach((obj) => {
     if (!syllabusAllowedForCourse(obj, state.currentCourse)) return;
-    if (obj.topic !== state.syllabusTopicFilter) return;
+    if (state.syllabusTopicFilter && obj.topic !== state.syllabusTopicFilter)
+      return;
     if (!cardHasPlacements(obj)) {
       unplacedSyllabus++;
       syllabusBacklog.appendChild(createCard(obj, "syllabus", null));
     }
   });
 
-  // Textbook backlog: unplaced + allowed for course + matches selected textbook tab
+  // Textbook backlog: filtered by course + selected book tab, and unplaced
   TEXTBOOK_REFERENCES.forEach((ref) => {
     if (!textbookAllowedForCourse(ref, state.currentCourse)) return;
 
     const bookName = getBookName(ref);
-    if (
-      state.textbookBookFilter &&
-      bookName !== state.textbookBookFilter
-    ) {
+    if (state.textbookBookFilter && bookName !== state.textbookBookFilter)
       return;
-    }
 
     if (!cardHasPlacements(ref)) {
       unplacedTextbook++;
@@ -459,7 +539,7 @@ function renderBacklogs() {
     }
   });
 
-  // Resource backlog (unchanged)
+  // Resource backlog: unplaced resources
   Object.values(state.resources).forEach((res) => {
     if (!cardHasPlacements(res)) {
       unplacedResources++;
@@ -480,14 +560,12 @@ function renderBacklogs() {
   retypesetMath();
 }
 
-
-
 function getLanePlacements(term, week, lane) {
   const results = [];
 
   if (lane === "syllabus") {
     SYLLABUS_OBJECTIVES.forEach((card) => {
-      if (!syllabusMatchesCurrentCourse(card, state.currentCourse)) return;
+      if (!syllabusAllowedForCourse(card, state.currentCourse)) return;
       (card.placements || []).forEach((p, idx) => {
         if (p.term === term && p.week === week && p.lane === lane) {
           results.push({
@@ -528,7 +606,7 @@ function getLanePlacements(term, week, lane) {
     });
   }
 
-  // Sort by order, then fallback to index
+  // Sort by order, fallback to index
   results.sort((a, b) => {
     const ao = typeof a.placement.order === "number" ? a.placement.order : 0;
     const bo = typeof b.placement.order === "number" ? b.placement.order : 0;
@@ -538,7 +616,6 @@ function getLanePlacements(term, week, lane) {
 
   return results;
 }
-
 
 function renderPlanner() {
   document.querySelectorAll(".slot-dropzone").forEach((dz) => {
@@ -595,11 +672,14 @@ function renderPlanner() {
 function updateSummaryLabel() {
   let syllabusPlacements = 0;
   SYLLABUS_OBJECTIVES.forEach((c) => {
+    // only count those allowed for current course
+    if (!syllabusAllowedForCourse(c, state.currentCourse)) return;
     syllabusPlacements += (c.placements || []).length;
   });
 
   let textbookPlacements = 0;
   TEXTBOOK_REFERENCES.forEach((c) => {
+    if (!textbookAllowedForCourse(c, state.currentCourse)) return;
     textbookPlacements += (c.placements || []).length;
   });
 
@@ -608,8 +688,12 @@ function updateSummaryLabel() {
     resourcePlacements += (c.placements || []).length;
   });
 
-  const totalSyllabus = SYLLABUS_OBJECTIVES.length;
-  const totalTextbook = TEXTBOOK_REFERENCES.length;
+  const totalSyllabus = SYLLABUS_OBJECTIVES.filter((c) =>
+    syllabusAllowedForCourse(c, state.currentCourse)
+  ).length;
+  const totalTextbook = TEXTBOOK_REFERENCES.filter((c) =>
+    textbookAllowedForCourse(c, state.currentCourse)
+  ).length;
 
   const label = document.getElementById("summaryLabel");
   label.textContent =
@@ -623,6 +707,7 @@ function retypesetMath() {
     window.MathJax.typesetPromise();
   }
 }
+
 /**********************************************************
  * UTILS
  **********************************************************/
@@ -630,210 +715,6 @@ function topicSlug(topic) {
   if (!topic) return "unknown";
   return topic.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
-
-function bookSlug(bookName) {
-  if (!bookName) return "unknown-book";
-  return bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-}
-
-function getBookName(ref) {
-  // Prefer explicit textbook property if present
-  if (ref && ref.textbook) return ref.textbook;
-
-  // Fallback: extract from label before the first "–"
-  if (ref && ref.label) {
-    const parts = ref.label.split(/–|-/);
-    return (parts[0] || "Textbook").trim();
-  }
-
-  return "Textbook";
-}
-
-function extractBookNameFromLabel(label) {
-  try {
-    if (!label) return "Textbook";
-    // Split on "–" or "-" (some TOCs use different dash types)
-    const parts = label.split(/–|-/);
-    return parts[0].trim();
-  } catch (e) {
-    console.warn("extractBookNameFromLabel error:", e);
-    return "Textbook";
-  }
-}
-
-/**
- * Parse a course code like "AA_SL" or "AI_HL" into { group, level }.
- */
-function parseCourseCode(code) {
-  switch (code) {
-    case "AA_SL":
-      return { group: "AA", level: "SL" };
-    case "AA_HL":
-      return { group: "AA", level: "HL" };
-    case "AI_SL":
-      return { group: "AI", level: "SL" };
-    case "AI_HL":
-      return { group: "AI", level: "HL" };
-    default:
-      return { group: "AA", level: "SL" };
-  }
-}
-
-/**
- * Determine syllabus meta from an objective:
- *  - group: "AA" or "AI"
- *  - level: "SL" or "HL"
- * based on id prefix or topic prefix.
- */
-function getSyllabusMeta(obj) {
-  if (!obj) return { group: "AA", level: "SL" };
-
-  // Prefer id prefix if present
-  if (obj.id) {
-    if (obj.id.startsWith("AA_SL_")) return { group: "AA", level: "SL" };
-    if (obj.id.startsWith("AA_HL_")) return { group: "AA", level: "HL" };
-    if (obj.id.startsWith("AI_SL_")) return { group: "AI", level: "SL" };
-    if (obj.id.startsWith("AI_HL_")) return { group: "AI", level: "HL" };
-  }
-
-  const topic = obj.topic || "";
-  if (topic.startsWith("AA SL")) return { group: "AA", level: "SL" };
-  if (topic.startsWith("AA HL")) return { group: "AA", level: "HL" };
-  if (topic.startsWith("AI SL")) return { group: "AI", level: "SL" };
-  if (topic.startsWith("AI HL")) return { group: "AI", level: "HL" };
-
-  return { group: "AA", level: "SL" };
-}
-
-/**
- * HL courses include their SL content; SL courses do not see HL.
- *
- * AA_SL  → AA + SL only
- * AA_HL  → AA + SL + HL
- * AI_SL  → AI + SL only
- * AI_HL  → AI + SL + HL
- */
-function syllabusMatchesCurrentCourse(obj, currentCourse) {
-  const syllabusMeta = getSyllabusMeta(obj);
-  const courseMeta = parseCourseCode(currentCourse);
-
-  // Must be the same group (AA vs AI)
-  if (syllabusMeta.group !== courseMeta.group) return false;
-
-  // SL course: only SL
-  if (courseMeta.level === "SL") {
-    return syllabusMeta.level === "SL";
-  }
-
-  // HL course: SL + HL
-  if (courseMeta.level === "HL") {
-    return syllabusMeta.level === "SL" || syllabusMeta.level === "HL";
-  }
-
-  return false;
-}
-
-/**
- * Determine the textbook "type" from its name:
- *  - AA SL, AA HL, AI SL, AI HL, Core SL, Core HL
- */
-function getBookTypeForTextbook(ref) {
-  try {
-    if (!ref) return "UNKNOWN";
-
-    const rawName =
-      (ref.textbook || extractBookNameFromLabel(ref.label) || "")
-        .toLowerCase()
-        .replace(/\s+/g, " ");
-
-    const isCore = rawName.includes("core");
-    const isAA =
-      rawName.includes("analysis and approaches") ||
-      rawName.includes(" aa ");
-    const isAI =
-      rawName.includes("applications and interpretation") ||
-      rawName.includes(" ai ");
-
-    const isSL =
-      rawName.includes(" sl") ||
-      rawName.includes("standard level");
-    const isHL =
-      rawName.includes(" hl") ||
-      rawName.includes("higher level");
-
-    // Core books
-    if (isCore && isSL) return "CORE_SL";
-    if (isCore && isHL) return "CORE_HL";
-
-    // AA books
-    if (isAA && isSL) return "AA_SL";
-    if (isAA && isHL) return "AA_HL";
-
-    // AI books
-    if (isAI && isSL) return "AI_SL";
-    if (isAI && isHL) return "AI_HL";
-
-    // Extra fallback pattern matches
-    if (rawName.includes("core sl")) return "CORE_SL";
-    if (rawName.includes("core hl")) return "CORE_HL";
-    if (rawName.includes("aa sl")) return "AA_SL";
-    if (rawName.includes("aa hl")) return "AA_HL";
-    if (rawName.includes("ai sl")) return "AI_SL";
-    if (rawName.includes("ai hl")) return "AI_HL";
-
-    return "UNKNOWN";
-  } catch (e) {
-    console.warn("getBookTypeForTextbook error:", e);
-    return "UNKNOWN";
-  }
-}
-
-/**
- * Textbook availability rules:
- *
- * AA_SL: Core SL, AA SL
- * AA_HL: Core SL, Core HL, AA SL, AA HL
- * AI_SL: Core SL, AI SL
- * AI_HL: Core SL, Core HL, AI SL, AI HL
- */
-function textbookAllowedForCourse(ref, currentCourse) {
-  try {
-    const type = getBookTypeForTextbook(ref);
-
-    if (type === "UNKNOWN") return true; // fail-open so nothing disappears
-
-    switch (currentCourse) {
-      case "AA_SL":
-        return type === "AA_SL" || type === "CORE_SL";
-
-      case "AA_HL":
-        return (
-          type === "AA_SL" ||
-          type === "AA_HL" ||
-          type === "CORE_SL" ||
-          type === "CORE_HL"
-        );
-
-      case "AI_SL":
-        return type === "AI_SL" || type === "CORE_SL";
-
-      case "AI_HL":
-        return (
-          type === "AI_SL" ||
-          type === "AI_HL" ||
-          type === "CORE_SL" ||
-          type === "CORE_HL"
-        );
-
-      default:
-        return true;
-    }
-  } catch (e) {
-    console.warn("textbookAllowedForCourse error:", e);
-    return true;
-  }
-}
-
 
 /**********************************************************
  * CARD CREATION
@@ -868,7 +749,7 @@ function createCard(data, type, placementInfo) {
   const label = document.createElement("span");
   label.className = "card-tag-label";
   if (type === "syllabus") label.textContent = data.section || "Syllabus";
-  else if (type === "textbook") label.textContent = "Text reference";
+  else if (type === "textbook") label.textContent = "Textbook";
   else label.textContent = "Resource";
 
   tag.appendChild(dot);
@@ -884,10 +765,11 @@ function createCard(data, type, placementInfo) {
     pill.textContent = data.topic || "Syllabus";
   } else if (type === "textbook") {
     pill.classList.add("pill-textbook");
-    const bookName = data.textbook || extractBookNameFromLabel(data.label);
+    const bookName = getBookName(data);
     pill.textContent = bookName;
-    const slug = bookSlug(bookName);
-    pill.classList.add(`book-${slug}`); // CSS can colour per book
+
+    const slug = bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    pill.classList.add(`book-${slug}`);
   } else {
     pill.classList.add("pill-resource");
     pill.textContent = "Note";
@@ -916,7 +798,7 @@ function createCard(data, type, placementInfo) {
     if (data.detail) parts.push(data.detail);
     if (data.url) {
       parts.push(
-        `<a href="${data.url}" target="_blank" rel="noopener noreferrer">Open chapter ↗</a>`
+        `<a href="${data.url}" target="_blank" rel="noopener noreferrer">Exercises ↗</a>`
       );
     }
     sub.innerHTML = parts.join(" · ");
@@ -955,7 +837,7 @@ function createNewResourceNote() {
 }
 
 /**********************************************************
- * DRAG & DROP (CARD-CENTRIC)
+ * DRAG & DROP
  **********************************************************/
 let currentDrag = null;
 
@@ -997,8 +879,6 @@ function handleDragEnd() {
 }
 
 function enableDropzone(dz) {
-  if (!dz) return;
-
   dz.addEventListener("dragover", (e) => {
     e.preventDefault();
     if (!currentDrag) return;
@@ -1078,7 +958,6 @@ function moveCardToDropzone(drag, dz, dropIndex) {
       // Reorder within same lane
       reorderWithinLane(type, id, sourcePlacement, dropIndex);
     } else {
-      // New placement
       if (type === "resource") {
         // Move: remove old placement (if any), then add new
         if (sourcePlacement && sourceLocationType === "week") {
@@ -1101,7 +980,6 @@ function moveCardToDropzone(drag, dz, dropIndex) {
     if (sourceLocationType === "week" && sourcePlacement) {
       removePlacement(card, sourcePlacement);
     }
-    // Backlog lists are derived from cards with 0 placements; nothing else to do
     saveState();
     renderAll();
   }
@@ -1110,7 +988,6 @@ function moveCardToDropzone(drag, dz, dropIndex) {
 function addPlacement(card, term, week, lane, dropIndex) {
   card.placements = card.placements || [];
 
-  // Collect all placements in the target lane to compute order
   const lanePlacements = card.placements.filter(
     (p) => p.term === term && p.week === week && p.lane === lane
   );
@@ -1132,7 +1009,6 @@ function addPlacement(card, term, week, lane, dropIndex) {
   const newPlacement = { term, week, lane, order: 0 };
   lanePlacements.splice(insertIndex, 0, newPlacement);
 
-  // Reassign orders
   lanePlacements.forEach((p, i) => {
     p.order = i;
   });
@@ -1142,14 +1018,20 @@ function addPlacement(card, term, week, lane, dropIndex) {
 
 function removePlacement(card, placementInfo) {
   if (!card.placements) return;
+  let encountered = 0;
   card.placements = card.placements.filter((p, idx) => {
     if (
       p.term === placementInfo.term &&
       p.week === placementInfo.week &&
       p.lane === placementInfo.lane
     ) {
-      // Remove only one occurrence; use index check
-      return idx !== placementInfo.placementIndex;
+      // Remove only the specific indexed occurrence
+      if (encountered === placementInfo.placementIndex) {
+        encountered++;
+        return false;
+      }
+      encountered++;
+      return true;
     }
     return true;
   });
@@ -1212,7 +1094,7 @@ function exportJSON() {
   });
 
   const exportObj = {
-    version: 1,
+    version: 2,
     theme: document.body.dataset.theme || "dark",
     cards: {
       syllabusPlacements,
@@ -1221,13 +1103,13 @@ function exportJSON() {
     },
     internalState: {
       currentTerm: state.currentTerm,
+      currentCourse: state.currentCourse,
       syllabusPlacements,
       textbookPlacements,
       resources: state.resources,
       nextResourceId: state.nextResourceId,
       syllabusTopicFilter: state.syllabusTopicFilter,
-      textbookBookFilter: state.textbookBookFilter,
-      currentCourse: state.currentCourse
+      textbookBookFilter: state.textbookBookFilter
     }
   };
 
@@ -1238,7 +1120,7 @@ function exportJSON() {
   const a = document.createElement("a");
   const dateStr = new Date().toISOString().slice(0, 10);
   a.href = url;
-  a.download = `aa-topic1-planner-${dateStr}.json`;
+  a.download = `ib-math-planner-${dateStr}.json`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -1273,7 +1155,6 @@ function applyImportedState(importObj) {
   // Clear placements first
   SYLLABUS_OBJECTIVES.forEach((c) => (c.placements = []));
   TEXTBOOK_REFERENCES.forEach((c) => (c.placements = []));
-  Object.values(state.resources).forEach((r) => (r.placements = []));
 
   if (s.syllabusPlacements && typeof s.syllabusPlacements === "object") {
     Object.entries(s.syllabusPlacements).forEach(([id, placements]) => {
@@ -1299,11 +1180,9 @@ function applyImportedState(importObj) {
     typeof s.nextResourceId === "number" ? s.nextResourceId : 0;
   state.currentTerm =
     typeof s.currentTerm === "number" ? s.currentTerm : 1;
-  state.syllabusTopicFilter =
-    s.syllabusTopicFilter || state.syllabusTopicFilter;
-  state.textbookBookFilter =
-    s.textbookBookFilter || state.textbookBookFilter;
-  state.currentCourse = s.currentCourse || state.currentCourse;
+  state.currentCourse = s.currentCourse || "AA_SL";
+  state.syllabusTopicFilter = s.syllabusTopicFilter || state.syllabusTopicFilter;
+  state.textbookBookFilter = s.textbookBookFilter || state.textbookBookFilter;
 
   buildTermTabs();
   buildSyllabusTopicTabs();
@@ -1340,8 +1219,20 @@ function cleanPlanner() {
 }
 
 /**********************************************************
- * CONTROLS
+ * COURSE CHANGE + CONTROLS
  **********************************************************/
+function handleCourseChange(newCourse) {
+  state.currentCourse = newCourse;
+
+  // Rebuild dependent UI
+  buildSyllabusTopicTabs();
+  buildTextbookTabs();
+  renderBacklogs();
+  renderPlanner();
+  updateSummaryLabel();
+  saveState();
+}
+
 function wireControls() {
   document
     .getElementById("resetLayoutBtn")
@@ -1392,17 +1283,13 @@ function wireControls() {
   });
   importInput.addEventListener("change", handleImportFile);
 
-  // NEW: course selector
-  const courseSelect = document.getElementById("classFilterSelect");
-  if (courseSelect) {
-    courseSelect.value = state.currentCourse;
-    courseSelect.addEventListener("change", () => {
-      state.currentCourse = courseSelect.value;
-      // Rebuild topic/textbook tabs to match new course
-      buildSyllabusTopicTabs();
-      buildTextbookTabs();
-      renderAll();
-      saveState();
+  // Course select
+  const classSelect = document.getElementById("classFilterSelect");
+  if (classSelect) {
+    // Sync UI with state
+    classSelect.value = state.currentCourse;
+    classSelect.addEventListener("change", (e) => {
+      handleCourseChange(e.target.value);
     });
   }
 }
