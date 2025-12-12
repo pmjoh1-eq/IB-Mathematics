@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>IB Mathematics Planner</title>
 
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 
   <!-- MathJax for LaTeX rendering in cards -->
@@ -35,58 +34,34 @@
         </div>
       </div>
       <div class="header-top-actions">
-        <button id="resetLayoutBtn" title="Reset all placements">
-          ⟳ Reset layout
-        </button>
-        <button id="cleanPlannerBtn" title="Remove duplicates and fix backlog">
-          🧹 Clean planner
-        </button>
-      </div>
-    </div>
-    <div class="term-tabs" id="termTabs"></div>
-    <div class="header-controls">
-      <!-- <div>
-        Each term has 10 weeks. Select a term, then drag cards into syllabus / textbook /
-        resource lanes. Use LaTeX like <code>$a\times 10^k$</code> in syllabus text.
-      </div> -->
-      <div class="header-actions">
         <span id="summaryLabel"></span>
-<div class="top-controls">
-  <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
+        <div class="top-controls">
+          <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
 
-  <!-- NEW: Course filter -->
-  <label for="classFilterSelect" class="course-label">Course:</label>
-  <select id="classFilterSelect" class="course-select">
-    <option value="AA_SL">AA SL</option>
-    <option value="AA_HL">AA HL</option>
-    <option value="AI_SL">AI SL</option>
-    <option value="AI_HL">AI HL</option>
-  </select>
+          <label for="classFilterSelect" class="course-label">Course:</label>
+          <select id="classFilterSelect" class="course-select">
+            <option value="AA_SL">AA SL</option>
+            <option value="AA_HL">AA HL</option>
+            <option value="AI_SL">AI SL</option>
+            <option value="AI_HL">AI HL</option>
+          </select>
 
-  <!-- existing buttons -->
-  <button id="resetLayoutBtn" type="button">Reset layout</button>
-  <button id="cleanPlannerBtn" type="button">Clean planner</button>
-  <button id="newResourceBtn" type="button">New resource</button>
-  <button id="exportBtn" type="button">Export JSON</button>
-  <button id="importBtn" type="button">Import JSON</button>
-  <input id="importFileInput" type="file" accept="application/json" style="display:none" />
-</div>
-
-        
-        <button id="exportBtn" title="Export planner as JSON">
-          ⭳ Export JSON
-        </button>
-        <button id="importBtn" title="Import planner from JSON">
-          ⭱ Import JSON
-        </button>
-        <input
-          type="file"
-          id="importFileInput"
-          accept="application/json"
-          style="display: none"
-        />
+          <button id="resetLayoutBtn" type="button">⟳ Reset layout</button>
+          <button id="cleanPlannerBtn" type="button">🧹 Clean planner</button>
+          <button id="newResourceBtn" type="button">＋ New resource</button>
+          <button id="exportBtn" type="button">⭳ Export JSON</button>
+          <button id="importBtn" type="button">⭱ Import JSON</button>
+          <input
+            id="importFileInput"
+            type="file"
+            accept="application/json"
+            style="display:none"
+          />
+        </div>
       </div>
     </div>
+
+    <div class="term-tabs" id="termTabs"></div>
   </header>
 
   <main>
@@ -163,19 +138,20 @@
           </div>
           <span id="textbookBacklogCount" class="panel-subtitle"></span>
         </div>
+
+        <!-- Tabs by textbook (filtered by course) -->
         <div class="tabs-row" id="textbookTabs"></div>
+
         <div
           id="textbookBacklog"
           class="backlog-dropzone"
           data-location-type="backlog"
           data-accept-type="textbook"
         ></div>
-         <div id="textbookBacklogCount" class="backlog-count"></div>
       </section>
     </aside>
   </main>
 
-  <!-- Data + App scripts -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
