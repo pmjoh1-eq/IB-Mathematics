@@ -14,7 +14,9 @@ const state = {
   resources: {},                 // id -> { id, title, detail, placements[] }
   nextResourceId: 0,
   syllabusTopicFilter: null,
-  textbookBookFilter: null       // which textbook tab is active
+  textbookBookFilter: null,      // which textbook tab is active
+  syllabusSearchQuery: "",       // NEW: filter text for syllabus backlog
+  textbookSearchQuery: ""        // NEW: filter text for textbook backlog
 };
 
 /**********************************************************
@@ -196,6 +198,8 @@ function loadState() {
     state.resources = {};
     state.nextResourceId = 0;
     state.currentCourse = "AA_SL";
+    state.syllabusSearchQuery = "";
+    state.textbookSearchQuery = "";
     return;
   }
 
@@ -239,6 +243,9 @@ function loadState() {
     if (s.textbookBookFilter) {
       state.textbookBookFilter = s.textbookBookFilter;
     }
+
+    state.syllabusSearchQuery = s.syllabusSearchQuery || "";
+    state.textbookSearchQuery = s.textbookSearchQuery || "";
   } catch (e) {
     console.warn("Error loading saved state", e);
   }
@@ -269,7 +276,9 @@ function saveState() {
       resources: state.resources,
       nextResourceId: state.nextResourceId,
       syllabusTopicFilter: state.syllabusTopicFilter,
-      textbookBookFilter: state.textbookBookFilter
+      textbookBookFilter: state.textbookBookFilter,
+      syllabusSearchQuery: state.syllabusSearchQuery,
+      textbookSearchQuery: state.textbookSearchQuery
     }
   };
 
@@ -501,6 +510,37 @@ function cardHasPlacements(card) {
   return card.placements && card.placements.length > 0;
 }
 
+/**
+ * Case-insensitive text matcher for syllabus cards.
+ */
+function syllabusMatchesSearch(obj, query) {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  const haystack =
+    ((obj.section || "") +
+      " " +
+      (obj.topic || "") +
+      " " +
+      (obj.text || "")).toLowerCase();
+  return haystack.includes(q);
+}
+
+/**
+ * Case-insensitive text matcher for textbook cards.
+ */
+function textbookMatchesSearch(ref, query) {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  const bookName = getBookName(ref);
+  const haystack =
+    ((bookName || "") +
+      " " +
+      (ref.label || "") +
+      " " +
+      (ref.detail || "")).toLowerCase();
+  return haystack.includes(q);
+}
+
 function renderBacklogs() {
   const syllabusBacklog = document.getElementById("syllabusBacklog");
   const textbookBacklog = document.getElementById("textbookBacklog");
@@ -514,18 +554,23 @@ function renderBacklogs() {
   let unplacedTextbook = 0;
   let unplacedResources = 0;
 
-  // Syllabus backlog: filtered by course + topic, and unplaced
+  const syllabusQuery = (state.syllabusSearchQuery || "").trim().toLowerCase();
+  const textbookQuery =
+    (state.textbookSearchQuery || "").trim().toLowerCase();
+
+  // Syllabus backlog: filtered by course + topic + search, and unplaced
   SYLLABUS_OBJECTIVES.forEach((obj) => {
     if (!syllabusAllowedForCourse(obj, state.currentCourse)) return;
     if (state.syllabusTopicFilter && obj.topic !== state.syllabusTopicFilter)
       return;
+    if (syllabusQuery && !syllabusMatchesSearch(obj, syllabusQuery)) return;
     if (!cardHasPlacements(obj)) {
       unplacedSyllabus++;
       syllabusBacklog.appendChild(createCard(obj, "syllabus", null));
     }
   });
 
-  // Textbook backlog: filtered by course + selected book tab, and unplaced
+  // Textbook backlog: filtered by course + selected book tab + search, and unplaced
   TEXTBOOK_REFERENCES.forEach((ref) => {
     if (!textbookAllowedForCourse(ref, state.currentCourse)) return;
 
@@ -533,13 +578,15 @@ function renderBacklogs() {
     if (state.textbookBookFilter && bookName !== state.textbookBookFilter)
       return;
 
+    if (textbookQuery && !textbookMatchesSearch(ref, textbookQuery)) return;
+
     if (!cardHasPlacements(ref)) {
       unplacedTextbook++;
       textbookBacklog.appendChild(createCard(ref, "textbook", null));
     }
   });
 
-  // Resource backlog: unplaced resources
+  // Resource backlog: unplaced resources (not searched for now)
   Object.values(state.resources).forEach((res) => {
     if (!cardHasPlacements(res)) {
       unplacedResources++;
@@ -879,6 +926,8 @@ function handleDragEnd() {
 }
 
 function enableDropzone(dz) {
+  if (!dz) return;
+
   dz.addEventListener("dragover", (e) => {
     e.preventDefault();
     if (!currentDrag) return;
@@ -1019,7 +1068,7 @@ function addPlacement(card, term, week, lane, dropIndex) {
 function removePlacement(card, placementInfo) {
   if (!card.placements) return;
   let encountered = 0;
-  card.placements = card.placements.filter((p, idx) => {
+  card.placements = card.placements.filter((p) => {
     if (
       p.term === placementInfo.term &&
       p.week === placementInfo.week &&
@@ -1109,7 +1158,9 @@ function exportJSON() {
       resources: state.resources,
       nextResourceId: state.nextResourceId,
       syllabusTopicFilter: state.syllabusTopicFilter,
-      textbookBookFilter: state.textbookBookFilter
+      textbookBookFilter: state.textbookBookFilter,
+      syllabusSearchQuery: state.syllabusSearchQuery,
+      textbookSearchQuery: state.textbookSearchQuery
     }
   };
 
@@ -1181,8 +1232,12 @@ function applyImportedState(importObj) {
   state.currentTerm =
     typeof s.currentTerm === "number" ? s.currentTerm : 1;
   state.currentCourse = s.currentCourse || "AA_SL";
-  state.syllabusTopicFilter = s.syllabusTopicFilter || state.syllabusTopicFilter;
-  state.textbookBookFilter = s.textbookBookFilter || state.textbookBookFilter;
+  state.syllabusTopicFilter =
+    s.syllabusTopicFilter || state.syllabusTopicFilter;
+  state.textbookBookFilter =
+    s.textbookBookFilter || state.textbookBookFilter;
+  state.syllabusSearchQuery = s.syllabusSearchQuery || "";
+  state.textbookSearchQuery = s.textbookSearchQuery || "";
 
   buildTermTabs();
   buildSyllabusTopicTabs();
@@ -1290,6 +1345,28 @@ function wireControls() {
     classSelect.value = state.currentCourse;
     classSelect.addEventListener("change", (e) => {
       handleCourseChange(e.target.value);
+    });
+  }
+
+  // NEW: Syllabus backlog search input (Option C – header search)
+  const syllabusSearchInput = document.getElementById("syllabusSearchInput");
+  if (syllabusSearchInput) {
+    syllabusSearchInput.value = state.syllabusSearchQuery || "";
+    syllabusSearchInput.addEventListener("input", (e) => {
+      state.syllabusSearchQuery = e.target.value || "";
+      renderBacklogs();
+      saveState();
+    });
+  }
+
+  // NEW: Textbook backlog search input (Option C – header search)
+  const textbookSearchInput = document.getElementById("textbookSearchInput");
+  if (textbookSearchInput) {
+    textbookSearchInput.value = state.textbookSearchQuery || "";
+    textbookSearchInput.addEventListener("input", (e) => {
+      state.textbookSearchQuery = e.target.value || "";
+      renderBacklogs();
+      saveState();
     });
   }
 }
