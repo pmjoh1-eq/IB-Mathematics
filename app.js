@@ -259,7 +259,7 @@ function buildSyllabusTopicTabs() {
 }
 
 
-function buildTextbookTabs() {
+function () {
   const container = document.getElementById("textbookTabs");
   if (!container) return;
 
