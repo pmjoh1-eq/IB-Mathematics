@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <title>IB Mathematics Planner</title>
 
+  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- MathJax for LaTeX rendering -->
+  <!-- MathJax for LaTeX rendering in cards -->
   <script>
     window.MathJax = {
       tex: {
@@ -24,10 +25,7 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
   ></script>
 </head>
-
 <body data-theme="dark">
-
-  <!-- ================= HEADER ================= -->
   <header>
     <div class="header-top">
       <div>
@@ -36,69 +34,75 @@
           8 terms × 10 weeks • Syllabus / textbook / resources • LaTeX enabled
         </div>
       </div>
-
       <div class="header-top-actions">
-        <span id="summaryLabel"></span>
-        <div class="top-controls">
-
-          <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
-
-          <label for="classFilterSelect" class="course-label">Course:</label>
-          <select id="classFilterSelect" class="course-select">
-            <option value="AA_SL">AA SL</option>
-            <option value="AA_HL">AA HL</option>
-            <option value="AI_SL">AI SL</option>
-            <option value="AI_HL">AI HL</option>
-          </select>
-
-          <button id="resetLayoutBtn" type="button">⟳ Reset layout</button>
-          <button id="cleanPlannerBtn" type="button">🧹 Clean planner</button>
-          <button id="newResourceBtn" type="button">＋ New resource</button>
-          <button id="exportBtn" type="button">⭳ Export JSON</button>
-          <button id="importBtn" type="button">⭱ Import JSON</button>
-
-          <input
-            id="importFileInput"
-            type="file"
-            accept="application/json"
-            style="display:none"
-          />
-        </div>
+        <button id="resetLayoutBtn" title="Reset all placements">
+          ⟳ Reset layout
+        </button>
+        <button id="cleanPlannerBtn" title="Remove duplicates and fix backlog">
+          🧹 Clean planner
+        </button>
       </div>
     </div>
-
-    <!-- Term tabs -->
     <div class="term-tabs" id="termTabs"></div>
+    <div class="header-controls">
+      <!-- <div>
+        Each term has 10 weeks. Select a term, then drag cards into syllabus / textbook /
+        resource lanes. Use LaTeX like <code>$a\times 10^k$</code> in syllabus text.
+      </div> -->
+      <div class="header-actions">
+        <span id="summaryLabel"></span>
+<div class="top-controls">
+  <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
+
+  <!-- NEW: Course filter -->
+  <label for="classFilterSelect" class="course-label">Course:</label>
+  <select id="classFilterSelect" class="course-select">
+    <option value="AA_SL">AA SL</option>
+    <option value="AA_HL">AA HL</option>
+    <option value="AI_SL">AI SL</option>
+    <option value="AI_HL">AI HL</option>
+  </select>
+
+  <!-- existing buttons -->
+  <button id="resetLayoutBtn" type="button">Reset layout</button>
+  <button id="cleanPlannerBtn" type="button">Clean planner</button>
+  <button id="newResourceBtn" type="button">New resource</button>
+  <button id="exportBtn" type="button">Export JSON</button>
+  <button id="importBtn" type="button">Import JSON</button>
+  <input id="importFileInput" type="file" accept="application/json" style="display:none" />
+</div>
+
+        
+        <button id="exportBtn" title="Export planner as JSON">
+          ⭳ Export JSON
+        </button>
+        <button id="importBtn" title="Import planner from JSON">
+          ⭱ Import JSON
+        </button>
+        <input
+          type="file"
+          id="importFileInput"
+          accept="application/json"
+          style="display: none"
+        />
+      </div>
+    </div>
   </header>
 
-  <!-- ================= MAIN LAYOUT ================= -->
   <main>
-
-    <!-- ========== LEFT COLUMN: Syllabus + Resources ========== -->
+    <!-- LEFT: syllabus + resources -->
     <aside class="left-column">
-
-      <!-- ---------------- SYLLABUS BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
             <div class="panel-title">Syllabus backlog</div>
-            <div class="panel-subtitle">Topic-filtered backlog (cards with no placements)</div>
+            <div class="panel-subtitle">
+              Topic-filtered backlog (cards with no placements)
+            </div>
           </div>
-
-          <!-- === NEW: SYLLABUS SEARCH FIELD (Option A) === -->
-          <div class="panel-header-actions">
-            <input
-              type="text"
-              id="syllabusSearchInput"
-              class="panel-search"
-              placeholder="Search syllabus…"
-            />
-            <span id="syllabusBacklogCount" class="panel-subtitle"></span>
-          </div>
+          <span id="syllabusBacklogCount" class="panel-subtitle"></span>
         </div>
-
         <div id="syllabusTopicTabs" class="syllabus-topic-tabs"></div>
-
         <div
           class="backlog-dropzone"
           id="syllabusBacklog"
@@ -107,7 +111,6 @@
         ></div>
       </section>
 
-      <!-- ---------------- RESOURCES BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
@@ -118,22 +121,21 @@
           </div>
           <span id="resourceBacklogCount" class="panel-subtitle"></span>
         </div>
-
         <div
           class="backlog-dropzone"
           id="resourceBacklog"
           data-location-type="backlog"
           data-accept-type="resource"
         ></div>
-
         <div class="resource-btn-row">
-          <button id="newResourceBtn" class="primary">＋ New resource note</button>
+          <button id="newResourceBtn" class="primary">
+            ＋ New resource note
+          </button>
         </div>
       </section>
-
     </aside>
 
-    <!-- ========== CENTER COLUMN: PLANNER GRID ========== -->
+    <!-- CENTER: planner -->
     <section class="planner-area">
       <div class="planner-header-row">
         <div>
@@ -146,14 +148,11 @@
           </div>
         </div>
       </div>
-
       <div class="planner-grid" id="plannerGrid"></div>
     </section>
 
-    <!-- ========== RIGHT COLUMN: TEXTBOOK BACKLOG ========== -->
+    <!-- RIGHT: textbook references -->
     <aside class="right-column">
-
-      <!-- ---------------- TEXTBOOK BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
@@ -162,37 +161,22 @@
               Cards with no placements appear here. Drag into the textbook lane.
             </div>
           </div>
-
-          <!-- === NEW: TEXTBOOK SEARCH FIELD (Option A) === -->
-          <div class="panel-header-actions">
-            <input
-              type="text"
-              id="textbookSearchInput"
-              class="panel-search"
-              placeholder="Search textbooks…"
-            />
-            <span id="textbookBacklogCount" class="panel-subtitle"></span>
-          </div>
+          <span id="textbookBacklogCount" class="panel-subtitle"></span>
         </div>
-
-        <!-- Tabs filtered by current course -->
         <div class="tabs-row" id="textbookTabs"></div>
-
         <div
           id="textbookBacklog"
           class="backlog-dropzone"
           data-location-type="backlog"
           data-accept-type="textbook"
         ></div>
+         <div id="textbookBacklogCount" class="backlog-count"></div>
       </section>
-
     </aside>
-
   </main>
 
-  <!-- JS -->
+  <!-- Data + App scripts -->
   <script src="data.js"></script>
   <script src="app.js"></script>
-
 </body>
 </html>
