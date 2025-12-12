@@ -702,18 +702,29 @@ function syllabusMatchesCurrentCourse(obj, currentCourse) {
  */
 function getBookTypeForTextbook(ref) {
   const bookName = (ref.textbook || extractBookNameFromLabel(ref.label) || "")
+    .trim()
     .toLowerCase();
 
-  if (bookName.includes("aa sl")) return "AA_SL";
-  if (bookName.includes("aa hl")) return "AA_HL";
-  if (bookName.includes("ai sl")) return "AI_SL";
-  if (bookName.includes("ai hl")) return "AI_HL";
-  if (bookName.includes("core sl")) return "CORE_SL";
-  if (bookName.includes("core hl")) return "CORE_HL";
+  // Normalise common formats
+  // Handle names like:
+  //  "Core Content SL"
+  //  "AA Content HL"
+  //  "AI SL Haese"
+  //  "Haese AA HL"
+  //  etc.
 
-  // Fallback: unknown
+  if (/aa/.test(bookName) && /sl/.test(bookName)) return "AA_SL";
+  if (/aa/.test(bookName) && /hl/.test(bookName)) return "AA_HL";
+  if (/ai/.test(bookName) && /sl/.test(bookName)) return "AI_SL";
+  if (/ai/.test(bookName) && /hl/.test(bookName)) return "AI_HL";
+
+  // Core books
+  if (/core/.test(bookName) && /sl/.test(bookName)) return "CORE_SL";
+  if (/core/.test(bookName) && /hl/.test(bookName)) return "CORE_HL";
+
   return "UNKNOWN";
 }
+
 
 /**
  * Textbook availability rules:
