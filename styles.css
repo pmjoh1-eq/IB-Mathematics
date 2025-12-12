@@ -627,7 +627,7 @@ body[data-theme="light"] .card:hover {
 /* Topic bubbles – per-topic colours (syllabus) */
 
 /* Dark theme */
-body[data-theme="dark"] .pill-syllabus.topic-number-and-algebra {
+body[data-theme="dark"] .pill-syllabus.topic-aa-sl-number-and-algebra {
   background: rgba(34, 197, 94, 0.16);
   color: #bbf7d0;
   border-color: rgba(34, 197, 94, 0.7);
