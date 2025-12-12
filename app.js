@@ -8,13 +8,13 @@ const THEME_KEY = "aa-planner-theme";
 
 const state = {
   currentTerm: 1,
-  syllabusById: new Map(), // id -> syllabus card (with placements[])
-  textbookById: new Map(), // id -> textbook card (with placements[])
-  resources: {},           // id -> { id, title, detail, placements[] }
+  currentCourse: "AA_SL",
+  syllabusById: new Map(),
+  textbookById: new Map(),
+  resources: {},
   nextResourceId: 0,
   syllabusTopicFilter: null,
-  textbookBookFilter: null,
-  currentCourse: "AA_SL"   // NEW: "AA_SL" | "AA_HL" | "AI_SL" | "AI_HL"
+  textbookBookFilter: null
 };
 
 /**********************************************************
@@ -618,10 +618,17 @@ function bookSlug(bookName) {
   return bookName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
+
 function extractBookNameFromLabel(label) {
-  if (!label) return "Textbook";
-  const parts = label.split("–");
-  return parts[0].trim();
+  try {
+    if (!label) return "Textbook";
+    // Split on "–" or "-" (some TOCs use different dash types)
+    const parts = label.split(/–|-/);
+    return parts[0].trim();
+  } catch (e) {
+    console.warn("extractBookNameFromLabel error:", e);
+    return "Textbook";
+  }
 }
 
 /**
@@ -701,18 +708,54 @@ function syllabusMatchesCurrentCourse(obj, currentCourse) {
  *  - AA SL, AA HL, AI SL, AI HL, Core SL, Core HL
  */
 function getBookTypeForTextbook(ref) {
-  const bookName = (ref.textbook || extractBookNameFromLabel(ref.label) || "")
-    .toLowerCase();
+  try {
+    if (!ref) return "UNKNOWN";
 
-  if (bookName.includes("aa sl")) return "AA_SL";
-  if (bookName.includes("aa hl")) return "AA_HL";
-  if (bookName.includes("ai sl")) return "AI_SL";
-  if (bookName.includes("ai hl")) return "AI_HL";
-  if (bookName.includes("core sl")) return "CORE_SL";
-  if (bookName.includes("core hl")) return "CORE_HL";
+    const rawName =
+      (ref.textbook || extractBookNameFromLabel(ref.label) || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ");
 
-  // Fallback: unknown
-  return "UNKNOWN";
+    const isCore = rawName.includes("core");
+    const isAA =
+      rawName.includes("analysis and approaches") ||
+      rawName.includes(" aa ");
+    const isAI =
+      rawName.includes("applications and interpretation") ||
+      rawName.includes(" ai ");
+
+    const isSL =
+      rawName.includes(" sl") ||
+      rawName.includes("standard level");
+    const isHL =
+      rawName.includes(" hl") ||
+      rawName.includes("higher level");
+
+    // Core books
+    if (isCore && isSL) return "CORE_SL";
+    if (isCore && isHL) return "CORE_HL";
+
+    // AA books
+    if (isAA && isSL) return "AA_SL";
+    if (isAA && isHL) return "AA_HL";
+
+    // AI books
+    if (isAI && isSL) return "AI_SL";
+    if (isAI && isHL) return "AI_HL";
+
+    // Extra fallback pattern matches
+    if (rawName.includes("core sl")) return "CORE_SL";
+    if (rawName.includes("core hl")) return "CORE_HL";
+    if (rawName.includes("aa sl")) return "AA_SL";
+    if (rawName.includes("aa hl")) return "AA_HL";
+    if (rawName.includes("ai sl")) return "AI_SL";
+    if (rawName.includes("ai hl")) return "AI_HL";
+
+    return "UNKNOWN";
+  } catch (e) {
+    console.warn("getBookTypeForTextbook error:", e);
+    return "UNKNOWN";
+  }
 }
 
 /**
@@ -724,36 +767,40 @@ function getBookTypeForTextbook(ref) {
  * AI_HL: Core SL, Core HL, AI SL, AI HL
  */
 function textbookAllowedForCourse(ref, currentCourse) {
-  const type = getBookTypeForTextbook(ref);
+  try {
+    const type = getBookTypeForTextbook(ref);
 
-  // Unknown type: be permissive so nothing disappears mysteriously
-  if (type === "UNKNOWN") return true;
+    if (type === "UNKNOWN") return true; // fail-open so nothing disappears
 
-  switch (currentCourse) {
-    case "AA_SL":
-      return type === "AA_SL" || type === "CORE_SL";
+    switch (currentCourse) {
+      case "AA_SL":
+        return type === "AA_SL" || type === "CORE_SL";
 
-    case "AA_HL":
-      return (
-        type === "AA_SL" ||
-        type === "AA_HL" ||
-        type === "CORE_SL" ||
-        type === "CORE_HL"
-      );
+      case "AA_HL":
+        return (
+          type === "AA_SL" ||
+          type === "AA_HL" ||
+          type === "CORE_SL" ||
+          type === "CORE_HL"
+        );
 
-    case "AI_SL":
-      return type === "AI_SL" || type === "CORE_SL";
+      case "AI_SL":
+        return type === "AI_SL" || type === "CORE_SL";
 
-    case "AI_HL":
-      return (
-        type === "AI_SL" ||
-        type === "AI_HL" ||
-        type === "CORE_SL" ||
-        type === "CORE_HL"
-      );
+      case "AI_HL":
+        return (
+          type === "AI_SL" ||
+          type === "AI_HL" ||
+          type === "CORE_SL" ||
+          type === "CORE_HL"
+        );
 
-    default:
-      return true;
+      default:
+        return true;
+    }
+  } catch (e) {
+    console.warn("textbookAllowedForCourse error:", e);
+    return true;
   }
 }
 
