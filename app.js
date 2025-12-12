@@ -700,40 +700,20 @@ function syllabusMatchesCurrentCourse(obj, currentCourse) {
  * Determine the textbook "type" from its name:
  *  - AA SL, AA HL, AI SL, AI HL, Core SL, Core HL
  */
-function textbookAllowedForCourse(ref, currentCourse) {
-  const type = getBookTypeForTextbook(ref);
+function getBookTypeForTextbook(ref) {
+  const bookName = (ref.textbook || extractBookNameFromLabel(ref.label) || "")
+    .toLowerCase();
 
-  // Unknown type: be permissive so nothing disappears mysteriously
-  if (type === "UNKNOWN") return true;
+  if (bookName.includes("aa sl")) return "AA_SL";
+  if (bookName.includes("aa hl")) return "AA_HL";
+  if (bookName.includes("ai sl")) return "AI_SL";
+  if (bookName.includes("ai hl")) return "AI_HL";
+  if (bookName.includes("core sl")) return "CORE_SL";
+  if (bookName.includes("core hl")) return "CORE_HL";
 
-  switch (currentCourse) {
-    case "AA_SL":
-      return type === "AA_SL" || type === "CORE_SL";
-
-    case "AA_HL":
-      return (
-        type === "AA_SL" ||
-        type === "AA_HL" ||
-        type === "CORE_SL" ||
-        type === "CORE_HL"
-      );
-
-    case "AI_SL":
-      return type === "AI_SL" || type === "CORE_SL";
-
-    case "AI_HL":
-      return (
-        type === "AI_SL" ||
-        type === "AI_HL" ||
-        type === "CORE_SL" ||
-        type === "CORE_HL"
-      );
-
-    default:
-      return true;
-  }
+  // Fallback: unknown
+  return "UNKNOWN";
 }
-
 
 /**
  * Textbook availability rules:
