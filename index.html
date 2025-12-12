@@ -6,7 +6,7 @@
 
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- MathJax for LaTeX rendering in cards -->
+  <!-- MathJax for LaTeX rendering -->
   <script>
     window.MathJax = {
       tex: {
@@ -24,7 +24,10 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
   ></script>
 </head>
+
 <body data-theme="dark">
+
+  <!-- ================= HEADER ================= -->
   <header>
     <div class="header-top">
       <div>
@@ -33,9 +36,11 @@
           8 terms × 10 weeks • Syllabus / textbook / resources • LaTeX enabled
         </div>
       </div>
+
       <div class="header-top-actions">
         <span id="summaryLabel"></span>
         <div class="top-controls">
+
           <button id="themeToggleBtn" type="button">🌙 Dark mode</button>
 
           <label for="classFilterSelect" class="course-label">Course:</label>
@@ -51,6 +56,7 @@
           <button id="newResourceBtn" type="button">＋ New resource</button>
           <button id="exportBtn" type="button">⭳ Export JSON</button>
           <button id="importBtn" type="button">⭱ Import JSON</button>
+
           <input
             id="importFileInput"
             type="file"
@@ -61,23 +67,38 @@
       </div>
     </div>
 
+    <!-- Term tabs -->
     <div class="term-tabs" id="termTabs"></div>
   </header>
 
+  <!-- ================= MAIN LAYOUT ================= -->
   <main>
-    <!-- LEFT: syllabus + resources -->
+
+    <!-- ========== LEFT COLUMN: Syllabus + Resources ========== -->
     <aside class="left-column">
+
+      <!-- ---------------- SYLLABUS BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
             <div class="panel-title">Syllabus backlog</div>
-            <div class="panel-subtitle">
-              Topic-filtered backlog (cards with no placements)
-            </div>
+            <div class="panel-subtitle">Topic-filtered backlog (cards with no placements)</div>
           </div>
-          <span id="syllabusBacklogCount" class="panel-subtitle"></span>
+
+          <!-- === NEW: SYLLABUS SEARCH FIELD (Option A) === -->
+          <div class="panel-header-actions">
+            <input
+              type="text"
+              id="syllabusSearchInput"
+              class="panel-search"
+              placeholder="Search syllabus…"
+            />
+            <span id="syllabusBacklogCount" class="panel-subtitle"></span>
+          </div>
         </div>
+
         <div id="syllabusTopicTabs" class="syllabus-topic-tabs"></div>
+
         <div
           class="backlog-dropzone"
           id="syllabusBacklog"
@@ -86,6 +107,7 @@
         ></div>
       </section>
 
+      <!-- ---------------- RESOURCES BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
@@ -96,21 +118,22 @@
           </div>
           <span id="resourceBacklogCount" class="panel-subtitle"></span>
         </div>
+
         <div
           class="backlog-dropzone"
           id="resourceBacklog"
           data-location-type="backlog"
           data-accept-type="resource"
         ></div>
+
         <div class="resource-btn-row">
-          <button id="newResourceBtn" class="primary">
-            ＋ New resource note
-          </button>
+          <button id="newResourceBtn" class="primary">＋ New resource note</button>
         </div>
       </section>
+
     </aside>
 
-    <!-- CENTER: planner -->
+    <!-- ========== CENTER COLUMN: PLANNER GRID ========== -->
     <section class="planner-area">
       <div class="planner-header-row">
         <div>
@@ -123,11 +146,14 @@
           </div>
         </div>
       </div>
+
       <div class="planner-grid" id="plannerGrid"></div>
     </section>
 
-    <!-- RIGHT: textbook references -->
+    <!-- ========== RIGHT COLUMN: TEXTBOOK BACKLOG ========== -->
     <aside class="right-column">
+
+      <!-- ---------------- TEXTBOOK BACKLOG ---------------- -->
       <section class="panel">
         <div class="panel-header">
           <div>
@@ -136,10 +162,20 @@
               Cards with no placements appear here. Drag into the textbook lane.
             </div>
           </div>
-          <span id="textbookBacklogCount" class="panel-subtitle"></span>
+
+          <!-- === NEW: TEXTBOOK SEARCH FIELD (Option A) === -->
+          <div class="panel-header-actions">
+            <input
+              type="text"
+              id="textbookSearchInput"
+              class="panel-search"
+              placeholder="Search textbooks…"
+            />
+            <span id="textbookBacklogCount" class="panel-subtitle"></span>
+          </div>
         </div>
 
-        <!-- Tabs by textbook (filtered by course) -->
+        <!-- Tabs filtered by current course -->
         <div class="tabs-row" id="textbookTabs"></div>
 
         <div
@@ -149,10 +185,14 @@
           data-accept-type="textbook"
         ></div>
       </section>
+
     </aside>
+
   </main>
 
+  <!-- JS -->
   <script src="data.js"></script>
   <script src="app.js"></script>
+
 </body>
 </html>
